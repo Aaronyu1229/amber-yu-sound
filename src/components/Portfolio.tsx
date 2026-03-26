@@ -1,14 +1,18 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useLocale } from "@/lib/i18n";
 import SectionTag from "./ui/SectionTag";
 import SectionTitle from "./ui/SectionTitle";
 import { portfolioItems } from "@/lib/constants";
 
 export default function Portfolio() {
   const { ref, isVisible } = useScrollReveal();
+  const { t } = useLocale();
 
   return (
     <section id="portfolio" className="py-24 md:py-32" ref={ref}>
@@ -21,7 +25,7 @@ export default function Portfolio() {
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6 }}
             >
-              <SectionTag>Portfolio</SectionTag>
+              <SectionTag>{t.portfolio.tag}</SectionTag>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -29,7 +33,7 @@ export default function Portfolio() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="mt-4"
             >
-              <SectionTitle>Selected works</SectionTitle>
+              <SectionTitle>{t.portfolio.title}</SectionTitle>
             </motion.div>
           </div>
           <motion.p
@@ -38,8 +42,7 @@ export default function Portfolio() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-ivory/50 max-w-sm text-sm leading-relaxed"
           >
-            A curated selection of recent casino &amp; iGaming audio projects.
-            Each one crafted to elevate the player experience.
+            {t.portfolio.description}
           </motion.p>
         </div>
 
@@ -51,40 +54,49 @@ export default function Portfolio() {
               initial={{ opacity: 0, y: 30 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.08 }}
-              className="group bg-bg2 rounded-xl overflow-hidden border border-ivory/5 transition-all duration-300 hover:-translate-y-1.5 hover:border-gold/30 hover:shadow-xl hover:shadow-gold/5"
             >
-              {/* Thumbnail placeholder */}
-              <div
-                className={`relative h-44 bg-gradient-to-br ${item.gradient} flex items-center justify-center`}
+              <Link
+                href={`/portfolio/${item.slug}`}
+                className="group block bg-bg2 rounded-xl overflow-hidden border border-ivory/5 transition-all duration-300 hover:-translate-y-1.5 hover:border-gold/30 hover:shadow-xl hover:shadow-gold/5"
               >
-                <span className="text-[10px] tracking-[3px] uppercase absolute top-4 left-4 bg-bg/60 backdrop-blur-sm px-3 py-1 rounded-full text-ivory/80">
-                  {item.type}
-                </span>
-                {/* Hover play overlay */}
-                <div className="absolute inset-0 bg-bg/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <div className="w-12 h-12 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center">
-                    <Play size={16} className="text-gold ml-0.5" />
+                {/* Thumbnail */}
+                <div
+                  className={`relative h-44 bg-gradient-to-br ${item.gradient} flex items-center justify-center overflow-hidden`}
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  <span className="text-[10px] tracking-[3px] uppercase absolute top-4 left-4 bg-bg/60 backdrop-blur-sm px-3 py-1 rounded-full text-ivory/80 z-10">
+                    {t.portfolio.items[i].type}
+                  </span>
+                  <div className="absolute inset-0 bg-bg/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10">
+                    <div className="w-12 h-12 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center">
+                      <Play size={16} className="text-gold ml-0.5" />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Info */}
-              <div className="p-6">
-                <h3 className="font-display text-xl font-medium text-ivory mb-1">
-                  {item.title}
-                </h3>
-                <p className="text-xs text-muted mb-4">{item.services}</p>
-                <div className="flex flex-wrap gap-2">
-                  {item.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-[10px] tracking-wider uppercase px-3 py-1 rounded-full bg-purple-dim text-purple"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                <div className="p-6">
+                  <h3 className="font-display text-xl font-medium text-ivory mb-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs text-muted mb-4">{t.portfolio.items[i].services}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {t.portfolio.items[i].tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[10px] tracking-wider uppercase px-3 py-1 rounded-full bg-purple-dim text-purple"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </Link>
             </motion.div>
           ))}
         </div>

@@ -2,7 +2,9 @@
 
 import { motion } from "framer-motion";
 import { Play, Mail } from "lucide-react";
+import Link from "next/link";
 import Button from "./ui/Button";
+import { useLocale } from "@/lib/i18n";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -34,6 +36,11 @@ function WaveSVG({ color, opacity, delay }: { color: string; opacity: number; de
 }
 
 export default function Hero() {
+  const { t } = useLocale();
+
+  // Split title by highlight
+  const parts = t.hero.title.split(t.hero.titleHighlight);
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background radial gradients */}
@@ -55,7 +62,7 @@ export default function Hero() {
           variants={fadeUp}
           className="text-[10px] tracking-[5px] uppercase text-purple mb-6"
         >
-          Premium Casino Game Audio
+          {t.hero.tag}
         </motion.p>
 
         <motion.h1
@@ -65,8 +72,9 @@ export default function Hero() {
           variants={fadeUp}
           className="font-display text-4xl md:text-5xl lg:text-7xl font-medium leading-tight max-w-3xl mb-6"
         >
-          Sound design rooted in{" "}
-          <span className="text-gold italic">musical artistry</span>
+          {parts[0]}
+          <span className="text-gold italic">{t.hero.titleHighlight}</span>
+          {parts[1]}
         </motion.h1>
 
         <motion.p
@@ -76,8 +84,7 @@ export default function Hero() {
           variants={fadeUp}
           className="text-ivory/70 text-base md:text-lg max-w-xl mb-10 leading-relaxed"
         >
-          Classically trained composer crafting immersive audio for slot games,
-          live casino &amp; iGaming studios worldwide.
+          {t.hero.subtitle}
         </motion.p>
 
         <motion.div
@@ -87,11 +94,11 @@ export default function Hero() {
           variants={fadeUp}
           className="flex flex-wrap gap-4"
         >
-          <Button href="#portfolio" variant="primary">
-            <Play size={14} /> View Portfolio
+          <Button href="/portfolio" variant="primary">
+            <Play size={14} /> {t.hero.cta1}
           </Button>
-          <Button href="#contact" variant="secondary">
-            <Mail size={14} /> Get in Touch
+          <Button href="/contact" variant="secondary">
+            <Mail size={14} /> {t.hero.cta2}
           </Button>
         </motion.div>
       </div>
@@ -104,7 +111,7 @@ export default function Hero() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
       >
         <span className="text-[9px] tracking-[4px] uppercase text-muted">
-          Scroll
+          {t.hero.scroll}
         </span>
         <div
           className="w-px h-8 bg-gradient-to-b from-gold to-transparent"

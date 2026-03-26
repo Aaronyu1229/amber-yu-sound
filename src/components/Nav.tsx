@@ -1,13 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { navLinks } from "@/lib/constants";
+import { Menu, X, Globe } from "lucide-react";
+import { useLocale } from "@/lib/i18n";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t, toggleLocale } = useLocale();
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -25,26 +29,37 @@ export default function Nav() {
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="font-display text-xl md:text-2xl">
+        <Link href="/" className="font-display text-xl md:text-2xl">
           <span className="text-gold font-semibold">AMBER YU</span>{" "}
-          <span className="text-ivory font-light">Sound</span>
-        </a>
+          <span className="text-ivory font-light">Studio</span>
+        </Link>
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
+          {t.nav.links.map((link) => (
+            <Link
               key={link.href}
               href={link.href}
               className={`text-xs tracking-[2px] uppercase transition-colors ${
-                link.label === "Contact"
+                pathname === link.href
+                  ? "text-gold"
+                  : link.href === "/contact"
                   ? "text-gold hover:text-gold-light"
                   : "text-ivory/70 hover:text-ivory"
               }`}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
+
+          {/* Language toggle */}
+          <button
+            onClick={toggleLocale}
+            className="flex items-center gap-1.5 text-[10px] tracking-[2px] uppercase border border-ivory/20 px-3 py-1.5 rounded-full text-ivory/60 hover:text-gold hover:border-gold/40 transition-colors cursor-pointer"
+          >
+            <Globe size={12} />
+            {t.nav.langLabel}
+          </button>
         </div>
 
         {/* Mobile hamburger */}
@@ -67,20 +82,27 @@ export default function Nav() {
             className="md:hidden bg-bg2/95 backdrop-blur-lg border-b border-gold/10 overflow-hidden"
           >
             <div className="px-6 py-6 flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <a
+              {t.nav.links.map((link) => (
+                <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
                   className={`text-xs tracking-[2px] uppercase ${
-                    link.label === "Contact"
+                    pathname === link.href
                       ? "text-gold"
                       : "text-ivory/70"
                   }`}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
+              <button
+                onClick={toggleLocale}
+                className="flex items-center gap-1.5 text-xs tracking-[2px] uppercase text-ivory/60 mt-2 cursor-pointer"
+              >
+                <Globe size={12} />
+                {t.nav.langLabel}
+              </button>
             </div>
           </motion.div>
         )}
