@@ -12,7 +12,7 @@ export default function Contact() {
   const { t } = useLocale();
 
   return (
-    <section id="contact" className="py-24 md:py-32" ref={ref}>
+    <section id="contact" className="py-20 md:py-24" ref={ref}>
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 lg:gap-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -46,7 +46,7 @@ export default function Contact() {
           >
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-[10px] tracking-[2px] uppercase text-muted block mb-2">
+                <label className="text-xs tracking-[1.5px] uppercase text-ivory/50 block mb-2">
                   {t.contact.form.name}
                 </label>
                 <input
@@ -57,7 +57,7 @@ export default function Contact() {
                 />
               </div>
               <div>
-                <label className="text-[10px] tracking-[2px] uppercase text-muted block mb-2">
+                <label className="text-xs tracking-[1.5px] uppercase text-ivory/50 block mb-2">
                   {t.contact.form.company}
                 </label>
                 <input
@@ -70,7 +70,7 @@ export default function Contact() {
             </div>
 
             <div>
-              <label className="text-[10px] tracking-[2px] uppercase text-muted block mb-2">
+              <label className="text-xs tracking-[1.5px] uppercase text-ivory/50 block mb-2">
                 {t.contact.form.emailLabel}
               </label>
               <input
@@ -82,7 +82,7 @@ export default function Contact() {
             </div>
 
             <div>
-              <label className="text-[10px] tracking-[2px] uppercase text-muted block mb-2">
+              <label className="text-xs tracking-[1.5px] uppercase text-ivory/50 block mb-2">
                 {t.contact.form.platform}
               </label>
               <select className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory focus:border-gold focus:outline-none transition-colors appearance-none">
@@ -94,7 +94,7 @@ export default function Contact() {
             </div>
 
             <div>
-              <label className="text-[10px] tracking-[2px] uppercase text-muted block mb-2">
+              <label className="text-xs tracking-[1.5px] uppercase text-ivory/50 block mb-2">
                 {t.contact.form.details}
               </label>
               <textarea

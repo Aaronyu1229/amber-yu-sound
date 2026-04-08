@@ -11,7 +11,7 @@ export default function Testimonials() {
   const { t } = useLocale();
 
   return (
-    <section className="py-24 md:py-32 bg-bg2" ref={ref}>
+    <section className="py-20 md:py-24 bg-bg2" ref={ref}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <motion.div
@@ -53,7 +53,7 @@ export default function Testimonials() {
                   <div className="text-sm font-medium text-ivory">
                     {item.name}
                   </div>
-                  <div className="text-xs text-muted">
+                  <div className="text-sm text-ivory/60">
                     {item.role}, {item.company}
                   </div>
                 </div>

@@ -16,7 +16,7 @@ export default function Services() {
   const { t } = useLocale();
 
   return (
-    <section id="services" className="py-24 md:py-32 bg-bg2" ref={ref}>
+    <section id="services" className="py-20 md:py-24 bg-bg2" ref={ref}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <motion.div
@@ -85,7 +85,7 @@ export default function Services() {
                   {s.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-[10px] tracking-wider uppercase px-3 py-1 rounded-full bg-ivory/5 text-muted"
+                      className="text-xs tracking-wider uppercase px-3 py-1 rounded-full bg-ivory/5 text-ivory/60"
                     >
                       {tag}
                     </span>

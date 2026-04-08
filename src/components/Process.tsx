@@ -11,7 +11,7 @@ export default function Process() {
   const { t } = useLocale();
 
   return (
-    <section className="py-24 md:py-32 bg-bg2" ref={ref}>
+    <section className="py-20 md:py-24 bg-bg2" ref={ref}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <motion.div
@@ -51,7 +51,7 @@ export default function Process() {
               <h3 className="text-xs tracking-[3px] uppercase font-medium text-ivory mb-2">
                 {step.title}
               </h3>
-              <p className="text-xs text-muted leading-relaxed max-w-[200px]">
+              <p className="text-sm text-ivory/60 leading-relaxed max-w-[200px]">
                 {step.description}
               </p>
             </motion.div>

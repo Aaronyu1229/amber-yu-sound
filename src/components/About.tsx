@@ -13,7 +13,7 @@ export default function About() {
   const { t } = useLocale();
 
   return (
-    <section id="about" className="py-24 md:py-32" ref={ref}>
+    <section id="about" className="py-20 md:py-24" ref={ref}>
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
         <motion.div
           initial={{ opacity: 0, x: -40 }}
@@ -29,7 +29,7 @@ export default function About() {
             sizes="(max-width: 768px) 100vw, 50vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-bg/80 via-transparent to-transparent" />
-          <span className="absolute bottom-6 left-6 text-[10px] tracking-[3px] uppercase text-purple z-10">
+          <span className="absolute bottom-6 left-6 text-xs tracking-[3px] uppercase text-purple z-10">
             {t.about.founderLabel}
           </span>
         </motion.div>
@@ -67,7 +67,7 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="pt-6"
           >
-            <span className="text-[10px] tracking-[3px] uppercase text-purple block mb-4">
+            <span className="text-xs tracking-[3px] uppercase text-purple block mb-4">
               {t.about.toolsLabel}
             </span>
             <div className="flex flex-wrap gap-2">

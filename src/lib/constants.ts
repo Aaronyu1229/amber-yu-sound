@@ -67,6 +67,16 @@ export const portfolioItems = [
     image: "https://images.unsplash.com/photo-1575783402312-883c35cad34b?w=800&q=80",
     heroImage: "https://images.unsplash.com/photo-1553075712-25b66b659833?w=1600&q=80",
   },
+  {
+    slug: "lu-fei",
+    title: "鹿飛 LuFei",
+    type: "WEB DESIGN",
+    services: "Website Design & Development",
+    tags: ["Brand Site", "Responsive", "Motion"],
+    gradient: "from-emerald-900/40 to-teal-900/40",
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
+    heroImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&q=80",
+  },
 ];
 
 // PLACEHOLDER: Replace with Amber's real portrait

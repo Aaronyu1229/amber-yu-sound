@@ -11,7 +11,7 @@ interface PageBannerProps {
 
 export default function PageBanner({ title, subtitle, backgroundImage }: PageBannerProps) {
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 overflow-hidden">
+    <section className="relative pt-28 pb-16 md:pt-32 md:pb-20 overflow-hidden">
       {/* Background image */}
       {backgroundImage && (
         <div className="absolute inset-0">
@@ -40,7 +40,7 @@ export default function PageBanner({ title, subtitle, backgroundImage }: PageBan
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-[10px] tracking-[5px] uppercase text-purple mb-4"
+          className="text-xs tracking-[3px] uppercase text-purple mb-4"
         >
           / {title}
         </motion.p>

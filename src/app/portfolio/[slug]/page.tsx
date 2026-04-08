@@ -68,7 +68,7 @@ export default function PortfolioDetailPage() {
           >
             <Link
               href="/portfolio"
-              className="inline-flex items-center gap-2 text-sm text-muted hover:text-gold transition-colors mb-6"
+              className="inline-flex items-center gap-2 text-sm text-ivory/60 hover:text-gold transition-colors mb-6"
             >
               <ArrowLeft size={16} />
               {t.portfolioDetail.backLabel}
@@ -80,13 +80,13 @@ export default function PortfolioDetailPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <span className="text-[10px] tracking-[3px] uppercase text-purple bg-purple-dim px-3 py-1 rounded-full">
+            <span className="text-xs tracking-[3px] uppercase text-purple bg-purple-dim px-3 py-1 rounded-full">
               {t.portfolio.items[itemIndex].type}
             </span>
             <h1 className="font-display text-4xl md:text-6xl font-semibold text-ivory mt-4 mb-3">
               {item.title}
             </h1>
-            <p className="text-ivory/50 text-lg">
+            <p className="text-ivory/70 text-lg">
               {t.portfolio.items[itemIndex].services}
             </p>
           </motion.div>
@@ -115,7 +115,7 @@ export default function PortfolioDetailPage() {
               },
             ].map((meta, i) => (
               <motion.div key={meta.label} custom={i} variants={fadeUp}>
-                <p className="text-[10px] tracking-[2px] uppercase text-muted mb-1">
+                <p className="text-xs tracking-[1.5px] uppercase text-ivory/50 mb-1">
                   {meta.label}
                 </p>
                 <p className="text-sm text-ivory font-medium">{meta.value}</p>
@@ -202,7 +202,7 @@ export default function PortfolioDetailPage() {
                 <p className="text-ivory/80 italic text-lg leading-relaxed mb-4">
                   &ldquo;{detail.testimonial}&rdquo;
                 </p>
-                <p className="text-sm text-muted">
+                <p className="text-sm text-ivory/60">
                   — {detail.testimonialAuthor}
                 </p>
               </motion.div>
@@ -218,13 +218,13 @@ export default function PortfolioDetailPage() {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className="bg-bg2 rounded-xl p-6 border border-ivory/5"
               >
-                <p className="text-[10px] tracking-[2px] uppercase text-muted mb-2">
+                <p className="text-xs tracking-[1.5px] uppercase text-ivory/50 mb-2">
                   {t.portfolioDetail.clientLabel}
                 </p>
                 <p className="text-ivory font-display text-lg font-medium mb-2">
                   {detail.client}
                 </p>
-                <p className="text-ivory/50 text-sm leading-relaxed">
+                <p className="text-ivory/70 text-sm leading-relaxed">
                   {detail.clientRole}
                 </p>
               </motion.div>
@@ -276,7 +276,7 @@ export default function PortfolioDetailPage() {
                 {t.portfolio.items[itemIndex].tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-[10px] tracking-wider uppercase px-3 py-1.5 rounded-full bg-purple-dim text-purple"
+                    className="text-xs tracking-wider uppercase px-3 py-1.5 rounded-full bg-purple-dim text-purple"
                   >
                     {tag}
                   </span>

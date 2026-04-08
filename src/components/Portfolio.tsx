@@ -15,7 +15,7 @@ export default function Portfolio() {
   const { t } = useLocale();
 
   return (
-    <section id="portfolio" className="py-24 md:py-32" ref={ref}>
+    <section id="portfolio" className="py-20 md:py-24" ref={ref}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
@@ -40,7 +40,7 @@ export default function Portfolio() {
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-ivory/50 max-w-sm text-sm leading-relaxed"
+            className="text-ivory/70 max-w-sm text-sm leading-relaxed"
           >
             {t.portfolio.description}
           </motion.p>
@@ -70,7 +70,7 @@ export default function Portfolio() {
                     className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
-                  <span className="text-[10px] tracking-[3px] uppercase absolute top-4 left-4 bg-bg/60 backdrop-blur-sm px-3 py-1 rounded-full text-ivory/80 z-10">
+                  <span className="text-xs tracking-[3px] uppercase absolute top-4 left-4 bg-bg/60 backdrop-blur-sm px-3 py-1 rounded-full text-ivory/80 z-10">
                     {t.portfolio.items[i].type}
                   </span>
                   <div className="absolute inset-0 bg-bg/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10">
@@ -84,12 +84,12 @@ export default function Portfolio() {
                   <h3 className="font-display text-xl font-medium text-ivory mb-1">
                     {item.title}
                   </h3>
-                  <p className="text-xs text-muted mb-4">{t.portfolio.items[i].services}</p>
+                  <p className="text-sm text-ivory/60 mb-4">{t.portfolio.items[i].services}</p>
                   <div className="flex flex-wrap gap-2">
                     {t.portfolio.items[i].tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-[10px] tracking-wider uppercase px-3 py-1 rounded-full bg-purple-dim text-purple"
+                        className="text-xs tracking-wider uppercase px-3 py-1 rounded-full bg-purple-dim text-purple"
                       >
                         {tag}
                       </span>

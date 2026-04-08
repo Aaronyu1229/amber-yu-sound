@@ -60,7 +60,7 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="text-[10px] tracking-[5px] uppercase text-purple mb-6"
+          className="text-xs tracking-[3px] uppercase text-purple mb-6"
         >
           {t.hero.tag}
         </motion.p>
@@ -110,7 +110,7 @@ export default function Hero() {
         transition={{ delay: 1.2 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
       >
-        <span className="text-[9px] tracking-[4px] uppercase text-muted">
+        <span className="text-[11px] tracking-[3px] uppercase text-ivory/50">
           {t.hero.scroll}
         </span>
         <div

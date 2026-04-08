@@ -53,7 +53,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-ivory/50 hover:text-gold transition-colors"
+                    className="text-sm text-ivory/70 hover:text-gold transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -72,7 +72,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-ivory/50 hover:text-gold transition-colors"
+                    className="text-sm text-ivory/70 hover:text-gold transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -91,7 +91,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-ivory/50 hover:text-gold transition-colors"
+                    className="text-sm text-ivory/70 hover:text-gold transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -128,10 +128,10 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-ivory/5">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-2">
-          <p className="text-[11px] text-muted tracking-wider">
+          <p className="text-xs text-ivory/50 tracking-wider">
             &copy; {new Date().getFullYear()} {t.footer.copyright}
           </p>
-          <p className="text-[11px] text-muted/50 tracking-wider">
+          <p className="text-xs text-ivory/40 tracking-wider">
             Taipei, Taiwan — Available Worldwide
           </p>
         </div>

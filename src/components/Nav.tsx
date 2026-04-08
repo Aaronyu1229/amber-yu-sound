@@ -40,7 +40,7 @@ export default function Nav() {
             <Link
               key={link.href}
               href={link.href}
-              className={`text-xs tracking-[2px] uppercase transition-colors ${
+              className={`text-[13px] tracking-[1.5px] uppercase transition-colors ${
                 pathname === link.href
                   ? "text-gold"
                   : link.href === "/contact"
@@ -55,7 +55,7 @@ export default function Nav() {
           {/* Language toggle */}
           <button
             onClick={toggleLocale}
-            className="flex items-center gap-1.5 text-[10px] tracking-[2px] uppercase border border-ivory/20 px-3 py-1.5 rounded-full text-ivory/60 hover:text-gold hover:border-gold/40 transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 text-xs tracking-[1.5px] uppercase border border-ivory/20 px-3 py-1.5 rounded-full text-ivory/60 hover:text-gold hover:border-gold/40 transition-colors cursor-pointer"
           >
             <Globe size={12} />
             {t.nav.langLabel}

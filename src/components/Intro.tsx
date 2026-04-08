@@ -12,7 +12,7 @@ export default function Intro() {
   const { t } = useLocale();
 
   return (
-    <section className="py-24 md:py-32" ref={ref}>
+    <section className="py-20 md:py-24" ref={ref}>
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
         <motion.div
           initial={{ opacity: 0, x: -40 }}
@@ -62,7 +62,7 @@ export default function Intro() {
                 <div className="font-display text-3xl md:text-4xl text-gold font-medium">
                   {s.value}
                 </div>
-                <div className="text-xs text-muted mt-1">{s.label}</div>
+                <div className="text-sm text-ivory/60 mt-1">{s.label}</div>
               </div>
             ))}
           </motion.div>
