@@ -232,6 +232,7 @@ export default function MusicPlayer() {
   const { locale } = useLocale();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [activeTrack, setActiveTrack] = useState<ActiveTrack | null>(null);
+  const activeTrackRef = useRef<ActiveTrack | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -270,7 +271,9 @@ export default function MusicPlayer() {
         audioRef.current.src = track.file;
         audioRef.current.play();
       }
-      setActiveTrack({ albumIndex, trackIndex });
+      const next = { albumIndex, trackIndex };
+      activeTrackRef.current = next;
+      setActiveTrack(next);
       setIsPlaying(true);
       setCurrentTime(0);
     },
@@ -308,33 +311,26 @@ export default function MusicPlayer() {
       setDuration(audio.duration)
     );
     audio.addEventListener("ended", () => {
-      setActiveTrack((prev) => {
-        if (!prev) return null;
-        const album = musicLibrary[prev.albumIndex];
-        // Next track in same album
-        if (prev.trackIndex < album.tracks.length - 1) {
-          const next = {
-            albumIndex: prev.albumIndex,
-            trackIndex: prev.trackIndex + 1,
-          };
-          audio.src = album.tracks[next.trackIndex].file;
-          audio.play();
-          return next;
-        }
-        // Next album's first track
-        if (prev.albumIndex < musicLibrary.length - 1) {
-          const next = {
-            albumIndex: prev.albumIndex + 1,
-            trackIndex: 0,
-          };
-          audio.src = musicLibrary[next.albumIndex].tracks[0].file;
-          audio.play();
-          return next;
-        }
-        // All done
+      const prev = activeTrackRef.current;
+      if (!prev) return;
+      const album = musicLibrary[prev.albumIndex];
+
+      let next: ActiveTrack | null = null;
+      if (prev.trackIndex < album.tracks.length - 1) {
+        next = { albumIndex: prev.albumIndex, trackIndex: prev.trackIndex + 1 };
+      } else if (prev.albumIndex < musicLibrary.length - 1) {
+        next = { albumIndex: prev.albumIndex + 1, trackIndex: 0 };
+      }
+
+      if (next) {
+        const nextTrack = musicLibrary[next.albumIndex].tracks[next.trackIndex];
+        activeTrackRef.current = next;
+        setActiveTrack(next);
+        audio.src = nextTrack.file;
+        audio.play().catch(() => {});
+      } else {
         setIsPlaying(false);
-        return prev;
-      });
+      }
     });
 
     return () => {
