@@ -238,11 +238,6 @@ export default function MusicPlayer() {
   const [duration, setDuration] = useState(0);
   const [muted, setMuted] = useState(false);
   const [filter, setFilter] = useState<"all" | "slot" | "brand">("all");
-  const [debugLog, setDebugLog] = useState<string[]>([]);
-
-  const addLog = useCallback((msg: string) => {
-    setDebugLog((prev) => [...prev.slice(-4), msg]);
-  }, []);
 
   const filtered = musicLibrary.filter(
     (a) => filter === "all" || a.category === filter
@@ -274,15 +269,11 @@ export default function MusicPlayer() {
 
       const onCanPlay = () => {
         audio.removeEventListener("canplay", onCanPlay);
-        audio.play().then(() => {
-          addLog(`▶ playing a${albumIndex}t${trackIndex}`);
-        }).catch((err) => {
-          addLog(`✖ play fail a${albumIndex}t${trackIndex}: ${err.message}`);
-        });
+        audio.play().catch(() => {});
       };
       audio.addEventListener("canplay", onCanPlay);
     },
-    [addLog]
+    []
   );
 
   const playTrack = useCallback(
@@ -358,11 +349,6 @@ export default function MusicPlayer() {
         return;
       }
 
-      setDebugLog((prev) => [
-        ...prev.slice(-4),
-        `ended: a${current.albumIndex}t${current.trackIndex} → a${nextAlbum}t${nextTrackIdx}`,
-      ]);
-
       // Defer to next tick — critical for iOS Safari cross-track playback
       setTimeout(() => {
         const track = musicLibrary[nextAlbum].tracks[nextTrackIdx];
@@ -377,17 +363,7 @@ export default function MusicPlayer() {
 
         const onCanPlay = () => {
           audio.removeEventListener("canplay", onCanPlay);
-          audio.play().then(() => {
-            setDebugLog((prev) => [
-              ...prev.slice(-4),
-              `▶ auto a${nextAlbum}t${nextTrackIdx}`,
-            ]);
-          }).catch((err) => {
-            setDebugLog((prev) => [
-              ...prev.slice(-4),
-              `✖ auto fail: ${err.message}`,
-            ]);
-          });
+          audio.play().catch(() => {});
         };
         audio.addEventListener("canplay", onCanPlay);
       }, 0);
@@ -425,15 +401,6 @@ export default function MusicPlayer() {
     <div className="space-y-8">
       {/* DOM audio element — more reliable on iOS than new Audio() */}
       <audio ref={audioRef} playsInline preload="auto" />
-
-      {/* Debug overlay — temporary, remove after fix confirmed */}
-      {debugLog.length > 0 && (
-        <div className="fixed top-2 left-2 z-[999] bg-black/80 text-green-400 text-[10px] font-mono p-2 rounded max-w-[260px] pointer-events-none">
-          {debugLog.map((l, i) => (
-            <div key={i}>{l}</div>
-          ))}
-        </div>
-      )}
 
       {/* Filter tabs - centered */}
       <div className="flex justify-center gap-2 flex-wrap">
