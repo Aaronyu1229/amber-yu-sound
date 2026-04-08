@@ -310,34 +310,47 @@ export default function MusicPlayer() {
     audio.addEventListener("loadedmetadata", () =>
       setDuration(audio.duration)
     );
-    audio.addEventListener("ended", () => {
-      const prev = activeTrackRef.current;
-      if (!prev) return;
-      const album = musicLibrary[prev.albumIndex];
-
-      let next: ActiveTrack | null = null;
-      if (prev.trackIndex < album.tracks.length - 1) {
-        next = { albumIndex: prev.albumIndex, trackIndex: prev.trackIndex + 1 };
-      } else if (prev.albumIndex < musicLibrary.length - 1) {
-        next = { albumIndex: prev.albumIndex + 1, trackIndex: 0 };
-      }
-
-      if (next) {
-        const nextTrack = musicLibrary[next.albumIndex].tracks[next.trackIndex];
-        activeTrackRef.current = next;
-        setActiveTrack(next);
-        audio.src = nextTrack.file;
-        audio.play().catch(() => {});
-      } else {
-        setIsPlaying(false);
-      }
-    });
 
     return () => {
       audio.pause();
       audio.src = "";
     };
   }, []);
+
+  // Separate effect for ended handler — re-binds when activeTrack changes
+  // so the closure always has the latest track position
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handleEnded = () => {
+      if (!activeTrack) return;
+      const album = musicLibrary[activeTrack.albumIndex];
+
+      let nextAlbum = activeTrack.albumIndex;
+      let nextTrackIdx = activeTrack.trackIndex;
+
+      if (activeTrack.trackIndex < album.tracks.length - 1) {
+        nextTrackIdx = activeTrack.trackIndex + 1;
+      } else if (activeTrack.albumIndex < musicLibrary.length - 1) {
+        nextAlbum = activeTrack.albumIndex + 1;
+        nextTrackIdx = 0;
+      } else {
+        setIsPlaying(false);
+        return;
+      }
+
+      const next = { albumIndex: nextAlbum, trackIndex: nextTrackIdx };
+      const nextTrack = musicLibrary[next.albumIndex].tracks[next.trackIndex];
+      activeTrackRef.current = next;
+      setActiveTrack(next);
+      audio.src = nextTrack.file;
+      audio.play().catch(() => {});
+    };
+
+    audio.addEventListener("ended", handleEnded);
+    return () => audio.removeEventListener("ended", handleEnded);
+  }, [activeTrack]);
 
   useEffect(() => {
     if (audioRef.current) audioRef.current.muted = muted;
