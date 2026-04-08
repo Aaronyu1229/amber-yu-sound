@@ -268,14 +268,8 @@ export default function MusicPlayer() {
 
       const track = musicLibrary[albumIndex].tracks[trackIndex];
       if (audioRef.current) {
-        const a = audioRef.current;
-        const onCanPlay = () => {
-          a.removeEventListener("canplay", onCanPlay);
-          a.play().catch(() => {});
-        };
-        a.addEventListener("canplay", onCanPlay);
-        a.src = track.file;
-        a.load();
+        audioRef.current.src = track.file;
+        audioRef.current.play().catch(() => {});
       }
       const next = { albumIndex, trackIndex };
       activeTrackRef.current = next;
@@ -317,29 +311,19 @@ export default function MusicPlayer() {
       setDuration(audio.duration)
     );
 
-    return () => {
-      audio.pause();
-      audio.src = "";
-    };
-  }, []);
+    // Single ended handler — reads from ref so it always has the latest track
+    audio.addEventListener("ended", () => {
+      const current = activeTrackRef.current;
+      if (!current) return;
+      const album = musicLibrary[current.albumIndex];
 
-  // Separate effect for ended handler — re-binds when activeTrack changes
-  // so the closure always has the latest track position
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
+      let nextAlbum = current.albumIndex;
+      let nextTrackIdx = current.trackIndex;
 
-    const handleEnded = () => {
-      if (!activeTrack) return;
-      const album = musicLibrary[activeTrack.albumIndex];
-
-      let nextAlbum = activeTrack.albumIndex;
-      let nextTrackIdx = activeTrack.trackIndex;
-
-      if (activeTrack.trackIndex < album.tracks.length - 1) {
-        nextTrackIdx = activeTrack.trackIndex + 1;
-      } else if (activeTrack.albumIndex < musicLibrary.length - 1) {
-        nextAlbum = activeTrack.albumIndex + 1;
+      if (current.trackIndex < album.tracks.length - 1) {
+        nextTrackIdx = current.trackIndex + 1;
+      } else if (current.albumIndex < musicLibrary.length - 1) {
+        nextAlbum = current.albumIndex + 1;
         nextTrackIdx = 0;
       } else {
         setIsPlaying(false);
@@ -350,20 +334,15 @@ export default function MusicPlayer() {
       const nextTrack = musicLibrary[next.albumIndex].tracks[next.trackIndex];
       activeTrackRef.current = next;
       setActiveTrack(next);
-
-      // Wait for audio to be ready before playing — required for mobile Safari
-      const onCanPlay = () => {
-        audio.removeEventListener("canplay", onCanPlay);
-        audio.play().catch(() => {});
-      };
-      audio.addEventListener("canplay", onCanPlay);
       audio.src = nextTrack.file;
-      audio.load();
-    };
+      audio.play().catch(() => {});
+    });
 
-    audio.addEventListener("ended", handleEnded);
-    return () => audio.removeEventListener("ended", handleEnded);
-  }, [activeTrack]);
+    return () => {
+      audio.pause();
+      audio.src = "";
+    };
+  }, []);
 
   useEffect(() => {
     if (audioRef.current) audioRef.current.muted = muted;
