@@ -233,6 +233,7 @@ export default function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [activeTrack, setActiveTrack] = useState<ActiveTrack | null>(null);
   const activeTrackRef = useRef<ActiveTrack | null>(null);
+  const advancingRef = useRef(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -267,6 +268,7 @@ export default function MusicPlayer() {
       }
 
       const track = musicLibrary[albumIndex].tracks[trackIndex];
+      advancingRef.current = false;
       if (audioRef.current) {
         audioRef.current.src = track.file;
         audioRef.current.play().catch(() => {});
@@ -304,19 +306,15 @@ export default function MusicPlayer() {
     const audio = new Audio();
     audioRef.current = audio;
 
-    audio.addEventListener("timeupdate", () =>
-      setCurrentTime(audio.currentTime)
-    );
-    audio.addEventListener("loadedmetadata", () =>
-      setDuration(audio.duration)
-    );
-
-    // Single ended handler — reads from ref so it always has the latest track
-    audio.addEventListener("ended", () => {
+    // Advance to the next track (same album or cross-album)
+    const advanceTrack = () => {
       const current = activeTrackRef.current;
       if (!current) return;
-      const album = musicLibrary[current.albumIndex];
+      // Guard: prevent double-advance
+      if (advancingRef.current) return;
+      advancingRef.current = true;
 
+      const album = musicLibrary[current.albumIndex];
       let nextAlbum = current.albumIndex;
       let nextTrackIdx = current.trackIndex;
 
@@ -327,6 +325,7 @@ export default function MusicPlayer() {
         nextTrackIdx = 0;
       } else {
         setIsPlaying(false);
+        advancingRef.current = false;
         return;
       }
 
@@ -335,8 +334,32 @@ export default function MusicPlayer() {
       activeTrackRef.current = next;
       setActiveTrack(next);
       audio.src = nextTrack.file;
-      audio.play().catch(() => {});
+      audio.play().then(() => {
+        advancingRef.current = false;
+      }).catch(() => {
+        advancingRef.current = false;
+      });
+    };
+
+    audio.addEventListener("timeupdate", () => {
+      setCurrentTime(audio.currentTime);
+      // Fallback: if timeupdate fires near the end and ended might not fire,
+      // trigger advance when within 0.3s of the end
+      if (
+        audio.duration > 0 &&
+        audio.currentTime > 0 &&
+        audio.duration - audio.currentTime < 0.3 &&
+        !audio.paused
+      ) {
+        advanceTrack();
+      }
     });
+    audio.addEventListener("loadedmetadata", () =>
+      setDuration(audio.duration)
+    );
+
+    // Primary: ended event
+    audio.addEventListener("ended", advanceTrack);
 
     return () => {
       audio.pause();
