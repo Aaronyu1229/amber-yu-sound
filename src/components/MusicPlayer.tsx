@@ -233,12 +233,16 @@ export default function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [activeTrack, setActiveTrack] = useState<ActiveTrack | null>(null);
   const activeTrackRef = useRef<ActiveTrack | null>(null);
-  const advancingRef = useRef(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [muted, setMuted] = useState(false);
   const [filter, setFilter] = useState<"all" | "slot" | "brand">("all");
+  const [debugLog, setDebugLog] = useState<string[]>([]);
+
+  const addLog = useCallback((msg: string) => {
+    setDebugLog((prev) => [...prev.slice(-4), msg]);
+  }, []);
 
   const filtered = musicLibrary.filter(
     (a) => filter === "all" || a.category === filter
@@ -250,6 +254,36 @@ export default function MusicPlayer() {
   const currentTrackData = activeTrack
     ? musicLibrary[activeTrack.albumIndex].tracks[activeTrack.trackIndex]
     : null;
+
+  // Core function: load and play a specific track on the audio element
+  const loadAndPlay = useCallback(
+    (albumIndex: number, trackIndex: number) => {
+      const track = musicLibrary[albumIndex].tracks[trackIndex];
+      const audio = audioRef.current;
+      if (!audio) return;
+
+      const next = { albumIndex, trackIndex };
+      activeTrackRef.current = next;
+      setActiveTrack(next);
+      setIsPlaying(true);
+      setCurrentTime(0);
+
+      // Set src, load, then play after canplay
+      audio.src = track.file;
+      audio.load();
+
+      const onCanPlay = () => {
+        audio.removeEventListener("canplay", onCanPlay);
+        audio.play().then(() => {
+          addLog(`▶ playing a${albumIndex}t${trackIndex}`);
+        }).catch((err) => {
+          addLog(`✖ play fail a${albumIndex}t${trackIndex}: ${err.message}`);
+        });
+      };
+      audio.addEventListener("canplay", onCanPlay);
+    },
+    [addLog]
+  );
 
   const playTrack = useCallback(
     (albumIndex: number, trackIndex: number) => {
@@ -266,20 +300,9 @@ export default function MusicPlayer() {
         }
         return;
       }
-
-      const track = musicLibrary[albumIndex].tracks[trackIndex];
-      advancingRef.current = false;
-      if (audioRef.current) {
-        audioRef.current.src = track.file;
-        audioRef.current.play().catch(() => {});
-      }
-      const next = { albumIndex, trackIndex };
-      activeTrackRef.current = next;
-      setActiveTrack(next);
-      setIsPlaying(true);
-      setCurrentTime(0);
+      loadAndPlay(albumIndex, trackIndex);
     },
-    [activeTrack, isPlaying]
+    [activeTrack, isPlaying, loadAndPlay]
   );
 
   const playNext = useCallback(() => {
@@ -302,17 +325,24 @@ export default function MusicPlayer() {
     }
   }, [activeTrack, playTrack]);
 
+  // Set up the audio element once on mount
   useEffect(() => {
-    const audio = new Audio();
-    audioRef.current = audio;
+    const audio = audioRef.current;
+    if (!audio) return;
 
-    // Advance to the next track (same album or cross-album)
-    const advanceTrack = () => {
+    const handleTimeUpdate = () => {
+      setCurrentTime(audio.currentTime);
+    };
+
+    const handleLoadedMetadata = () => {
+      setDuration(audio.duration);
+    };
+
+    // The key fix: use setTimeout to escape the ended event handler context.
+    // iOS Safari blocks play() on a new src when called synchronously inside ended.
+    const handleEnded = () => {
       const current = activeTrackRef.current;
       if (!current) return;
-      // Guard: prevent double-advance
-      if (advancingRef.current) return;
-      advancingRef.current = true;
 
       const album = musicLibrary[current.albumIndex];
       let nextAlbum = current.albumIndex;
@@ -325,45 +355,52 @@ export default function MusicPlayer() {
         nextTrackIdx = 0;
       } else {
         setIsPlaying(false);
-        advancingRef.current = false;
         return;
       }
 
-      const next = { albumIndex: nextAlbum, trackIndex: nextTrackIdx };
-      const nextTrack = musicLibrary[next.albumIndex].tracks[next.trackIndex];
-      activeTrackRef.current = next;
-      setActiveTrack(next);
-      audio.src = nextTrack.file;
-      audio.play().then(() => {
-        advancingRef.current = false;
-      }).catch(() => {
-        advancingRef.current = false;
-      });
+      setDebugLog((prev) => [
+        ...prev.slice(-4),
+        `ended: a${current.albumIndex}t${current.trackIndex} → a${nextAlbum}t${nextTrackIdx}`,
+      ]);
+
+      // Defer to next tick — critical for iOS Safari cross-track playback
+      setTimeout(() => {
+        const track = musicLibrary[nextAlbum].tracks[nextTrackIdx];
+        const next = { albumIndex: nextAlbum, trackIndex: nextTrackIdx };
+        activeTrackRef.current = next;
+        setActiveTrack(next);
+        setIsPlaying(true);
+        setCurrentTime(0);
+
+        audio.src = track.file;
+        audio.load();
+
+        const onCanPlay = () => {
+          audio.removeEventListener("canplay", onCanPlay);
+          audio.play().then(() => {
+            setDebugLog((prev) => [
+              ...prev.slice(-4),
+              `▶ auto a${nextAlbum}t${nextTrackIdx}`,
+            ]);
+          }).catch((err) => {
+            setDebugLog((prev) => [
+              ...prev.slice(-4),
+              `✖ auto fail: ${err.message}`,
+            ]);
+          });
+        };
+        audio.addEventListener("canplay", onCanPlay);
+      }, 0);
     };
 
-    audio.addEventListener("timeupdate", () => {
-      setCurrentTime(audio.currentTime);
-      // Fallback: if timeupdate fires near the end and ended might not fire,
-      // trigger advance when within 0.3s of the end
-      if (
-        audio.duration > 0 &&
-        audio.currentTime > 0 &&
-        audio.duration - audio.currentTime < 0.3 &&
-        !audio.paused
-      ) {
-        advanceTrack();
-      }
-    });
-    audio.addEventListener("loadedmetadata", () =>
-      setDuration(audio.duration)
-    );
-
-    // Primary: ended event
-    audio.addEventListener("ended", advanceTrack);
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audio.addEventListener("ended", handleEnded);
 
     return () => {
-      audio.pause();
-      audio.src = "";
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.removeEventListener("ended", handleEnded);
     };
   }, []);
 
@@ -386,6 +423,18 @@ export default function MusicPlayer() {
 
   return (
     <div className="space-y-8">
+      {/* DOM audio element — more reliable on iOS than new Audio() */}
+      <audio ref={audioRef} playsInline preload="auto" />
+
+      {/* Debug overlay — temporary, remove after fix confirmed */}
+      {debugLog.length > 0 && (
+        <div className="fixed top-2 left-2 z-[999] bg-black/80 text-green-400 text-[10px] font-mono p-2 rounded max-w-[260px] pointer-events-none">
+          {debugLog.map((l, i) => (
+            <div key={i}>{l}</div>
+          ))}
+        </div>
+      )}
+
       {/* Filter tabs - centered */}
       <div className="flex justify-center gap-2 flex-wrap">
         {(
