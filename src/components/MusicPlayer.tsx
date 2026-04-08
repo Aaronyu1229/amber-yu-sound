@@ -268,8 +268,14 @@ export default function MusicPlayer() {
 
       const track = musicLibrary[albumIndex].tracks[trackIndex];
       if (audioRef.current) {
-        audioRef.current.src = track.file;
-        audioRef.current.play();
+        const a = audioRef.current;
+        const onCanPlay = () => {
+          a.removeEventListener("canplay", onCanPlay);
+          a.play().catch(() => {});
+        };
+        a.addEventListener("canplay", onCanPlay);
+        a.src = track.file;
+        a.load();
       }
       const next = { albumIndex, trackIndex };
       activeTrackRef.current = next;
@@ -344,8 +350,15 @@ export default function MusicPlayer() {
       const nextTrack = musicLibrary[next.albumIndex].tracks[next.trackIndex];
       activeTrackRef.current = next;
       setActiveTrack(next);
+
+      // Wait for audio to be ready before playing — required for mobile Safari
+      const onCanPlay = () => {
+        audio.removeEventListener("canplay", onCanPlay);
+        audio.play().catch(() => {});
+      };
+      audio.addEventListener("canplay", onCanPlay);
       audio.src = nextTrack.file;
-      audio.play().catch(() => {});
+      audio.load();
     };
 
     audio.addEventListener("ended", handleEnded);
