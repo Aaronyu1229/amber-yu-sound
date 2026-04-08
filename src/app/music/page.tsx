@@ -11,22 +11,22 @@ export default function MusicPage() {
 
   return (
     <>
-      {/* Hero: two-column layout */}
-      <section className="relative pt-28 pb-16 md:pt-32 md:pb-20 overflow-hidden">
+      {/* Hero: single-column centered layout */}
+      <section className="relative min-h-screen pt-24 pb-16 md:pt-28 md:pb-20 overflow-hidden">
         {/* Background accents */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-purple/5 rounded-full blur-[150px]" />
           <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-gold/5 rounded-full blur-[150px]" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-[1fr_1.4fr] gap-12 lg:gap-16 items-start">
-          {/* Left column: title + headphone notice */}
-          <div className="md:sticky md:top-32">
+        <div className="relative z-10 max-w-4xl mx-auto px-6">
+          {/* Header - centered */}
+          <div className="text-center mb-10">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-xs tracking-[3px] uppercase text-purple mb-4"
+              className="text-[10px] tracking-[5px] uppercase text-purple mb-4"
             >
               / {t.pages.music.title}
             </motion.p>
@@ -35,7 +35,7 @@ export default function MusicPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="font-display text-4xl md:text-5xl lg:text-6xl font-medium text-ivory leading-tight mb-8"
+              className="font-display text-4xl md:text-5xl lg:text-6xl font-medium text-ivory leading-tight mb-6"
             >
               {t.pages.music.title}
             </motion.h1>
@@ -44,10 +44,10 @@ export default function MusicPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="flex items-start gap-3 p-5 rounded-xl bg-purple-dim border border-purple/10 mb-8"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-purple-dim border border-purple/10"
             >
-              <Headphones size={20} className="text-purple shrink-0 mt-0.5" />
-              <p className="text-sm text-purple leading-relaxed">
+              <Headphones size={16} className="text-purple shrink-0" />
+              <p className="text-xs text-purple">
                 {t.pages.music.headphones}
               </p>
             </motion.div>
@@ -56,17 +56,17 @@ export default function MusicPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="text-ivory/70 text-sm leading-relaxed"
+              className="text-ivory/50 text-sm leading-relaxed mt-6 max-w-lg mx-auto"
             >
               {t.pages.music.subtitle}
             </motion.p>
           </div>
 
-          {/* Right column: custom music player */}
+          {/* Music Player */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
           >
             <MusicPlayer />
           </motion.div>
@@ -74,7 +74,7 @@ export default function MusicPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 md:py-24 bg-bg2">
+      <section className="py-20 md:py-28 bg-bg2">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
