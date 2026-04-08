@@ -282,6 +282,8 @@ export default function MusicPlayer() {
     const album = musicLibrary[activeTrack.albumIndex];
     if (activeTrack.trackIndex < album.tracks.length - 1) {
       playTrack(activeTrack.albumIndex, activeTrack.trackIndex + 1);
+    } else if (activeTrack.albumIndex < musicLibrary.length - 1) {
+      playTrack(activeTrack.albumIndex + 1, 0);
     }
   }, [activeTrack, playTrack]);
 
@@ -289,6 +291,9 @@ export default function MusicPlayer() {
     if (!activeTrack) return;
     if (activeTrack.trackIndex > 0) {
       playTrack(activeTrack.albumIndex, activeTrack.trackIndex - 1);
+    } else if (activeTrack.albumIndex > 0) {
+      const prevAlbum = musicLibrary[activeTrack.albumIndex - 1];
+      playTrack(activeTrack.albumIndex - 1, prevAlbum.tracks.length - 1);
     }
   }, [activeTrack, playTrack]);
 
@@ -306,6 +311,7 @@ export default function MusicPlayer() {
       setActiveTrack((prev) => {
         if (!prev) return null;
         const album = musicLibrary[prev.albumIndex];
+        // Next track in same album
         if (prev.trackIndex < album.tracks.length - 1) {
           const next = {
             albumIndex: prev.albumIndex,
@@ -315,6 +321,17 @@ export default function MusicPlayer() {
           audio.play();
           return next;
         }
+        // Next album's first track
+        if (prev.albumIndex < musicLibrary.length - 1) {
+          const next = {
+            albumIndex: prev.albumIndex + 1,
+            trackIndex: 0,
+          };
+          audio.src = musicLibrary[next.albumIndex].tracks[0].file;
+          audio.play();
+          return next;
+        }
+        // All done
         setIsPlaying(false);
         return prev;
       });
