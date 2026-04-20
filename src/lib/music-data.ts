@@ -147,6 +147,16 @@ export const musicLibrary: GameAlbum[] = [
     ],
   },
   {
+    game: "Buffalo Ways",
+    gameZh: "狂野水牛",
+    category: "slot",
+    gradient: "from-amber-700/30 to-stone-500/20",
+    tracks: [
+      { title: "Free Game", file: "/audio/buffalo-ways-free-game.mp3" },
+      { title: "Transition", file: "/audio/buffalo-ways-transition.mp3" },
+    ],
+  },
+  {
     game: "Wealth God's Blessing",
     gameZh: "財神賜福",
     category: "slot",
