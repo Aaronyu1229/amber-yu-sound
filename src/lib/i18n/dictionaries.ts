@@ -54,6 +54,10 @@ export interface Dictionary {
     p1: string;
     p2: string;
     toolsLabel: string;
+    whyTag: string;
+    whyTitle: string;
+    whyDescription: string;
+    whyItems: { title: string; description: string }[];
   };
   testimonials: {
     tag: string;
@@ -77,6 +81,13 @@ export interface Dictionary {
       emailLabel: string;
       platform: string;
       platformOptions: string[];
+      gameType: string;
+      gameTypeOptions: string[];
+      gameTypePlaceholder: string;
+      audioNeeds: string;
+      audioNeedsOptions: string[];
+      audioNeedsHint: string;
+      deadline: string;
       details: string;
       submit: string;
       namePlaceholder: string;
@@ -148,11 +159,11 @@ const en: Dictionary = {
     langLabel: "中文",
   },
   hero: {
-    tag: "Premium Casino Game Audio",
-    title: "Sound design rooted in musical artistry",
-    titleHighlight: "musical artistry",
+    tag: "Premium Game Audio Studio",
+    title: "Audio That Keeps Players Spinning.",
+    titleHighlight: "Players Spinning.",
     subtitle:
-      "Classically trained composer crafting immersive audio for slot games, live casino & iGaming studios worldwide.",
+      "Slot games · Live casino · iGaming — sound design crafted for retention, immersion, and brand recognition.",
     cta1: "View Portfolio",
     cta2: "Get in Touch",
     scroll: "Scroll",
@@ -161,17 +172,17 @@ const en: Dictionary = {
     tag: "Creative Sound Solutions",
     title: "Where music meets the machine",
     titleHighlight: "music",
-    p1: "With a foundation in classical music and a passion for interactive media, I create audio experiences that resonate with players and elevate game brands. Every sound is intentional — designed to heighten emotion, reinforce mechanics, and keep players engaged.",
-    p2: "From the first spin to the jackpot celebration, I craft cohesive soundscapes that give your game a distinctive sonic identity in a crowded market.",
+    p1: "With a foundation in classical music and a passion for interactive media, we create audio experiences that resonate with players and elevate game brands. Every sound is intentional — designed to heighten emotion, reinforce mechanics, and keep players engaged.",
+    p2: "From the first spin to the jackpot celebration, we craft cohesive soundscapes that give your game a distinctive sonic identity in a crowded market.",
     stats: [
-      { value: "50+", label: "Games delivered" },
+      { value: "5+", label: "Years in iGaming" },
+      { value: "500+", label: "Audio assets delivered" },
       { value: "10+", label: "Studio partners" },
-      { value: "365", label: "Days available" },
     ],
   },
   services: {
     tag: "Services",
-    title: "What I can do for your games",
+    title: "What we can do for your games",
     titleHighlight: "your games",
     items: [
       {
@@ -209,7 +220,6 @@ const en: Dictionary = {
       { type: "SLOT", services: "Music & Sound Design", tags: ["Asian Theme", "Orchestral", "96 SFX"] },
       { type: "LIVE CASINO", services: "Sound Design & VO", tags: ["Jazz", "Minimal", "Dealer Audio"] },
       { type: "SLOT", services: "Full Audio Package", tags: ["Cinematic", "Epic", "120+ Assets"] },
-      { type: "WEB DESIGN", services: "Website Design & Development", tags: ["Brand Site", "Responsive", "Motion"] },
     ],
   },
   process: {
@@ -224,11 +234,47 @@ const en: Dictionary = {
   },
   about: {
     tag: "About",
-    title: "The person behind the sound",
-    founderLabel: "Founder & Composer",
-    p1: "Hi, I'm Amber — a classically trained musician turned game audio specialist. After years of studying composition and performance, I discovered the world of interactive entertainment and never looked back.",
-    p2: "Today I focus exclusively on the iGaming space, crafting sonic identities for slot games, live casino products, and promotional content. My musical background gives me a unique perspective — I don't just design sounds, I compose experiences that connect with players on an emotional level.",
+    title: "The team behind the sound",
+    founderLabel: "Founder & Composer — Amber Yu",
+    p1: "Dolce & Forte is a Taipei-based audio studio led by founder and composer Amber Yu — a classically trained musician who turned her expertise to game audio. We're a collaborative network of composers, sound designers, voice actors, and mix engineers united by one goal: crafting audio that makes games unforgettable.",
+    p2: "We focus exclusively on the iGaming space, building sonic identities for slot games, live casino products, and promotional content. Our musical foundation gives us a unique perspective — we don't just design sounds, we compose experiences that connect with players on an emotional level.",
     toolsLabel: "Tools & Technologies",
+    whyTag: "Why Dolce & Forte?",
+    whyTitle: "Your extended audio team",
+    whyDescription:
+      "With over 10 years of experience in music and audio production, Dolce & Forte specializes in games, animation, advertising, and voice-over production. Our end-to-end service covers everything from initial theme and style development through production, integration, revisions, and ongoing support — all targeting AAA-quality audio that perfectly matches the feel of your game. We are your dedicated, one-stop audio production partner.",
+    whyItems: [
+      {
+        title: "Battle-Ready Team",
+        description:
+          "No internal training needed — we hit the ground running from day one.",
+      },
+      {
+        title: "Full-Cycle Support",
+        description:
+          "From production to revisions and QA testing, we see every asset through.",
+      },
+      {
+        title: "Game-Dev Fluent",
+        description:
+          "We integrate seamlessly with your planners, artists, and developers.",
+      },
+      {
+        title: "Precision Delivery",
+        description:
+          "Consistent, spec-compliant file delivery every single time.",
+      },
+      {
+        title: "Flexible Engagement",
+        description:
+          "Custom quotes and timelines tailored to your project's scope.",
+      },
+      {
+        title: "Your Extended Audio Team",
+        description:
+          "Think of us as your lean, outsourced sound department.",
+      },
+    ],
   },
   testimonials: {
     tag: "Testimonials",
@@ -236,27 +282,19 @@ const en: Dictionary = {
     items: [
       {
         quote:
-          "Amber transformed our slot game with a soundtrack that players genuinely love. The attention to detail in every win sound and bonus trigger is remarkable.",
-        name: "James Thompson",
-        role: "Creative Director",
-        company: "Nexus Gaming",
-        initials: "JT",
-      },
-      {
-        quote:
-          "Working with Amber Yu Studio was seamless. She understood our brief instantly and delivered audio that elevated the entire player experience.",
-        name: "Maria Kovacs",
-        role: "Head of Product",
-        company: "CasinoTech Studios",
-        initials: "MK",
+          "Real-time, efficient responses. Precise timeline coordination. Zero-miss professional communication — combined with deep product understanding and top-tier audio quality, they deliver music experiences on par with AAA original soundtracks.",
+        name: "Senior Game Producer",
+        role: "Game Production Lead",
+        company: "iGaming Studio",
+        initials: "SP",
       },
     ],
   },
   contact: {
     title: "Let's make your game sound incredible",
     description:
-      "Whether you're developing a new slot title or refreshing an existing game's audio, I'd love to hear about your project. Reach out and let's create something players will remember.",
-    email: "hello@amberyustudio.com",
+      "Whether you're developing a new slot title or refreshing an existing game's audio, we'd love to hear about your project. Reach out and let's create something players will remember.",
+    email: "hello@dolcenforte.com",
     location: "Taipei, Taiwan — Available worldwide",
     form: {
       name: "Name *",
@@ -264,17 +302,25 @@ const en: Dictionary = {
       emailLabel: "Email *",
       platform: "Platform",
       platformOptions: ["Mobile", "Web-based", "Land-based", "Multi-platform", "Other"],
+      gameType: "Game Type",
+      gameTypeOptions: ["Slot", "Live Casino", "Table Game", "Casual Game", "Other"],
+      gameTypePlaceholder: "Select game type",
+      audioNeeds: "Audio Needs",
+      audioNeedsOptions: ["BGM", "SFX", "Voice Over", "Mixing", "Other"],
+      audioNeedsHint: "Select all that apply",
+      deadline: "Deadline",
       details: "Project Details",
       submit: "Send Message",
       namePlaceholder: "Your name",
       companyPlaceholder: "Studio name",
       emailPlaceholder: "you@studio.com",
-      detailsPlaceholder: "Tell me about your game and audio needs...",
+      detailsPlaceholder:
+        "Tell us about your game: theme, number of assets needed, and any reference audio you have in mind.",
       platformPlaceholder: "Select platform",
     },
   },
   footer: {
-    copyright: "Amber Yu Studio. All rights reserved.",
+    copyright: "Dolce & Forte. All rights reserved.",
     services: "/ Services",
     serviceLinks: [
       { label: "Music Composition", href: "/services" },
@@ -317,7 +363,7 @@ const en: Dictionary = {
         duration: "8 weeks",
         overview: "Fortune Dynasty is a 5-reel, 243-ways-to-win slot game steeped in Chinese mythology. The game features the Four Divine Beasts as scatter symbols and a progressive jackpot tied to a celestial palace bonus round. Audio needed to feel culturally authentic while meeting the fast-paced energy modern slot players expect.",
         challenge: "The client needed audio that respected traditional Chinese musical aesthetics without sounding like a stereotype. The game features rapid base-game spins alongside a slow, dramatic free-spins mode — requiring two distinct sonic worlds that still felt cohesive. Additionally, 96 unique SFX were needed for a complex symbol cascade mechanic.",
-        approach: "I began with extensive research into traditional Chinese instruments — guzheng, erhu, dizi, and pipa — then layered them with modern orchestral arrangements and subtle electronic textures. The base game music uses a 120 BPM pentatonic-driven loop, while the bonus round transitions to a sweeping cinematic piece with taiko drums and full string section. Every SFX was designed to match the visual particle effects frame-by-frame.",
+        approach: "We began with extensive research into traditional Chinese instruments — guzheng, erhu, dizi, and pipa — then layered them with modern orchestral arrangements and subtle electronic textures. The base game music uses a 120 BPM pentatonic-driven loop, while the bonus round transitions to a sweeping cinematic piece with taiko drums and full string section. Every SFX was designed to match the visual particle effects frame-by-frame.",
         result: "Fortune Dynasty launched as Nexus Gaming's highest-performing Q1 title. Player session times increased 23% compared to their previous release, with audio specifically cited in player feedback as a standout feature. The soundtrack was later featured on the studio's promotional reel at ICE London 2024.",
         assets: [
           { label: "Music Tracks", count: "12" },
@@ -325,7 +371,7 @@ const en: Dictionary = {
           { label: "Ambient Loops", count: "4" },
           { label: "Jingles", count: "8" },
         ],
-        testimonial: "Amber captured the essence of Chinese mythology in a way that feels modern and exciting. Players keep telling us the sound is what makes Fortune Dynasty special.",
+        testimonial: "Dolce & Forte captured the essence of Chinese mythology in a way that feels modern and exciting. Players keep telling us the sound is what makes Fortune Dynasty special.",
         testimonialAuthor: "James Thompson, Creative Director — Nexus Gaming",
       },
       {
@@ -337,7 +383,7 @@ const en: Dictionary = {
         duration: "6 weeks",
         overview: "Midnight Blackjack is a high-end live dealer blackjack product targeting VIP players. The game streams from a purpose-built studio with art deco aesthetics. Audio needed to complement a sophisticated, club-like atmosphere without competing with the live dealer's voice or distracting from gameplay decisions.",
         challenge: "Live casino audio is uniquely demanding — it must coexist with real-time dealer speech, player chat, and environmental noise from the physical studio. The client needed a sophisticated jazz soundtrack that would loop seamlessly for sessions lasting hours, plus dealer callout audio that felt natural rather than robotic. Multilingual VO (English, German, Mandarin) was also required.",
-        approach: "I composed a set of modular jazz pieces using brushed drums, upright bass, Rhodes piano, and muted trumpet — all recorded with careful dynamic range to sit beneath conversation. The music system uses adaptive layers: quieter during active hands, slightly fuller during betting phases. For dealer VO, I directed three native-speaking voice actors with a focus on warmth and clarity, then processed the recordings to match the room tone of the physical studio.",
+        approach: "We composed a set of modular jazz pieces using brushed drums, upright bass, Rhodes piano, and muted trumpet — all recorded with careful dynamic range to sit beneath conversation. The music system uses adaptive layers: quieter during active hands, slightly fuller during betting phases. For dealer VO, we directed three native-speaking voice actors with a focus on warmth and clarity, then processed the recordings to match the room tone of the physical studio.",
         result: "Midnight Blackjack became CasinoTech's flagship live dealer product. Operator partners reported a 15% increase in average session duration for VIP tables compared to their standard blackjack offering. The adaptive audio system has since been adopted as the template for all future CasinoTech live products.",
         assets: [
           { label: "Music Tracks", count: "6" },
@@ -357,36 +403,16 @@ const en: Dictionary = {
         duration: "12 weeks",
         overview: "Golden Pharaoh is a feature-rich 6-reel megaways slot set in ancient Egypt. The game includes five distinct bonus modes, an expanding narrative system, and a multi-level progressive jackpot. This was a full audio package engagement — music, SFX, VO, and trailer audio — representing the most comprehensive project in the studio's history.",
         challenge: "With five bonus modes, each needing its own musical identity, plus a base game, jackpot sequences, and a cinematic intro, this project required an enormous volume of audio that still felt like one unified world. The client also wanted Hollywood-level production quality for their launch trailer, which would premiere at G2E Las Vegas.",
-        approach: "I created a master musical theme — a powerful brass and choir motif — then derived five variations for each bonus mode: desert exploration (ambient + ethnic percussion), tomb raid (tense strings + heartbeat pulse), pharaoh's chamber (regal horns + harp), scarab swarm (aggressive electronic + distorted elements), and the ultimate Eye of Ra jackpot (full orchestral crescendo with 60-piece virtual orchestra). Over 120 SFX were designed with consistent tonal characteristics. The launch trailer received a separate cinematic mix with Dolby Atmos spatialisation.",
-        result: "Golden Pharaoh became Pharaoh Interactive's most successful launch, reaching #3 on the global slot performance charts within its first month. The G2E trailer won a nomination for Best Marketing Content at the International Gaming Awards. The client has since engaged Amber Yu Studio for three additional titles.",
+        approach: "We created a master musical theme — a powerful brass and choir motif — then derived five variations for each bonus mode: desert exploration (ambient + ethnic percussion), tomb raid (tense strings + heartbeat pulse), pharaoh's chamber (regal horns + harp), scarab swarm (aggressive electronic + distorted elements), and the ultimate Eye of Ra jackpot (full orchestral crescendo with 60-piece virtual orchestra). Over 120 SFX were designed with consistent tonal characteristics. The launch trailer received a separate cinematic mix with Dolby Atmos spatialisation.",
+        result: "Golden Pharaoh became Pharaoh Interactive's most successful launch, reaching #3 on the global slot performance charts within its first month. The G2E trailer won a nomination for Best Marketing Content at the International Gaming Awards. The client has since engaged Dolce & Forte for three additional titles.",
         assets: [
           { label: "Music Tracks", count: "18" },
           { label: "Sound Effects", count: "124" },
           { label: "VO Lines", count: "60" },
           { label: "Trailer Mixes", count: "3" },
         ],
-        testimonial: "This was our most ambitious game and Amber delivered audio that matched our vision perfectly. The trailer alone was worth the investment — it stopped people in their tracks at G2E.",
+        testimonial: "This was our most ambitious game and Dolce & Forte delivered audio that matched our vision perfectly. The trailer alone was worth the investment — it stopped people in their tracks at G2E.",
         testimonialAuthor: "David Chen, CEO — Pharaoh Interactive",
-      },
-      {
-        client: "鹿飛 LuFei",
-        clientRole: "An emerging lifestyle brand based in Taipei, blending traditional Taiwanese craftsmanship with contemporary design sensibilities.",
-        genre: "Brand Website / Responsive Design",
-        year: "2025",
-        platform: "Mobile & Web",
-        duration: "6 weeks",
-        overview: "鹿飛 LuFei needed a digital home that captured their brand philosophy — the grace and agility of a deer in flight. The website serves as both a brand storytelling platform and an e-commerce gateway, requiring seamless transitions between editorial content and product showcases across all devices.",
-        challenge: "The brand's identity bridges Eastern heritage and modern aesthetics, which needed to translate into a web experience that felt neither overly traditional nor generically trendy. Performance was critical — the site needed to load under 2 seconds on 4G mobile networks while delivering rich motion design and high-resolution imagery.",
-        approach: "I designed a visual system rooted in natural motion — scroll-triggered animations inspired by a deer's fluid movement, paired with a muted earth-tone palette accented by jade green. The layout uses asymmetric grids for editorial sections and clean product cards for commerce. Built with Next.js for server-side rendering and optimized with lazy loading, responsive images, and a custom motion library to keep the bundle lean.",
-        result: "The new site launched to overwhelmingly positive reception, with average session duration reaching 4 minutes 30 seconds — 2.5x the industry benchmark for brand sites. Mobile conversion rates increased 38% compared to their previous Shopify storefront. The site was featured in Taiwan Design Week's digital showcase.",
-        assets: [
-          { label: "UI Screens", count: "24" },
-          { label: "Animations", count: "16" },
-          { label: "Icons", count: "40" },
-          { label: "Style Guides", count: "2" },
-        ],
-        testimonial: "Amber understood our vision from day one. The website doesn't just look beautiful — it moves and breathes like our brand. Our customers constantly tell us it's the best brand site they've seen in Taiwan.",
-        testimonialAuthor: "Lin Wei-Chen, Founder — 鹿飛 LuFei",
       },
     ],
   },
@@ -428,11 +454,11 @@ const zh: Dictionary = {
     langLabel: "EN",
   },
   hero: {
-    tag: "頂級博弈遊戲音效",
-    title: "根植於音樂藝術的聲音設計",
-    titleHighlight: "音樂藝術",
+    tag: "頂級遊戲音效工作室",
+    title: "讓玩家停不下來的遊戲音效。",
+    titleHighlight: "停不下來",
     subtitle:
-      "古典音樂背景出身的作曲家，為全球老虎機、真人賭場與 iGaming 工作室打造沉浸式音效體驗。",
+      "老虎機 · 真人賭場 · iGaming — 為留存、沉浸與品牌辨識度量身打造的聲音設計。",
     cta1: "瀏覽作品集",
     cta2: "聯繫我們",
     scroll: "往下滑",
@@ -441,17 +467,17 @@ const zh: Dictionary = {
     tag: "創意聲音方案",
     title: "當音樂遇上機台",
     titleHighlight: "音樂",
-    p1: "以古典音樂為根基，結合對互動媒體的熱情，我創造能與玩家產生共鳴的音效體驗，並提升遊戲品牌形象。每一個聲音都是精心設計——用以強化情緒、輔助機制、讓玩家持續投入。",
-    p2: "從第一次轉動到中獎慶祝，我打造具有整體感的聲音景觀，讓你的遊戲在競爭激烈的市場中脫穎而出。",
+    p1: "以古典音樂為根基，結合對互動媒體的熱情，我們創造能與玩家產生共鳴的音效體驗，並提升遊戲品牌形象。每一個聲音都是精心設計——用以強化情緒、輔助機制、讓玩家持續投入。",
+    p2: "從第一次轉動到中獎慶祝，我們打造具有整體感的聲音景觀，讓你的遊戲在競爭激烈的市場中脫穎而出。",
     stats: [
-      { value: "50+", label: "完成遊戲數" },
+      { value: "5+", label: "iGaming 年資" },
+      { value: "500+", label: "音效素材交付" },
       { value: "10+", label: "合作工作室" },
-      { value: "365", label: "天全年無休" },
     ],
   },
   services: {
     tag: "服務項目",
-    title: "我能為您的遊戲做什麼",
+    title: "我們能為您的遊戲做什麼",
     titleHighlight: "您的遊戲",
     items: [
       {
@@ -489,7 +515,6 @@ const zh: Dictionary = {
       { type: "老虎機", services: "音樂與音效設計", tags: ["亞洲主題", "管弦樂", "96 組音效"] },
       { type: "真人賭場", services: "音效設計與配音", tags: ["爵士", "極簡", "荷官音效"] },
       { type: "老虎機", services: "全套音效方案", tags: ["電影感", "史詩級", "120+ 素材"] },
-      { type: "網頁設計", services: "網站設計與開發", tags: ["品牌官網", "響應式", "動態設計"] },
     ],
   },
   process: {
@@ -504,11 +529,41 @@ const zh: Dictionary = {
   },
   about: {
     tag: "關於我們",
-    title: "聲音背後的人",
-    founderLabel: "創辦人暨作曲家",
-    p1: "嗨，我是 Amber——一位古典音樂出身、轉型為遊戲音效專家的作曲家。在多年的作曲與演奏學習後，我發現了互動娛樂的世界，從此一頭栽入。",
-    p2: "現在我專注於 iGaming 領域，為老虎機遊戲、真人賭場產品與宣傳內容打造獨特的聲音識別。我的音樂背景賦予我獨特的視角——我不只是設計聲音，我是在譜寫能觸動玩家情感的體驗。",
+    title: "聲音背後的團隊",
+    founderLabel: "創辦人暨作曲家 — Amber Yu",
+    p1: "Dolce & Forte 是一間位於台北的音效工作室，由創辦人暨作曲家 Amber Yu 領軍——她是一位古典音樂出身、將專業投入遊戲音效領域的音樂人。我們是一個由作曲家、音效設計師、配音員與混音工程師組成的協作網絡，凝聚於一個共同目標：打造讓遊戲令人難忘的音效。",
+    p2: "我們專注於 iGaming 領域，為老虎機遊戲、真人賭場產品與宣傳內容打造獨特的聲音識別。音樂底蘊賦予我們獨特的視角——我們不只是設計聲音，我們是在譜寫能觸動玩家情感的體驗。",
     toolsLabel: "工具與技術",
+    whyTag: "為什麼選擇 Dolce & Forte？",
+    whyTitle: "您的延伸音效團隊",
+    whyDescription:
+      "擁有超過 10 年音樂與音效製作經驗，Dolce & Forte 專精於遊戲、動畫、廣告與配音製作。我們提供從初期主題風格發想、正式製作、整合測試、修改調整到後續維護的全流程服務——目標是打造貼合您遊戲氛圍的 AAA 級音效品質。我們是您專屬的一站式音效製作夥伴。",
+    whyItems: [
+      {
+        title: "即戰力團隊",
+        description: "無需內部培訓，從第一天就能全速投入。",
+      },
+      {
+        title: "全流程支援",
+        description: "從製作、修改到 QA 測試，每一個素材我們都陪你走到完成。",
+      },
+      {
+        title: "熟悉遊戲開發",
+        description: "能無縫融入您的企劃、美術與工程團隊的協作流程。",
+      },
+      {
+        title: "精準交付",
+        description: "每一次交付都符合規格，一致且準時。",
+      },
+      {
+        title: "彈性合作",
+        description: "依專案規模量身訂製報價與時程。",
+      },
+      {
+        title: "您的延伸音效團隊",
+        description: "把我們當成您精實、外包的音效部門。",
+      },
+    ],
   },
   testimonials: {
     tag: "客戶推薦",
@@ -516,27 +571,19 @@ const zh: Dictionary = {
     items: [
       {
         quote:
-          "Amber 為我們的老虎機遊戲打造了一首玩家真心喜愛的配樂。她對每一個中獎音效和獎勵觸發的細膩程度令人驚嘆。",
-        name: "James Thompson",
-        role: "創意總監",
-        company: "Nexus Gaming",
-        initials: "JT",
-      },
-      {
-        quote:
-          "與 Amber Yu Studio 的合作非常順暢。她立刻理解了我們的需求，交付的音效將整個玩家體驗提升到了新層次。",
-        name: "Maria Kovacs",
-        role: "產品負責人",
-        company: "CasinoTech Studios",
-        initials: "MK",
+          "即時高效的回應、精準到位的時程配合，零漏接的專業溝通，加上對產品的深度理解與頂級音效品質，打造出媲美 OST 等級的動人音樂體驗。",
+        name: "資深遊戲企劃主管",
+        role: "遊戲企劃負責人",
+        company: "iGaming 工作室",
+        initials: "企劃",
       },
     ],
   },
   contact: {
     title: "讓我們一起打造令人驚艷的遊戲音效",
     description:
-      "無論您正在開發新的老虎機遊戲，還是想更新現有遊戲的音效，我都很樂意了解您的專案。歡迎聯繫，讓我們共同創造玩家難忘的體驗。",
-    email: "hello@amberyustudio.com",
+      "無論您正在開發新的老虎機遊戲，還是想更新現有遊戲的音效，我們都很樂意了解您的專案。歡迎聯繫，讓我們共同創造玩家難忘的體驗。",
+    email: "hello@dolcenforte.com",
     location: "台灣台北 — 服務範圍遍及全球",
     form: {
       name: "姓名 *",
@@ -544,17 +591,25 @@ const zh: Dictionary = {
       emailLabel: "電子郵件 *",
       platform: "遊戲平台",
       platformOptions: ["手機", "網頁", "實體機台", "跨平台", "其他"],
+      gameType: "遊戲類型",
+      gameTypeOptions: ["老虎機", "真人賭場", "桌遊", "休閒遊戲", "其他"],
+      gameTypePlaceholder: "選擇遊戲類型",
+      audioNeeds: "音效需求",
+      audioNeedsOptions: ["背景音樂", "音效", "配音", "混音", "其他"],
+      audioNeedsHint: "可複選",
+      deadline: "交付期限",
       details: "專案詳情",
       submit: "發送訊息",
       namePlaceholder: "您的姓名",
       companyPlaceholder: "工作室名稱",
       emailPlaceholder: "you@studio.com",
-      detailsPlaceholder: "請描述您的遊戲和音效需求...",
+      detailsPlaceholder:
+        "請告訴我們遊戲主題、需要的素材數量，以及任何參考音效。",
       platformPlaceholder: "選擇平台",
     },
   },
   footer: {
-    copyright: "Amber Yu Studio. 版權所有。",
+    copyright: "Dolce & Forte. 版權所有。",
     services: "/ 服務項目",
     serviceLinks: [
       { label: "音樂作曲", href: "/services" },
@@ -597,7 +652,7 @@ const zh: Dictionary = {
         duration: "8 週",
         overview: "Fortune Dynasty 是一款 5 軸、243 條連線的老虎機遊戲，以中國神話為主題。遊戲以四大神獸作為分散符號，並設有與天宮獎勵回合連動的累進彩金。音效需要在文化真實性與現代老虎機玩家期待的快節奏之間取得平衡。",
         challenge: "客戶需要的音效既要尊重中國傳統音樂美學，又不能流於刻板印象。遊戲的基本轉動模式節奏快速，而免費旋轉模式則是緩慢而戲劇性的——需要兩個截然不同卻又保持一致性的聲音世界。此外，複雜的符號連鎖機制需要 96 個獨特音效。",
-        approach: "我從深入研究中國傳統樂器開始——古箏、二胡、笛子、琵琶——然後將它們與現代管弦樂編曲及細膩的電子紋理疊加。基本遊戲音樂使用 120 BPM 的五聲音階循環，而獎勵回合則過渡到以太鼓和完整弦樂組為主的恢弘電影配樂。每一個音效都與視覺粒子效果逐幀對齊。",
+        approach: "我們從深入研究中國傳統樂器開始——古箏、二胡、笛子、琵琶——然後將它們與現代管弦樂編曲及細膩的電子紋理疊加。基本遊戲音樂使用 120 BPM 的五聲音階循環，而獎勵回合則過渡到以太鼓和完整弦樂組為主的恢弘電影配樂。每一個音效都與視覺粒子效果逐幀對齊。",
         result: "Fortune Dynasty 成為 Nexus Gaming 第一季表現最佳的遊戲。玩家平均遊戲時間比前一款作品提升了 23%，音效在玩家回饋中被特別提及為亮點功能。配樂後來在 2024 年 ICE London 展會的工作室宣傳影片中亮相。",
         assets: [
           { label: "音樂曲目", count: "12" },
@@ -605,7 +660,7 @@ const zh: Dictionary = {
           { label: "氛圍音樂", count: "4" },
           { label: "過場音樂", count: "8" },
         ],
-        testimonial: "Amber 以一種既現代又令人興奮的方式捕捉了中國神話的精髓。玩家不斷告訴我們，音效是 Fortune Dynasty 的最大亮點。",
+        testimonial: "Dolce & Forte 以一種既現代又令人興奮的方式捕捉了中國神話的精髓。玩家不斷告訴我們，音效是 Fortune Dynasty 的最大亮點。",
         testimonialAuthor: "James Thompson，創意總監 — Nexus Gaming",
       },
       {
@@ -617,7 +672,7 @@ const zh: Dictionary = {
         duration: "6 週",
         overview: "Midnight Blackjack 是一款面向 VIP 玩家的高端真人荷官二十一點產品。遊戲從一個裝飾藝術風格的專用攝影棚進行直播。音效需要營造精緻的俱樂部氛圍，同時不能與真人荷官的聲音競爭，也不能干擾玩家的遊戲決策。",
         challenge: "真人賭場音效有獨特的挑戰——必須與即時荷官語音、玩家聊天和實體攝影棚的環境噪音共存。客戶需要一套精緻的爵士配樂，能在長達數小時的遊戲中無縫循環，還需要自然而不機械的荷官叫牌音效。此外還需要多語言配音（英語、德語、中文）。",
-        approach: "我使用刷鼓、立式貝斯、Rhodes 電鋼琴和加了弱音器的小號創作了一套模組化的爵士樂曲——全部錄製時特別注意動態範圍，確保能融入對話之下。音樂系統使用自適應音層：出牌時更安靜，下注階段則稍微豐富。荷官配音方面，我指導了三位母語配音員，專注於溫暖感和清晰度，然後對錄音進行處理以匹配實體攝影棚的空間音色。",
+        approach: "我們使用刷鼓、立式貝斯、Rhodes 電鋼琴和加了弱音器的小號創作了一套模組化的爵士樂曲——全部錄製時特別注意動態範圍，確保能融入對話之下。音樂系統使用自適應音層：出牌時更安靜，下注階段則稍微豐富。荷官配音方面，我們指導了三位母語配音員，專注於溫暖感和清晰度，然後對錄音進行處理以匹配實體攝影棚的空間音色。",
         result: "Midnight Blackjack 成為 CasinoTech 的旗艦真人荷官產品。合作運營商報告 VIP 桌的平均遊戲時間比標準二十一點產品提升了 15%。自適應音效系統已被採用為所有未來 CasinoTech 真人產品的範本。",
         assets: [
           { label: "音樂曲目", count: "6" },
@@ -637,36 +692,16 @@ const zh: Dictionary = {
         duration: "12 週",
         overview: "Golden Pharaoh 是一款功能豐富的 6 軸 Megaways 老虎機，背景設定在古埃及。遊戲包含五種不同的獎勵模式、擴展敘事系統和多層級累進彩金。這是一個全套音效委託——音樂、音效、配音和預告片音效——代表了該工作室歷史上最全面的專案。",
         challenge: "五種獎勵模式各需要獨立的音樂識別度，加上基本遊戲、彩金序列和電影級開場動畫，這個專案需要龐大的音效量，同時仍要感覺像一個統一的世界觀。客戶還希望為將在 G2E 拉斯維加斯首映的宣傳預告片獲得好萊塢級的製作品質。",
-        approach: "我創作了一個主旋律主題——強有力的銅管與合唱動機——然後為每種獎勵模式衍生出五個變奏：沙漠探險（氛圍音樂 + 民族打擊樂）、古墓突襲（緊張弦樂 + 心跳脈動）、法老寢殿（莊嚴號角 + 豎琴）、聖甲蟲風暴（激進電子 + 失真元素）以及終極荷魯斯之眼彩金（60 人虛擬管弦樂團的完整高潮）。超過 120 個音效都設計了一致的音色特徵。宣傳預告片則獲得了獨立的 Dolby Atmos 空間混音。",
-        result: "Golden Pharaoh 成為 Pharaoh Interactive 最成功的發行作品，在上線首月即登上全球老虎機排行榜第三名。G2E 預告片獲得了國際博弈獎最佳行銷內容的提名。客戶隨後又委託 Amber Yu Studio 製作了三款額外的遊戲。",
+        approach: "我們創作了一個主旋律主題——強有力的銅管與合唱動機——然後為每種獎勵模式衍生出五個變奏：沙漠探險（氛圍音樂 + 民族打擊樂）、古墓突襲（緊張弦樂 + 心跳脈動）、法老寢殿（莊嚴號角 + 豎琴）、聖甲蟲風暴（激進電子 + 失真元素）以及終極荷魯斯之眼彩金（60 人虛擬管弦樂團的完整高潮）。超過 120 個音效都設計了一致的音色特徵。宣傳預告片則獲得了獨立的 Dolby Atmos 空間混音。",
+        result: "Golden Pharaoh 成為 Pharaoh Interactive 最成功的發行作品，在上線首月即登上全球老虎機排行榜第三名。G2E 預告片獲得了國際博弈獎最佳行銷內容的提名。客戶隨後又委託 Dolce & Forte 製作了三款額外的遊戲。",
         assets: [
           { label: "音樂曲目", count: "18" },
           { label: "音效", count: "124" },
           { label: "配音台詞", count: "60" },
           { label: "預告片混音", count: "3" },
         ],
-        testimonial: "這是我們最具野心的遊戲，Amber 交付的音效完美匹配了我們的願景。光是預告片就值回票價——它在 G2E 現場讓人駐足不前。",
+        testimonial: "這是我們最具野心的遊戲，Dolce & Forte 交付的音效完美匹配了我們的願景。光是預告片就值回票價——它在 G2E 現場讓人駐足不前。",
         testimonialAuthor: "David Chen，執行長 — Pharaoh Interactive",
-      },
-      {
-        client: "鹿飛 LuFei",
-        clientRole: "一個立足台北的新銳生活風格品牌，融合台灣傳統工藝與當代設計美學。",
-        genre: "品牌官網 / 響應式設計",
-        year: "2025",
-        platform: "手機 & 網頁",
-        duration: "6 週",
-        overview: "鹿飛 LuFei 需要一個能完美傳達品牌哲學的數位據點——如飛鹿般優雅而敏捷。網站同時作為品牌故事平台與電商入口，需要在編輯內容與產品展示之間實現跨裝置的無縫切換。",
-        challenge: "品牌識別橫跨東方傳統與現代美學，這需要轉化為一個既不過於傳統、也不流於泛泛的網頁體驗。效能至關重要——網站需要在 4G 行動網路下 2 秒內載入，同時呈現豐富的動態設計與高解析度影像。",
-        approach: "我設計了一套以自然動態為核心的視覺系統——以鹿的流暢動作為靈感的滾動觸發動畫，搭配以翡翠綠為點綴的大地色系。版面採用非對稱網格呈現編輯內容，簡潔的產品卡片用於電商區塊。使用 Next.js 實現伺服器端渲染，透過延遲載入、響應式圖片與自訂動態庫來保持套件精簡。",
-        result: "新網站上線後獲得壓倒性好評，平均瀏覽時間達 4 分 30 秒——是品牌網站產業基準的 2.5 倍。行動端轉換率較先前的 Shopify 店面提升了 38%。網站入選台灣設計週數位展示。",
-        assets: [
-          { label: "介面頁面", count: "24" },
-          { label: "動畫", count: "16" },
-          { label: "圖示", count: "40" },
-          { label: "風格指南", count: "2" },
-        ],
-        testimonial: "Amber 從第一天就理解了我們的願景。這個網站不只是好看——它像我們的品牌一樣會呼吸、會流動。客戶不斷告訴我們，這是他們在台灣見過最好的品牌官網。",
-        testimonialAuthor: "林韋辰，創辦人 — 鹿飛 LuFei",
       },
     ],
   },

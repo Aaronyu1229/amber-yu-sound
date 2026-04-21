@@ -3,9 +3,9 @@ import "./globals.css";
 import ClientLayout from "@/components/ClientLayout";
 
 export const metadata: Metadata = {
-  title: "Amber Yu Studio — Premium Casino Game Audio & Sound Design",
+  title: "Dolce & Forte — Premium Game Audio Studio",
   description:
-    "Classically trained composer crafting immersive audio for slot games, live casino & iGaming studios worldwide. Music composition, sound design, voice over & trailer audio.",
+    "Audio that keeps players spinning. Slot games · Live casino · iGaming — sound design crafted for retention, immersion, and brand recognition by Dolce & Forte.",
   keywords: [
     "Casino Game Sound Design",
     "Slot Game Music Composer",
@@ -16,18 +16,18 @@ export const metadata: Metadata = {
     "Freelance Casino Game Audio",
   ],
   openGraph: {
-    title: "Amber Yu Studio — Premium Casino Game Audio",
+    title: "Dolce & Forte — Premium Game Audio Studio",
     description:
-      "Classically trained composer crafting immersive audio for slot games, live casino & iGaming studios worldwide.",
+      "Audio that keeps players spinning. Slot games · Live casino · iGaming — sound design for retention, immersion, and brand recognition.",
     type: "website",
     locale: "en_US",
-    siteName: "Amber Yu Studio",
+    siteName: "Dolce & Forte",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Amber Yu Studio — Premium Casino Game Audio",
+    title: "Dolce & Forte — Premium Game Audio Studio",
     description:
-      "Classically trained composer crafting immersive audio for slot games, live casino & iGaming studios worldwide.",
+      "Audio that keeps players spinning. Slot games · Live casino · iGaming — sound design for retention, immersion, and brand recognition.",
   },
   robots: { index: true, follow: true },
 };

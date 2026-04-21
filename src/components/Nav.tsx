@@ -30,8 +30,9 @@ export default function Nav() {
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="font-display text-xl md:text-2xl">
-          <span className="text-gold font-semibold">AMBER YU</span>{" "}
-          <span className="text-ivory font-light">Studio</span>
+          <span className="text-gold font-semibold">Dolce</span>
+          <span className="text-ivory/60 font-light mx-1.5">&</span>
+          <span className="text-gold font-semibold">Forte</span>
         </Link>
 
         {/* Desktop links */}

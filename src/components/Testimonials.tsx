@@ -31,10 +31,18 @@ export default function Testimonials() {
           </motion.div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div
+          className={`grid gap-6 mx-auto ${
+            t.testimonials.items.length === 1
+              ? "max-w-2xl"
+              : t.testimonials.items.length === 2
+              ? "md:grid-cols-2 max-w-5xl"
+              : "md:grid-cols-2 lg:grid-cols-3"
+          }`}
+        >
           {t.testimonials.items.map((item, i) => (
             <motion.div
-              key={item.name}
+              key={`${item.name}-${i}`}
               initial={{ opacity: 0, y: 30 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}

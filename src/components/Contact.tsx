@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
@@ -10,6 +11,13 @@ import Button from "./ui/Button";
 export default function Contact() {
   const { ref, isVisible } = useScrollReveal();
   const { t } = useLocale();
+  const [audioNeeds, setAudioNeeds] = useState<string[]>([]);
+
+  const toggleAudioNeed = (opt: string) => {
+    setAudioNeeds((prev) =>
+      prev.includes(opt) ? prev.filter((o) => o !== opt) : [...prev, opt]
+    );
+  };
 
   return (
     <section id="contact" className="py-20 md:py-24" ref={ref}>
@@ -81,16 +89,67 @@ export default function Contact() {
               />
             </div>
 
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="text-xs tracking-[1.5px] uppercase text-ivory/50 block mb-2">
+                  {t.contact.form.platform}
+                </label>
+                <select className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory focus:border-gold focus:outline-none transition-colors appearance-none">
+                  <option value="">{t.contact.form.platformPlaceholder}</option>
+                  {t.contact.form.platformOptions.map((opt) => (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="text-xs tracking-[1.5px] uppercase text-ivory/50 block mb-2">
+                  {t.contact.form.gameType}
+                </label>
+                <select className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory focus:border-gold focus:outline-none transition-colors appearance-none">
+                  <option value="">{t.contact.form.gameTypePlaceholder}</option>
+                  {t.contact.form.gameTypeOptions.map((opt) => (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
             <div>
               <label className="text-xs tracking-[1.5px] uppercase text-ivory/50 block mb-2">
-                {t.contact.form.platform}
+                {t.contact.form.audioNeeds}
+                <span className="ml-2 text-[10px] normal-case tracking-normal text-ivory/35">
+                  {t.contact.form.audioNeedsHint}
+                </span>
               </label>
-              <select className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory focus:border-gold focus:outline-none transition-colors appearance-none">
-                <option value="">{t.contact.form.platformPlaceholder}</option>
-                {t.contact.form.platformOptions.map((opt) => (
-                  <option key={opt} value={opt}>{opt}</option>
-                ))}
-              </select>
+              <div className="flex flex-wrap gap-2">
+                {t.contact.form.audioNeedsOptions.map((opt) => {
+                  const active = audioNeeds.includes(opt);
+                  return (
+                    <button
+                      type="button"
+                      key={opt}
+                      onClick={() => toggleAudioNeed(opt)}
+                      className={`text-xs px-3.5 py-2 rounded-full border transition-colors cursor-pointer ${
+                        active
+                          ? "bg-gold/15 border-gold/40 text-gold"
+                          : "bg-bg border-ivory/10 text-ivory/60 hover:border-ivory/25 hover:text-ivory/80"
+                      }`}
+                    >
+                      {opt}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div>
+              <label className="text-xs tracking-[1.5px] uppercase text-ivory/50 block mb-2">
+                {t.contact.form.deadline}
+              </label>
+              <input
+                type="date"
+                className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory focus:border-gold focus:outline-none transition-colors"
+              />
             </div>
 
             <div>

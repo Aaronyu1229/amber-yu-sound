@@ -103,8 +103,9 @@ export default function Footer() {
           {/* Column 4: Brand + Social */}
           <div className="col-span-2 md:col-span-1 flex flex-col items-center md:items-end gap-6 pt-6 md:pt-0 border-t border-ivory/5 md:border-0">
             <Link href="/" className="font-display text-xl">
-              <span className="text-gold font-semibold">AMBER YU</span>{" "}
-              <span className="text-ivory font-light">Studio</span>
+              <span className="text-gold font-semibold">Dolce</span>
+              <span className="text-ivory/60 font-light mx-1.5">&</span>
+              <span className="text-gold font-semibold">Forte</span>
             </Link>
 
             <div className="flex items-center gap-4">

@@ -2,11 +2,21 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import {
+  Rocket,
+  Workflow,
+  Gamepad2,
+  Target,
+  Settings2,
+  Users,
+} from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLocale } from "@/lib/i18n";
 import SectionTag from "./ui/SectionTag";
 import SectionTitle from "./ui/SectionTitle";
 import { tools, aboutImage } from "@/lib/constants";
+
+const WHY_ICONS = [Rocket, Workflow, Gamepad2, Target, Settings2, Users];
 
 export default function About() {
   const { ref, isVisible } = useScrollReveal();
@@ -81,6 +91,58 @@ export default function About() {
               ))}
             </div>
           </motion.div>
+        </div>
+      </div>
+
+      {/* Why Choose Us — Dolce & Forte differentiators */}
+      <div className="max-w-7xl mx-auto px-6 mt-24 md:mt-32">
+        <div className="max-w-3xl mx-auto text-center mb-14">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+          >
+            <SectionTag>{t.about.whyTag}</SectionTag>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mt-4"
+          >
+            <SectionTitle>{t.about.whyTitle}</SectionTitle>
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-6 text-ivory/65 leading-relaxed text-sm md:text-base"
+          >
+            {t.about.whyDescription}
+          </motion.p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+          {t.about.whyItems.map((item, i) => {
+            const Icon = WHY_ICONS[i] ?? Rocket;
+            return (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.25 + i * 0.07 }}
+                className="group relative bg-bg2 rounded-2xl p-6 border border-ivory/5 hover:border-gold/25 transition-colors"
+              >
+                <div className="w-10 h-10 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center mb-4 group-hover:bg-gold/15 transition-colors">
+                  <Icon size={18} className="text-gold" />
+                </div>
+                <h3 className="text-ivory font-medium mb-2">{item.title}</h3>
+                <p className="text-ivory/55 text-sm leading-relaxed">
+                  {item.description}
+                </p>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
