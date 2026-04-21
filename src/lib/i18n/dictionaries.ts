@@ -144,6 +144,17 @@ export interface Dictionary {
     music: { title: string; subtitle: string; headphones: string; cta: string };
     about: { title: string; subtitle: string };
     contact: { title: string; subtitle: string };
+    insights: {
+      title: string;
+      subtitle: string;
+      readMore: string;
+      backToList: string;
+      publishedOn: string;
+      shareLabel: string;
+      ctaTitle: string;
+      ctaButton: string;
+      empty: string;
+    };
   };
 }
 
@@ -153,6 +164,7 @@ const en: Dictionary = {
       { label: "Services", href: "/services" },
       { label: "Portfolio", href: "/portfolio" },
       { label: "Music", href: "/music" },
+      { label: "Insights", href: "/insights" },
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
     ],
@@ -333,6 +345,7 @@ const en: Dictionary = {
       { label: "About", href: "/about" },
       { label: "Portfolio", href: "/portfolio" },
       { label: "Our Music", href: "/music" },
+      { label: "Insights", href: "/insights" },
     ],
     support: "/ Support",
     supportLinks: [
@@ -439,6 +452,18 @@ const en: Dictionary = {
       title: "Contact Us",
       subtitle: "Ready to elevate your game's audio? Let's start a conversation.",
     },
+    insights: {
+      title: "Insights",
+      subtitle:
+        "Notes on game audio — craft, process, and lessons from the studio.",
+      readMore: "Read article",
+      backToList: "Back to Insights",
+      publishedOn: "Published",
+      shareLabel: "Share this article",
+      ctaTitle: "Want audio that feels like this?",
+      ctaButton: "Start a conversation",
+      empty: "More articles coming soon.",
+    },
   },
 };
 
@@ -448,6 +473,7 @@ const zh: Dictionary = {
       { label: "服務項目", href: "/services" },
       { label: "作品集", href: "/portfolio" },
       { label: "音樂試聽", href: "/music" },
+      { label: "觀點分享", href: "/insights" },
       { label: "關於我們", href: "/about" },
       { label: "聯繫我們", href: "/contact" },
     ],
@@ -622,6 +648,7 @@ const zh: Dictionary = {
       { label: "關於我們", href: "/about" },
       { label: "作品集", href: "/portfolio" },
       { label: "音樂試聽", href: "/music" },
+      { label: "觀點分享", href: "/insights" },
     ],
     support: "/ 支援",
     supportLinks: [
@@ -727,6 +754,17 @@ const zh: Dictionary = {
     contact: {
       title: "聯繫我們",
       subtitle: "準備好提升您遊戲的音效了嗎？讓我們開始對話。",
+    },
+    insights: {
+      title: "觀點分享",
+      subtitle: "關於遊戲音效的筆記——工藝、流程，以及工作室的所見所學。",
+      readMore: "閱讀文章",
+      backToList: "返回觀點列表",
+      publishedOn: "發布於",
+      shareLabel: "分享這篇文章",
+      ctaTitle: "想要這樣的音效嗎？",
+      ctaButton: "聯繫我們",
+      empty: "更多文章即將推出。",
     },
   },
 };

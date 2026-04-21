@@ -134,6 +134,7 @@ export const bannerImages = {
   about: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1600&q=80",
   portfolio: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1600&q=80",
   contact: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=1600&q=80",
+  insights: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1600&q=80",
 };
 
 // Service card images
