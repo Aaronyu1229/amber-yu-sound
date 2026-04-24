@@ -34,7 +34,12 @@ export default function Contact() {
           <div className="flex flex-col gap-4 pt-4">
             <div className="flex items-center gap-3">
               <Mail size={16} className="text-gold" />
-              <span className="text-sm text-ivory/80">{t.contact.email}</span>
+              <a
+                href={`mailto:${t.contact.email}`}
+                className="text-sm text-ivory/80 hover:text-gold transition-colors"
+              >
+                {t.contact.email}
+              </a>
             </div>
             <div className="flex items-center gap-3">
               <MapPin size={16} className="text-gold" />

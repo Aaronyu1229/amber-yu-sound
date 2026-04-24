@@ -125,6 +125,41 @@ export default function PortfolioDetailPage() {
         </div>
       </section>
 
+      {/* Video embed (YouTube or self-hosted MP4) */}
+      {(item.youtubeId || item.videoSrc) && (
+        <section className="py-10 md:py-14 bg-bg2/40">
+          <div className="max-w-5xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative aspect-video rounded-2xl overflow-hidden border border-ivory/10 bg-bg"
+            >
+              {item.youtubeId ? (
+                <iframe
+                  src={`https://www.youtube.com/embed/${item.youtubeId}?rel=0`}
+                  title={`${item.title} — video`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                />
+              ) : (
+                <video
+                  src={item.videoSrc}
+                  controls
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              )}
+            </motion.div>
+            <p className="text-center text-[10px] tracking-[3px] uppercase text-ivory/40 mt-4">
+              {item.youtubeId ? "YouTube · Audio Post-Production" : "Game Demo"}
+            </p>
+          </div>
+        </section>
+      )}
+
       {/* Main Content */}
       <section className="py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">

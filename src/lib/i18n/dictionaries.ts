@@ -187,7 +187,7 @@ const en: Dictionary = {
     p1: "With a foundation in classical music and a passion for interactive media, we create audio experiences that resonate with players and elevate game brands. Every sound is intentional — designed to heighten emotion, reinforce mechanics, and keep players engaged.",
     p2: "From the first spin to the jackpot celebration, we craft cohesive soundscapes that give your game a distinctive sonic identity in a crowded market.",
     stats: [
-      { value: "5+", label: "Years in iGaming" },
+      { value: "10+", label: "Years in iGaming" },
       { value: "500+", label: "Audio assets delivered" },
       { value: "10+", label: "Studio partners" },
     ],
@@ -232,6 +232,7 @@ const en: Dictionary = {
       { type: "SLOT", services: "Music & Sound Design", tags: ["Asian Theme", "Orchestral", "96 SFX"] },
       { type: "LIVE CASINO", services: "Sound Design & VO", tags: ["Jazz", "Minimal", "Dealer Audio"] },
       { type: "SLOT", services: "Full Audio Package", tags: ["Cinematic", "Epic", "120+ Assets"] },
+      { type: "POST-PRODUCTION", services: "Audio Post-Production", tags: ["Sound-to-Picture", "Mix", "Mastering"] },
     ],
   },
   process: {
@@ -300,13 +301,29 @@ const en: Dictionary = {
         company: "iGaming Studio",
         initials: "SP",
       },
+      {
+        quote:
+          "For Amber, music and sound design have never been just an outsourced task — they are the soul that brings a product to life. She consistently delivers the most precise designs, seamlessly integrating every element of the product and completing the final, most critical piece of the puzzle. Highly recommended!",
+        name: "Owen",
+        role: "Brand Director",
+        company: "iGaming Provider",
+        initials: "O",
+      },
+      {
+        quote:
+          "Exceptionally professional! Dolce & Forte demonstrates outstanding command of rhythmic transitions and tonal fine-tuning, perfectly crafting the desired atmosphere. Working with them is a worry-free experience — their expert recommendations on music flow and pacing solve every pain point, delivering flawless results every time.",
+        name: "Motion Designer",
+        role: "Motion Design Team",
+        company: "YILE Technology Co., Ltd.",
+        initials: "YL",
+      },
     ],
   },
   contact: {
     title: "Let's make your game sound incredible",
     description:
       "Whether you're developing a new slot title or refreshing an existing game's audio, we'd love to hear about your project. Reach out and let's create something players will remember.",
-    email: "hello@dolcenforte.com",
+    email: "polanmusic2025@gmail.com",
     location: "Taipei, Taiwan — Available worldwide",
     form: {
       name: "Name *",
@@ -427,6 +444,26 @@ const en: Dictionary = {
         testimonial: "This was our most ambitious game and Dolce & Forte delivered audio that matched our vision perfectly. The trailer alone was worth the investment — it stopped people in their tracks at G2E.",
         testimonialAuthor: "David Chen, CEO — Pharaoh Interactive",
       },
+      {
+        client: "Audio Post-Production Showcase",
+        clientRole: "Selected reel demonstrating sound-to-picture workflow, cinematic mixing, and atmospheric design for on-screen content.",
+        genre: "Sound-to-Picture / Mix / Mastering",
+        year: "2025",
+        platform: "Video",
+        duration: "Ongoing",
+        overview: "A short-form audio post-production reel showcasing our approach to sound-to-picture work — layered sound design, dialogue cleanup, music integration, and final mix for picture. The reel distills the same discipline we bring to slot game trailers, promotional content, and live-casino video assets.",
+        challenge: "Post-production audio only works when every element sits in the right pocket — effects should punctuate the picture without stealing the eye, music should carry emotion without burying dialogue, and the final mix must hold up on everything from a flagship TV to a phone speaker on public transit.",
+        approach: "We start by spotting the piece frame-by-frame and tagging every sync point — hits, transitions, and dialogue beats. Sound effects are built in layers (impact + sweetener + tail) for flexibility during the mix. Music is placed and edited to breathe around dialogue. The final mix is printed at broadcast-safe loudness with separate mobile-optimized stems where delivery requires it.",
+        result: "The reel serves as a portable demonstration of our post-production capability for clients evaluating partners for trailer work, promotional videos, and in-game cinematics.",
+        assets: [
+          { label: "Mix Passes", count: "3+" },
+          { label: "Sound Layers", count: "20+" },
+          { label: "Dialogue Cleanup", count: "Full" },
+          { label: "Deliverables", count: "Stereo / Stem" },
+        ],
+        testimonial: "Watch the reel on the right — the mix is the pitch.",
+        testimonialAuthor: "— Dolce & Forte",
+      },
     ],
   },
   pages: {
@@ -496,7 +533,7 @@ const zh: Dictionary = {
     p1: "以古典音樂為根基，結合對互動媒體的熱情，我們創造能與玩家產生共鳴的音效體驗，並提升遊戲品牌形象。每一個聲音都是精心設計——用以強化情緒、輔助機制、讓玩家持續投入。",
     p2: "從第一次轉動到中獎慶祝，我們打造具有整體感的聲音景觀，讓你的遊戲在競爭激烈的市場中脫穎而出。",
     stats: [
-      { value: "5+", label: "iGaming 年資" },
+      { value: "10+", label: "iGaming 年資" },
       { value: "500+", label: "音效素材交付" },
       { value: "10+", label: "合作工作室" },
     ],
@@ -541,6 +578,7 @@ const zh: Dictionary = {
       { type: "老虎機", services: "音樂與音效設計", tags: ["亞洲主題", "管弦樂", "96 組音效"] },
       { type: "真人賭場", services: "音效設計與配音", tags: ["爵士", "極簡", "荷官音效"] },
       { type: "老虎機", services: "全套音效方案", tags: ["電影感", "史詩級", "120+ 素材"] },
+      { type: "後期製作", services: "聲音後期製作", tags: ["聲畫同步", "混音", "母帶後期"] },
     ],
   },
   process: {
@@ -603,13 +641,29 @@ const zh: Dictionary = {
         company: "iGaming 工作室",
         initials: "企劃",
       },
+      {
+        quote:
+          "對 Amber 而言，音樂與音效從來不是單純的「外包任務」，而是賦予產品生命力的靈魂。她總能用最精準的設計，完美整合產品的所有元素，補齊那最關鍵的最後一塊拼圖。強力推薦！",
+        name: "Owen",
+        role: "品牌總監",
+        company: "iGaming 供應商",
+        initials: "O",
+      },
+      {
+        quote:
+          "展現超強專業度！Dolce & Forte 對節奏切換與音色微調的掌握度極佳，完美營造氛圍。與他們合作很放心！團隊對音樂銜接的專業建議完美解決痛點，成品無可挑剔。",
+        name: "動態影像設計師",
+        role: "Motion Design 團隊",
+        company: "翼樂數位科技 YILE",
+        initials: "YL",
+      },
     ],
   },
   contact: {
     title: "讓我們一起打造令人驚艷的遊戲音效",
     description:
       "無論您正在開發新的老虎機遊戲，還是想更新現有遊戲的音效，我們都很樂意了解您的專案。歡迎聯繫，讓我們共同創造玩家難忘的體驗。",
-    email: "hello@dolcenforte.com",
+    email: "polanmusic2025@gmail.com",
     location: "台灣台北 — 服務範圍遍及全球",
     form: {
       name: "姓名 *",
@@ -729,6 +783,26 @@ const zh: Dictionary = {
         ],
         testimonial: "這是我們最具野心的遊戲，Dolce & Forte 交付的音效完美匹配了我們的願景。光是預告片就值回票價——它在 G2E 現場讓人駐足不前。",
         testimonialAuthor: "David Chen，執行長 — Pharaoh Interactive",
+      },
+      {
+        client: "聲音後期製作 精選集",
+        clientRole: "展現聲畫同步工作流程、電影級混音與氛圍設計能力的精選影音作品。",
+        genre: "聲畫同步 / 混音 / 母帶後期",
+        year: "2025",
+        platform: "影音",
+        duration: "持續更新",
+        overview: "一段短篇聲音後期精選集，展示我們處理聲畫同步的方式——堆疊式音效設計、對白修飾、音樂整合，以及最終的畫面定位混音。這段精選濃縮了我們應用於老虎機預告片、宣傳內容與真人賭場影片素材的相同功力。",
+        challenge: "後期製作的音效只有在每個元素都放對位置時才會真正奏效——音效要點綴畫面而不搶鏡、音樂要承載情緒而不埋沒對白、最終混音要能在旗艦電視到公車上的手機喇叭都撐得住。",
+        approach: "我們逐格檢視影片、標記每一個同步點（撞擊、轉場、對白節拍）。音效以分層方式製作（主體 + 點綴 + 尾韻）讓混音階段有更大彈性。音樂擺放與剪輯都刻意讓出對白呼吸空間。最終混音以符合廣播安全音量標準輸出，必要時另外製作行動裝置優化版本。",
+        result: "這段精選作為可攜帶的後期製作能力展示，讓正在評估預告片、宣傳影片與遊戲內過場製作夥伴的客戶能快速看見我們的實力。",
+        assets: [
+          { label: "混音修改次數", count: "3+" },
+          { label: "音層數", count: "20+" },
+          { label: "對白修飾", count: "全面" },
+          { label: "交付格式", count: "Stereo / Stem" },
+        ],
+        testimonial: "往右看這支精選——混音本身就是最好的提案。",
+        testimonialAuthor: "— Dolce & Forte",
       },
     ],
   },

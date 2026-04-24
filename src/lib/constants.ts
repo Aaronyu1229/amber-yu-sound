@@ -35,8 +35,33 @@ export const services = [
   },
 ];
 
-// PLACEHOLDER: Replace image URLs with real game screenshots
-export const portfolioItems = [
+/**
+ * Portfolio items.
+ *
+ * Video options (per item):
+ *   - youtubeId: YouTube video ID (e.g. "YXYg6JrIZJI" from youtu.be/YXYg6JrIZJI)
+ *   - videoSrc:  absolute or /public path to an MP4 hosted by us
+ *
+ * Priority: youtubeId > videoSrc > image (poster fallback only).
+ *
+ * TO ADD GAME DEMO VIDEOS: download from the client's Google Drive
+ * (https://drive.google.com/drive/folders/1EC8riJFeQaiBcGvUJPH0M1mya4oyH9PF)
+ * → upload to /public/videos/<slug>.mp4 → set `videoSrc: "/videos/<slug>.mp4"`.
+ */
+export interface PortfolioItem {
+  slug: string;
+  title: string;
+  type: string;
+  services: string;
+  tags: string[];
+  gradient: string;
+  image: string;
+  heroImage: string;
+  youtubeId?: string;
+  videoSrc?: string;
+}
+
+export const portfolioItems: PortfolioItem[] = [
   {
     slug: "fortune-dynasty",
     title: "Fortune Dynasty",
@@ -46,6 +71,7 @@ export const portfolioItems = [
     gradient: "from-amber-900/40 to-purple-900/40",
     image: "https://images.unsplash.com/photo-1604028296525-8304e1a4969f?w=800&q=80",
     heroImage: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=1600&q=80",
+    // videoSrc: "/videos/fortune-dynasty.mp4", // TODO: upload from client's GDrive
   },
   {
     slug: "midnight-blackjack",
@@ -56,6 +82,7 @@ export const portfolioItems = [
     gradient: "from-purple-900/40 to-indigo-900/40",
     image: "https://images.unsplash.com/photo-1542222780-b06f7307d2c5?w=800&q=80",
     heroImage: "https://images.unsplash.com/photo-1511882150382-421056c89033?w=1600&q=80",
+    // videoSrc: "/videos/midnight-blackjack.mp4", // TODO: upload from client's GDrive
   },
   {
     slug: "golden-pharaoh",
@@ -66,6 +93,18 @@ export const portfolioItems = [
     gradient: "from-amber-900/40 to-yellow-900/40",
     image: "https://images.unsplash.com/photo-1575783402312-883c35cad34b?w=800&q=80",
     heroImage: "https://images.unsplash.com/photo-1553075712-25b66b659833?w=1600&q=80",
+    // videoSrc: "/videos/golden-pharaoh.mp4", // TODO: upload from client's GDrive
+  },
+  {
+    slug: "audio-post-production",
+    title: "Audio Post-Production",
+    type: "POST-PRODUCTION",
+    services: "Audio Post-Production",
+    tags: ["Sound-to-Picture", "Mix", "Mastering"],
+    gradient: "from-indigo-900/40 to-rose-900/40",
+    image: `https://img.youtube.com/vi/YXYg6JrIZJI/maxresdefault.jpg`,
+    heroImage: `https://img.youtube.com/vi/YXYg6JrIZJI/maxresdefault.jpg`,
+    youtubeId: "YXYg6JrIZJI",
   },
 ];
 
@@ -116,7 +155,7 @@ export const tools = [
 ];
 
 export const stats = [
-  { value: "5+", label: "Years in iGaming" },
+  { value: "10+", label: "Years in iGaming" },
   { value: "500+", label: "Audio assets delivered" },
   { value: "10+", label: "Studio partners" },
 ];
