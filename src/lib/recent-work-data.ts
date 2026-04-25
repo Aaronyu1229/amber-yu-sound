@@ -10,39 +10,38 @@ export interface RecentTrack {
   shortLabel: { en: string; zh: string };
 }
 
-// TODO(Dolce & Forte): replace with the 2 BGMs from
-// https://drive.google.com/drive/folders/1g9O6d4CV7JZB05DaI_YuWJY8NYJnT3IT
-// Drop the MP3s into /public/audio/ and update the file paths below.
-// Currently using 2 recent tracks as showcase defaults.
+// Recent Work BGMs sourced from the client's Google Drive folder
+// (1g9O6d4CV7JZB05DaI_YuWJY8NYJnT3IT) — 2 tracks from the upcoming
+// "Crown of Odin" slot title.
 export const recentWorkTracks: RecentTrack[] = [
   {
-    file: "/audio/buffalo-ways-free-game.mp3",
+    file: "/audio/crown-of-odin-main-game.mp3",
     title: {
-      en: "Buffalo Ways — Free Game",
-      zh: "狂野水牛 — Free Game",
+      en: "Crown of Odin — Main Game",
+      zh: "奧丁王冠 — Main Game",
     },
     album: {
       en: "Slot · 2026",
       zh: "老虎機 · 2026",
     },
     shortLabel: {
-      en: "Buffalo Ways",
-      zh: "狂野水牛",
+      en: "Main Game",
+      zh: "Main Game",
     },
   },
   {
-    file: "/audio/treasure-dragon-free-game.mp3",
+    file: "/audio/crown-of-odin-free-game.mp3",
     title: {
-      en: "Treasure Dragon — Free Game",
-      zh: "寶藏龍 — Free Game",
+      en: "Crown of Odin — Free Game",
+      zh: "奧丁王冠 — Free Game",
     },
     album: {
-      en: "Slot · 2025",
-      zh: "老虎機 · 2025",
+      en: "Slot · 2026",
+      zh: "老虎機 · 2026",
     },
     shortLabel: {
-      en: "Treasure Dragon",
-      zh: "寶藏龍",
+      en: "Free Game",
+      zh: "Free Game",
     },
   },
 ];
