@@ -57,7 +57,7 @@ export default function Contact() {
             className="bg-bg2 rounded-2xl p-8 space-y-5"
             onSubmit={(e) => e.preventDefault()}
           >
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="text-xs tracking-[1.5px] uppercase text-ivory/50 block mb-2">
                   {t.contact.form.name}
@@ -94,7 +94,7 @@ export default function Contact() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="text-xs tracking-[1.5px] uppercase text-ivory/50 block mb-2">
                   {t.contact.form.platform}

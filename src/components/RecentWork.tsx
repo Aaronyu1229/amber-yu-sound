@@ -214,9 +214,11 @@ export default function RecentWork() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        {/* Section header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-14">
-          <div>
+        {/* Section header — uses same 5-col grid as content below
+            so that the description aligns with the player card,
+            and the title aligns with the video panel. */}
+        <div className="grid lg:grid-cols-5 gap-6 lg:gap-8 lg:items-end mb-10 md:mb-14">
+          <div className="lg:col-span-3">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -243,7 +245,7 @@ export default function RecentWork() {
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-ivory/60 text-sm max-w-sm leading-relaxed"
+            className="lg:col-span-2 text-ivory/60 text-sm leading-relaxed"
           >
             {locale === "zh"
               ? "近期代表作的主視覺與配樂精華片段，感受我們為遊戲注入的聲音能量。"

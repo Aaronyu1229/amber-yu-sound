@@ -96,14 +96,27 @@ export const portfolioItems: PortfolioItem[] = [
     // videoSrc: "/videos/golden-pharaoh.mp4", // TODO: upload from client's GDrive
   },
   {
+    // 4th game demo placeholder — fill in after downloading from
+    // https://drive.google.com/drive/folders/1EC8riJFeQaiBcGvUJPH0M1mya4oyH9PF
+    slug: "buffalo-ways",
+    title: "Buffalo Ways",
+    type: "SLOT",
+    services: "Music & Sound Design",
+    tags: ["Western", "Driving", "Free Game"],
+    gradient: "from-amber-800/40 to-stone-700/40",
+    image: "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?w=800&q=80",
+    heroImage: "https://images.unsplash.com/photo-1517423568366-8b83523034fd?w=1600&q=80",
+    // videoSrc: "/videos/buffalo-ways.mp4", // TODO: upload from client's GDrive
+  },
+  {
     slug: "audio-post-production",
     title: "Audio Post-Production",
     type: "POST-PRODUCTION",
     services: "Audio Post-Production",
     tags: ["Sound-to-Picture", "Mix", "Mastering"],
     gradient: "from-indigo-900/40 to-rose-900/40",
-    image: `https://img.youtube.com/vi/YXYg6JrIZJI/maxresdefault.jpg`,
-    heroImage: `https://img.youtube.com/vi/YXYg6JrIZJI/maxresdefault.jpg`,
+    image: `https://img.youtube.com/vi/YXYg6JrIZJI/hqdefault.jpg`,
+    heroImage: `https://img.youtube.com/vi/YXYg6JrIZJI/hqdefault.jpg`,
     youtubeId: "YXYg6JrIZJI",
   },
 ];

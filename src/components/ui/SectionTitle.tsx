@@ -14,7 +14,7 @@ export default function SectionTitle({
   if (!highlight) {
     return (
       <h2
-        className={`font-display text-3xl md:text-4xl lg:text-5xl font-medium text-ivory leading-tight ${className}`}
+        className={`font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-ivory leading-tight break-words ${className}`}
       >
         {children}
       </h2>
@@ -24,7 +24,7 @@ export default function SectionTitle({
   const parts = children.split(highlight);
   return (
     <h2
-      className={`font-display text-3xl md:text-4xl lg:text-5xl font-medium text-ivory leading-tight ${className}`}
+      className={`font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-ivory leading-tight break-words ${className}`}
     >
       {parts[0]}
       <span className="text-gold">{highlight}</span>

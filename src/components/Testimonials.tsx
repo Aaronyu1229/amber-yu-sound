@@ -32,7 +32,7 @@ export default function Testimonials() {
         </div>
 
         <div
-          className={`grid gap-6 mx-auto ${
+          className={`grid gap-6 mx-auto items-stretch ${
             t.testimonials.items.length === 1
               ? "max-w-2xl"
               : t.testimonials.items.length === 2
@@ -46,22 +46,22 @@ export default function Testimonials() {
               initial={{ opacity: 0, y: 30 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
-              className="bg-bg rounded-xl p-8 border-l-2 border-gold"
+              className="bg-bg rounded-xl p-8 border-l-2 border-gold flex flex-col h-full"
             >
               <p className="font-display text-lg italic text-ivory/80 leading-relaxed mb-6">
                 &ldquo;{item.quote}&rdquo;
               </p>
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center">
+              <div className="flex items-center gap-4 mt-auto pt-4 border-t border-ivory/5">
+                <div className="w-10 h-10 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center shrink-0">
                   <span className="text-xs font-medium text-gold">
                     {item.initials}
                   </span>
                 </div>
-                <div>
-                  <div className="text-sm font-medium text-ivory">
+                <div className="min-w-0">
+                  <div className="text-sm font-medium text-ivory truncate">
                     {item.name}
                   </div>
-                  <div className="text-sm text-ivory/60">
+                  <div className="text-sm text-ivory/60 truncate">
                     {item.role}, {item.company}
                   </div>
                 </div>

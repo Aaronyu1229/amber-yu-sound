@@ -11,7 +11,7 @@ interface PageBannerProps {
 
 export default function PageBanner({ title, subtitle, backgroundImage }: PageBannerProps) {
   return (
-    <section className="relative pt-28 pb-16 md:pt-32 md:pb-20 overflow-hidden">
+    <section className="relative pt-24 pb-8 md:pt-32 md:pb-20 overflow-hidden">
       {/* Background image */}
       {backgroundImage && (
         <div className="absolute inset-0">
@@ -48,7 +48,7 @@ export default function PageBanner({ title, subtitle, backgroundImage }: PageBan
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="font-display text-4xl md:text-5xl lg:text-6xl font-medium text-ivory leading-tight max-w-3xl"
+          className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-ivory leading-tight max-w-3xl"
         >
           {title}
         </motion.h1>
@@ -56,7 +56,7 @@ export default function PageBanner({ title, subtitle, backgroundImage }: PageBan
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-ivory/50 mt-4 max-w-xl text-base md:text-lg leading-relaxed"
+          className="text-ivory/50 mt-3 md:mt-4 max-w-xl text-sm md:text-lg leading-relaxed"
         >
           {subtitle}
         </motion.p>

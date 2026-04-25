@@ -74,14 +74,14 @@ export default function MusicPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 md:py-28 bg-bg2">
+      <section className="py-16 md:py-28 bg-bg2">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="font-display text-3xl md:text-4xl font-medium text-ivory mb-4"
+            className="font-display text-2xl sm:text-3xl md:text-4xl font-medium text-ivory mb-4 break-words"
           >
             {t.pages.music.cta}
           </motion.h2>
