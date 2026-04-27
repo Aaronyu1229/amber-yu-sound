@@ -170,20 +170,42 @@ export default function RecentWork() {
 
   const switchTrack = (i: number) => {
     if (i === trackIndex) return;
-    setTrackIndex(i);
     const audio = audioRef.current;
     if (!audio) return;
-    audio.src = recentWorkTracks[i].file;
+
+    // Init the analyser graph BEFORE we mess with src — calling
+    // createMediaElementSource after we've started loading a different
+    // src can fail on some browsers.
     ensureAudioGraph();
     if (audioCtxRef.current?.state === "suspended") {
       audioCtxRef.current.resume();
     }
-    audio.play().catch(() => {});
+
+    setTrackIndex(i);
+
+    // Reliable iOS-safe pattern: pause → set src → load → wait for
+    // canplay → play. Without this, switching mid-playback often
+    // leaves the element in a half-loaded state until a page refresh.
+    audio.pause();
+    audio.src = recentWorkTracks[i].file;
+    audio.load();
+
+    const onCanPlay = () => {
+      audio.removeEventListener("canplay", onCanPlay);
+      audio.play().catch(() => {});
+    };
+    audio.addEventListener("canplay", onCanPlay);
   };
 
+  // Set the initial src once on mount. We deliberately DO NOT bind
+  // <audio src=...> in JSX — React would re-set the attribute on every
+  // render and fight our imperative pause/load/play flow during track
+  // switches, leaving the element half-loaded until a page refresh.
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+    if (!audio.src) audio.src = recentWorkTracks[0].file;
+
     const onPlay = () => setPlaying(true);
     const onPause = () => setPlaying(false);
     const onEnded = () => setPlaying(false);
@@ -323,7 +345,6 @@ export default function RecentWork() {
           >
             <audio
               ref={audioRef}
-              src={track.file}
               crossOrigin="anonymous"
               preload="auto"
               playsInline
