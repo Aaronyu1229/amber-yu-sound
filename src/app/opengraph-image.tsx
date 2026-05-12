@@ -41,20 +41,32 @@ export default function Image() {
           >
             Premium Game Audio Studio
           </span>
-          <span
+          {/* Heading rendered as flex row so Satori doesn't collapse the
+              whitespace around the ampersand. */}
+          <div
             style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: 24,
               fontSize: 128,
               lineHeight: 1,
               fontWeight: 700,
               color: "#f7f6f1",
               letterSpacing: "-2px",
-              textAlign: "center",
             }}
           >
-            Dolce <span style={{ color: "#b8860b", fontStyle: "italic" }}>&amp;</span> Forte
-          </span>
-          <span
+            <span>Dolce</span>
+            <span style={{ color: "#b8860b", fontStyle: "italic" }}>&amp;</span>
+            <span>Forte</span>
+          </div>
+          {/* Tagline split into two stacked spans because Satori ignores
+              <br/> inside text nodes. */}
+          <div
             style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 6,
               fontSize: 26,
               color: "rgba(247,246,241,0.7)",
               textAlign: "center",
@@ -63,10 +75,9 @@ export default function Image() {
               marginTop: 12,
             }}
           >
-            Audio that keeps players spinning.
-            <br />
-            Slot games · Live casino · iGaming
-          </span>
+            <span>Audio that keeps players spinning.</span>
+            <span>Slot games · Live casino · iGaming</span>
+          </div>
         </div>
         <div
           style={{
