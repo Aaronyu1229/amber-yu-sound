@@ -107,6 +107,17 @@ export const portfolioItems: PortfolioItem[] = [
     videoSrc: "/videos/golden-sun-aztec.mp4",
   },
   {
+    slug: "lock-key-meow-meow",
+    title: "Lock-Key Meow Meow",
+    type: "SLOT",
+    services: "Music & Sound Design",
+    tags: ["Japanese", "Lucky Cat", "Bonus Mechanics"],
+    gradient: "from-rose-900/50 to-indigo-900/40",
+    image: "/videos/posters/lock-key-meow-meow.jpg",
+    heroImage: "/videos/posters/lock-key-meow-meow.jpg",
+    videoSrc: "/videos/lock-key-meow-meow.mp4",
+  },
+  {
     slug: "audio-post-production",
     title: "Audio Post-Production",
     type: "POST-PRODUCTION",
