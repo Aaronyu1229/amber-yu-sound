@@ -30,9 +30,11 @@ async function resendRequest(
   path: string,
   body?: unknown,
 ): Promise<{ status: number; data: unknown }> {
-  const apiKey = process.env.RESEND_API_KEY;
+  // Use the elevated admin key for domain operations so the sending key
+  // (RESEND_API_KEY, restricted to "Sending access") stays minimal-scope.
+  const apiKey = process.env.RESEND_ADMIN_KEY || process.env.RESEND_API_KEY;
   if (!apiKey) {
-    return { status: 500, data: { error: "RESEND_API_KEY missing on server" } };
+    return { status: 500, data: { error: "RESEND_ADMIN_KEY missing on server" } };
   }
   const res = await fetch(`${RESEND}${path}`, {
     method,
