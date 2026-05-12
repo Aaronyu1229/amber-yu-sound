@@ -45,3 +45,4 @@ next-env.d.ts
 /Game Music_2025/
 # Local working docs
 /資料/
+.env*.local
