@@ -9,6 +9,19 @@
  *   5. Always log the full submission so it survives even if email fails
  *   6. Optionally POST to BACKUP_WEBHOOK_URL (Google Sheet / Discord)
  *
+ * Response payload (always JSON):
+ *   {
+ *     ok: boolean,                    // false ⇔ notify-to-owner failed (502)
+ *     notifyDelivered: boolean,       // did Amber's inbox get the lead?
+ *     autoReplyDelivered: boolean,    // did the visitor get their confirmation?
+ *     error?: string,                 // user-facing error message
+ *     errors?: {                      // detailed per-leg errors for QA
+ *       notify?: string,
+ *       autoReply?: string,
+ *     },
+ *     degraded?: true,                // RESEND_API_KEY missing — submission only logged
+ *   }
+ *
  * Required env (Vercel project settings):
  *   - RESEND_API_KEY            — from resend.com dashboard
  *   - CONTACT_TO_EMAIL          — defaults to polanmusic2025@gmail.com
@@ -197,7 +210,13 @@ export async function POST(request: Request) {
     // Graceful degradation: form still "succeeds" so visitors aren't stranded;
     // owner sees the submission in Vercel function logs until the env var is set.
     console.warn("[contact] RESEND_API_KEY missing — submission logged only");
-    return NextResponse.json({ ok: true, degraded: true });
+    return NextResponse.json({
+      ok: true,
+      degraded: true,
+      notifyDelivered: false,
+      autoReplyDelivered: false,
+      errors: { notify: "RESEND_API_KEY missing", autoReply: "RESEND_API_KEY missing" },
+    });
   }
 
   const resend = new Resend(apiKey);
@@ -205,26 +224,44 @@ export async function POST(request: Request) {
   const from = process.env.CONTACT_FROM_EMAIL || "Dolce & Forte <onboarding@resend.dev>";
   const subject = `[Dolce & Forte] New inquiry from ${clean.name} (${clean.company})`;
 
-  try {
-    // Send the notification first — this is the critical one
-    const notify = await resend.emails.send({
-      from,
-      to: [to],
-      replyTo: clean.email,
-      subject,
-      html: notifyHtml(clean),
-    });
-    if (notify.error) {
-      console.error("[contact] resend notify error:", notify.error);
-      return NextResponse.json(
-        { ok: false, error: "Email delivery failed" },
-        { status: 502 },
-      );
-    }
-
-    // Auto-reply — non-critical, don't fail the request if it errors
+  // Send notify + auto-reply in parallel; track each leg independently so the
+  // response payload tells callers exactly which one failed.
+  type Leg = { delivered: boolean; messageId?: string; error?: string };
+  const safeError = (e: unknown): string => {
+    if (!e) return "unknown error";
+    if (typeof e === "string") return e;
+    if (e instanceof Error) return e.message;
     try {
-      const ack = await resend.emails.send({
+      const obj = e as { message?: string; name?: string };
+      return obj.message || obj.name || JSON.stringify(e);
+    } catch {
+      return "unknown error";
+    }
+  };
+
+  const sendNotify = async (): Promise<Leg> => {
+    try {
+      const res = await resend.emails.send({
+        from,
+        to: [to],
+        replyTo: clean.email,
+        subject,
+        html: notifyHtml(clean),
+      });
+      if (res.error) {
+        console.error("[contact] resend notify error:", res.error);
+        return { delivered: false, error: safeError(res.error) };
+      }
+      return { delivered: true, messageId: res.data?.id };
+    } catch (e) {
+      console.error("[contact] resend notify threw:", e);
+      return { delivered: false, error: safeError(e) };
+    }
+  };
+
+  const sendAutoReply = async (): Promise<Leg> => {
+    try {
+      const res = await resend.emails.send({
         from,
         to: [clean.email],
         subject:
@@ -233,17 +270,44 @@ export async function POST(request: Request) {
             : "We've received your message — Dolce & Forte",
         html: autoReplyHtml(clean),
       });
-      if (ack.error) console.warn("[contact] auto-reply failed:", ack.error);
-    } catch (autoReplyErr) {
-      console.warn("[contact] auto-reply threw:", autoReplyErr);
+      if (res.error) {
+        console.warn("[contact] auto-reply error:", res.error);
+        return { delivered: false, error: safeError(res.error) };
+      }
+      return { delivered: true, messageId: res.data?.id };
+    } catch (e) {
+      console.warn("[contact] auto-reply threw:", e);
+      return { delivered: false, error: safeError(e) };
     }
+  };
 
-    return NextResponse.json({ ok: true });
-  } catch (e) {
-    console.error("[contact] resend threw:", e);
+  const [notify, autoReply] = await Promise.all([sendNotify(), sendAutoReply()]);
+
+  // The notify leg (to Amber) is the business-critical one. If it failed the
+  // submission is effectively lost from the owner's perspective — return 502
+  // so the client surfaces an error and the visitor knows to try again.
+  if (!notify.delivered) {
     return NextResponse.json(
-      { ok: false, error: "Email delivery failed" },
+      {
+        ok: false,
+        notifyDelivered: false,
+        autoReplyDelivered: autoReply.delivered,
+        error: "Email delivery failed",
+        errors: { notify: notify.error, autoReply: autoReply.error },
+      },
       { status: 502 },
     );
   }
+
+  // Notify succeeded. Auto-reply is "nice to have" — we still return 200 so
+  // the user gets a success state, but the payload tells the truth so QA can
+  // distinguish "fully delivered" from "owner-notified-only".
+  return NextResponse.json({
+    ok: true,
+    notifyDelivered: true,
+    autoReplyDelivered: autoReply.delivered,
+    ...(autoReply.delivered
+      ? {}
+      : { errors: { autoReply: autoReply.error } }),
+  });
 }

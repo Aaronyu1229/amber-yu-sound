@@ -65,8 +65,17 @@ export default function Contact() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, locale }),
       });
-      const data = (await res.json().catch(() => ({}))) as { ok?: boolean };
-      if (res.ok && data.ok) {
+      const data = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        notifyDelivered?: boolean;
+        autoReplyDelivered?: boolean;
+        error?: string;
+      };
+      // notifyDelivered is the business-critical signal: if Amber's inbox got
+      // the lead, the submission was a success even if the auto-reply bounced.
+      // The server already returns ok:false / 502 when notify fails, so this
+      // double-check is belt-and-braces.
+      if (res.ok && data.ok && data.notifyDelivered !== false) {
         setStatus("success");
         setForm(initialState);
       } else {
