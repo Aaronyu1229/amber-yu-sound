@@ -349,7 +349,7 @@ const en: Dictionary = {
       submitting: "Sending…",
       successTitle: "Message sent!",
       successBody:
-        "Thanks for reaching out. We've sent a confirmation to your inbox and will respond within 1–2 business days.",
+        "Thanks for reaching out. A confirmation should arrive in your inbox shortly, and we'll respond within 1–2 business days.",
       errorBody:
         "Something went wrong. Please try again, or email us directly at polanmusic2025@gmail.com.",
       namePlaceholder: "Your name",
@@ -414,7 +414,7 @@ const en: Dictionary = {
           { label: "Win Stingers", count: "8" },
         ],
         testimonial: "Watch the demo to feel the mood — the audio carries half the experience.",
-        testimonialAuthor: "— Dolce & Forte",
+        testimonialAuthor: "Dolce & Forte",
       },
       {
         client: "Fortune Tiger Deluxe",
@@ -434,7 +434,7 @@ const en: Dictionary = {
           { label: "Ambience Layers", count: "3" },
         ],
         testimonial: "The festive energy lands every spin — that's what we hired Dolce & Forte for.",
-        testimonialAuthor: "— Studio Producer",
+        testimonialAuthor: "Studio Producer",
       },
       {
         client: "Golden Piggy Megaways",
@@ -454,7 +454,7 @@ const en: Dictionary = {
           { label: "Win Resolutions", count: "10" },
         ],
         testimonial: "Watch the cascade build — that escalation is exactly the player feel we wanted.",
-        testimonialAuthor: "— Studio Producer",
+        testimonialAuthor: "Studio Producer",
       },
       {
         client: "Golden Sun Aztec",
@@ -474,7 +474,7 @@ const en: Dictionary = {
           { label: "Win Stingers", count: "10" },
         ],
         testimonial: "It feels like an Aztec world, not an Aztec costume. That's the difference Dolce & Forte makes.",
-        testimonialAuthor: "— Studio Producer",
+        testimonialAuthor: "Studio Producer",
       },
       {
         client: "Lock-Key Meow Meow",
@@ -494,7 +494,7 @@ const en: Dictionary = {
           { label: "Win Stingers", count: "12" },
         ],
         testimonial: "The three bonus modes feel like the same game and three different games at once. That's exactly the brief.",
-        testimonialAuthor: "— Studio Producer",
+        testimonialAuthor: "Studio Producer",
       },
       {
         client: "Audio Post-Production Showcase",
@@ -514,7 +514,7 @@ const en: Dictionary = {
           { label: "Deliverables", count: "Stereo / Stem" },
         ],
         testimonial: "Watch the reel on the right — the mix is the pitch.",
-        testimonialAuthor: "— Dolce & Forte",
+        testimonialAuthor: "Dolce & Forte",
       },
     ],
   },
@@ -737,7 +737,7 @@ const zh: Dictionary = {
       submitting: "發送中…",
       successTitle: "訊息已送出！",
       successBody:
-        "感謝您的詢問。我們已寄出一封確認信至您的信箱，並會在 1–2 個工作天內回覆。",
+        "感謝您的詢問。確認信稍後會寄到您的信箱，我們會在 1–2 個工作天內回覆。",
       errorBody:
         "傳送時發生問題，請再試一次，或直接寄信給 polanmusic2025@gmail.com。",
       namePlaceholder: "您的姓名",
@@ -802,7 +802,7 @@ const zh: Dictionary = {
           { label: "中獎音效", count: "8" },
         ],
         testimonial: "看那段 demo 就能感受到氛圍——音效本身就承擔了一半的體驗。",
-        testimonialAuthor: "— Dolce & Forte",
+        testimonialAuthor: "Dolce & Forte",
       },
       {
         client: "Fortune Tiger Deluxe 招財虎豪華版",
@@ -822,7 +822,7 @@ const zh: Dictionary = {
           { label: "氛圍音層", count: "3" },
         ],
         testimonial: "節慶能量每次旋轉都到位——這就是我們找 Dolce & Forte 的原因。",
-        testimonialAuthor: "— 工作室製作人",
+        testimonialAuthor: "工作室製作人",
       },
       {
         client: "Golden Piggy Megaways 黃金小豬 Megaways",
@@ -842,7 +842,7 @@ const zh: Dictionary = {
           { label: "中獎結算音", count: "10" },
         ],
         testimonial: "看連鎖堆疊的過程——那個推進感正是我們想要的玩家體驗。",
-        testimonialAuthor: "— 工作室製作人",
+        testimonialAuthor: "工作室製作人",
       },
       {
         client: "Golden Sun Aztec 黃金太陽 阿茲特克",
@@ -862,7 +862,7 @@ const zh: Dictionary = {
           { label: "中獎音效", count: "10" },
         ],
         testimonial: "感覺像個阿茲特克世界，而不是阿茲特克的外殼。這就是 Dolce & Forte 帶來的差別。",
-        testimonialAuthor: "— 工作室製作人",
+        testimonialAuthor: "工作室製作人",
       },
       {
         client: "Lock-Key Meow Meow 招福貓鎖鑰",
@@ -882,7 +882,7 @@ const zh: Dictionary = {
           { label: "中獎音效", count: "12" },
         ],
         testimonial: "三種獎勵模式感覺像同一款遊戲、又像三款不同遊戲。這就是想要的效果。",
-        testimonialAuthor: "— 工作室製作人",
+        testimonialAuthor: "工作室製作人",
       },
       {
         client: "聲音後期製作 精選集",
@@ -902,7 +902,7 @@ const zh: Dictionary = {
           { label: "交付格式", count: "Stereo / Stem" },
         ],
         testimonial: "往右看這支精選——混音本身就是最好的提案。",
-        testimonialAuthor: "— Dolce & Forte",
+        testimonialAuthor: "Dolce & Forte",
       },
     ],
   },
