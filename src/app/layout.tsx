@@ -3,6 +3,7 @@ import "./globals.css";
 import ClientLayout from "@/components/ClientLayout";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://dolcenforte.com"),
   title: "Dolce & Forte — Premium Game Audio Studio",
   description:
     "Audio that keeps players spinning. Slot games · Live casino · iGaming — sound design crafted for retention, immersion, and brand recognition by Dolce & Forte.",
@@ -15,10 +16,14 @@ export const metadata: Metadata = {
     "Game Trailer Audio Production",
     "Freelance Casino Game Audio",
   ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Dolce & Forte — Premium Game Audio Studio",
     description:
       "Audio that keeps players spinning. Slot games · Live casino · iGaming — sound design for retention, immersion, and brand recognition.",
+    url: "/",
     type: "website",
     locale: "en_US",
     siteName: "Dolce & Forte",

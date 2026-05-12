@@ -17,6 +17,13 @@ const LocaleContext = createContext<LocaleCtx>({
   t: dictionaries.en,
 });
 
+// Maps the in-app locale to a BCP-47 lang code for the <html lang> attr.
+// Used by screen readers (a11y) and search engines (hreflang signal).
+const HTML_LANG_BY_LOCALE: Record<Locale, string> = {
+  en: "en",
+  zh: "zh-Hant",
+};
+
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>("en");
 
@@ -24,6 +31,15 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     const saved = localStorage.getItem("locale") as Locale | null;
     if (saved === "en" || saved === "zh") setLocaleState(saved);
   }, []);
+
+  // Keep <html lang> in sync with the active locale so screen readers
+  // announce content with the right phoneme set and Google sees a correct
+  // language signal per page view.
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.lang = HTML_LANG_BY_LOCALE[locale];
+    }
+  }, [locale]);
 
   const setLocale = useCallback((l: Locale) => {
     setLocaleState(l);
