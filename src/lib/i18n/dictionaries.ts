@@ -90,6 +90,10 @@ export interface Dictionary {
       deadline: string;
       details: string;
       submit: string;
+      submitting: string;
+      successTitle: string;
+      successBody: string;
+      errorBody: string;
       namePlaceholder: string;
       companyPlaceholder: string;
       emailPlaceholder: string;
@@ -341,6 +345,12 @@ const en: Dictionary = {
       deadline: "Deadline",
       details: "Project Details",
       submit: "Send Message",
+      submitting: "Sending…",
+      successTitle: "Message sent!",
+      successBody:
+        "Thanks for reaching out. We've sent a confirmation to your inbox and will respond within 1–2 business days.",
+      errorBody:
+        "Something went wrong. Please try again, or email us directly at polanmusic2025@gmail.com.",
       namePlaceholder: "Your name",
       companyPlaceholder: "Studio name",
       emailPlaceholder: "you@studio.com",
@@ -702,6 +712,12 @@ const zh: Dictionary = {
       deadline: "交付期限",
       details: "專案詳情",
       submit: "發送訊息",
+      submitting: "發送中…",
+      successTitle: "訊息已送出！",
+      successBody:
+        "感謝您的詢問。我們已寄出一封確認信至您的信箱，並會在 1–2 個工作天內回覆。",
+      errorBody:
+        "傳送時發生問題，請再試一次，或直接寄信給 polanmusic2025@gmail.com。",
       namePlaceholder: "您的姓名",
       companyPlaceholder: "工作室名稱",
       emailPlaceholder: "you@studio.com",

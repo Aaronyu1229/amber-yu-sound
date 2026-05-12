@@ -1,22 +1,80 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Mail, MapPin } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Mail, MapPin, CheckCircle2, AlertCircle } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLocale } from "@/lib/i18n";
 import SectionTitle from "./ui/SectionTitle";
 import Button from "./ui/Button";
 
+type Status = "idle" | "submitting" | "success" | "error";
+
+interface FormState {
+  name: string;
+  company: string;
+  email: string;
+  platform: string;
+  gameType: string;
+  audioNeeds: string[];
+  deadline: string;
+  details: string;
+  /** Honeypot — must remain empty. Real users never see this field. */
+  website: string;
+}
+
+const initialState: FormState = {
+  name: "",
+  company: "",
+  email: "",
+  platform: "",
+  gameType: "",
+  audioNeeds: [],
+  deadline: "",
+  details: "",
+  website: "",
+};
+
 export default function Contact() {
   const { ref, isVisible } = useScrollReveal();
-  const { t } = useLocale();
-  const [audioNeeds, setAudioNeeds] = useState<string[]>([]);
+  const { t, locale } = useLocale();
+  const [form, setForm] = useState<FormState>(initialState);
+  const [status, setStatus] = useState<Status>("idle");
+
+  const update = <K extends keyof FormState>(key: K, value: FormState[K]) => {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  };
 
   const toggleAudioNeed = (opt: string) => {
-    setAudioNeeds((prev) =>
-      prev.includes(opt) ? prev.filter((o) => o !== opt) : [...prev, opt]
-    );
+    setForm((prev) => ({
+      ...prev,
+      audioNeeds: prev.audioNeeds.includes(opt)
+        ? prev.audioNeeds.filter((o) => o !== opt)
+        : [...prev.audioNeeds, opt],
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (status === "submitting") return;
+    setStatus("submitting");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, locale }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean };
+      if (res.ok && data.ok) {
+        setStatus("success");
+        setForm(initialState);
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -29,7 +87,9 @@ export default function Contact() {
           className="flex flex-col gap-6"
         >
           <SectionTitle>{t.contact.title}</SectionTitle>
-          <p className="text-ivory/60 leading-relaxed">{t.contact.description}</p>
+          <p className="text-ivory/60 leading-relaxed">
+            {t.contact.description}
+          </p>
 
           <div className="flex flex-col gap-4 pt-4">
             <div className="flex items-center gap-3">
@@ -43,7 +103,9 @@ export default function Contact() {
             </div>
             <div className="flex items-center gap-3">
               <MapPin size={16} className="text-gold" />
-              <span className="text-sm text-ivory/80">{t.contact.location}</span>
+              <span className="text-sm text-ivory/80">
+                {t.contact.location}
+              </span>
             </div>
           </div>
         </motion.div>
@@ -54,9 +116,36 @@ export default function Contact() {
           transition={{ duration: 0.6, delay: 0.15 }}
         >
           <form
-            className="bg-bg2 rounded-2xl p-8 space-y-5"
-            onSubmit={(e) => e.preventDefault()}
+            className="bg-bg2 rounded-2xl p-8 space-y-5 relative"
+            onSubmit={handleSubmit}
+            noValidate
           >
+            {/* Honeypot — visually + accessibly hidden, but bots will fill it.
+                Submissions where this field is non-empty are silently dropped
+                by the server. */}
+            <div
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                left: "-10000px",
+                top: "auto",
+                width: 1,
+                height: 1,
+                overflow: "hidden",
+              }}
+            >
+              <label>
+                Website
+                <input
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={form.website}
+                  onChange={(e) => update("website", e.target.value)}
+                />
+              </label>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="text-xs tracking-[1.5px] uppercase text-ivory/50 block mb-2">
@@ -65,6 +154,8 @@ export default function Contact() {
                 <input
                   type="text"
                   required
+                  value={form.name}
+                  onChange={(e) => update("name", e.target.value)}
                   className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-muted/50 focus:border-gold focus:outline-none transition-colors"
                   placeholder={t.contact.form.namePlaceholder}
                 />
@@ -76,6 +167,8 @@ export default function Contact() {
                 <input
                   type="text"
                   required
+                  value={form.company}
+                  onChange={(e) => update("company", e.target.value)}
                   className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-muted/50 focus:border-gold focus:outline-none transition-colors"
                   placeholder={t.contact.form.companyPlaceholder}
                 />
@@ -89,6 +182,8 @@ export default function Contact() {
               <input
                 type="email"
                 required
+                value={form.email}
+                onChange={(e) => update("email", e.target.value)}
                 className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-muted/50 focus:border-gold focus:outline-none transition-colors"
                 placeholder={t.contact.form.emailPlaceholder}
               />
@@ -99,10 +194,18 @@ export default function Contact() {
                 <label className="text-xs tracking-[1.5px] uppercase text-ivory/50 block mb-2">
                   {t.contact.form.platform}
                 </label>
-                <select className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory focus:border-gold focus:outline-none transition-colors appearance-none">
-                  <option value="">{t.contact.form.platformPlaceholder}</option>
+                <select
+                  value={form.platform}
+                  onChange={(e) => update("platform", e.target.value)}
+                  className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory focus:border-gold focus:outline-none transition-colors appearance-none"
+                >
+                  <option value="">
+                    {t.contact.form.platformPlaceholder}
+                  </option>
                   {t.contact.form.platformOptions.map((opt) => (
-                    <option key={opt} value={opt}>{opt}</option>
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -110,10 +213,18 @@ export default function Contact() {
                 <label className="text-xs tracking-[1.5px] uppercase text-ivory/50 block mb-2">
                   {t.contact.form.gameType}
                 </label>
-                <select className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory focus:border-gold focus:outline-none transition-colors appearance-none">
-                  <option value="">{t.contact.form.gameTypePlaceholder}</option>
+                <select
+                  value={form.gameType}
+                  onChange={(e) => update("gameType", e.target.value)}
+                  className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory focus:border-gold focus:outline-none transition-colors appearance-none"
+                >
+                  <option value="">
+                    {t.contact.form.gameTypePlaceholder}
+                  </option>
                   {t.contact.form.gameTypeOptions.map((opt) => (
-                    <option key={opt} value={opt}>{opt}</option>
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -128,7 +239,7 @@ export default function Contact() {
               </label>
               <div className="flex flex-wrap gap-2">
                 {t.contact.form.audioNeedsOptions.map((opt) => {
-                  const active = audioNeeds.includes(opt);
+                  const active = form.audioNeeds.includes(opt);
                   return (
                     <button
                       type="button"
@@ -153,6 +264,8 @@ export default function Contact() {
               </label>
               <input
                 type="date"
+                value={form.deadline}
+                onChange={(e) => update("deadline", e.target.value)}
                 className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory focus:border-gold focus:outline-none transition-colors"
               />
             </div>
@@ -163,14 +276,69 @@ export default function Contact() {
               </label>
               <textarea
                 rows={4}
+                value={form.details}
+                onChange={(e) => update("details", e.target.value)}
                 className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory placeholder:text-muted/50 focus:border-gold focus:outline-none transition-colors resize-none"
                 placeholder={t.contact.form.detailsPlaceholder}
               />
             </div>
 
-            <Button variant="primary" type="submit" className="w-full">
-              {t.contact.form.submit}
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={status === "submitting"}
+              className="w-full"
+            >
+              {status === "submitting"
+                ? t.contact.form.submitting
+                : t.contact.form.submit}
             </Button>
+
+            <AnimatePresence mode="wait">
+              {status === "success" && (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  className="flex gap-3 items-start rounded-lg bg-emerald-500/10 border border-emerald-500/30 p-4"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <CheckCircle2
+                    size={18}
+                    className="text-emerald-400 shrink-0 mt-0.5"
+                  />
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-emerald-300">
+                      {t.contact.form.successTitle}
+                    </p>
+                    <p className="text-xs text-emerald-200/80 leading-relaxed mt-1">
+                      {t.contact.form.successBody}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+              {status === "error" && (
+                <motion.div
+                  key="error"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  className="flex gap-3 items-start rounded-lg bg-rose-500/10 border border-rose-500/30 p-4"
+                  role="alert"
+                  aria-live="assertive"
+                >
+                  <AlertCircle
+                    size={18}
+                    className="text-rose-400 shrink-0 mt-0.5"
+                  />
+                  <p className="text-xs text-rose-200/90 leading-relaxed">
+                    {t.contact.form.errorBody}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </form>
         </motion.div>
       </div>

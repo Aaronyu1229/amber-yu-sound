@@ -8,6 +8,7 @@ interface ButtonProps {
   href?: string;
   className?: string;
   type?: "button" | "submit";
+  disabled?: boolean;
 }
 
 export default function Button({
@@ -16,9 +17,10 @@ export default function Button({
   href,
   className = "",
   type = "button",
+  disabled = false,
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center gap-2 px-7 py-3.5 text-xs font-medium tracking-[2px] uppercase rounded transition-all duration-300 cursor-pointer";
+    "inline-flex items-center justify-center gap-2 px-7 py-3.5 text-xs font-medium tracking-[2px] uppercase rounded transition-all duration-300";
 
   const variants = {
     primary:
@@ -27,7 +29,11 @@ export default function Button({
       "border border-purple text-purple hover:bg-purple-dim hover:-translate-y-0.5 hover:border-purple/60",
   };
 
-  const cls = `${base} ${variants[variant]} ${className}`;
+  const cursor = disabled
+    ? "cursor-not-allowed opacity-60 pointer-events-none"
+    : "cursor-pointer";
+
+  const cls = `${base} ${variants[variant]} ${cursor} ${className}`;
 
   if (href) {
     return (
@@ -38,7 +44,7 @@ export default function Button({
   }
 
   return (
-    <button type={type} className={cls}>
+    <button type={type} disabled={disabled} className={cls}>
       {children}
     </button>
   );
