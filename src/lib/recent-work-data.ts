@@ -45,19 +45,3 @@ export const recentWorkTracks: RecentTrack[] = [
     },
   },
 ];
-
-// TODO(Dolce & Forte): paste the Winning Panel video here when the client
-// approves release. Upload the MP4 to /public/videos/ and set `src`.
-// Leave `src` empty to show the "coming soon" placeholder.
-export const recentWorkVideo: {
-  src: string;
-  poster?: string;
-  label: { en: string; zh: string };
-} = {
-  src: "", // e.g. "/videos/winning-panel.mp4"
-  poster: undefined,
-  label: {
-    en: "Winning Panel",
-    zh: "遊戲主視覺",
-  },
-};

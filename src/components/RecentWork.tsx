@@ -2,16 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Play, Pause, Film } from "lucide-react";
+import { Play, Pause } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLocale } from "@/lib/i18n";
 import SectionTag from "./ui/SectionTag";
 import SectionTitle from "./ui/SectionTitle";
-import {
-  recentWorkTracks,
-  recentWorkVideo,
-  type RecentTrack,
-} from "@/lib/recent-work-data";
+import { recentWorkTracks, type RecentTrack } from "@/lib/recent-work-data";
 
 /**
  * Live-reactive waveform canvas — draws real-time frequency data from the
@@ -115,20 +111,17 @@ function LiveWaveform({
 
 export default function RecentWork() {
   const { ref, isVisible } = useScrollReveal();
-  const { t, locale } = useLocale();
+  const { locale } = useLocale();
 
   const [trackIndex, setTrackIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
-  const [videoPlaying, setVideoPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
   const [analyserReady, setAnalyserReady] = useState(false);
 
   const track: RecentTrack = recentWorkTracks[trackIndex];
-  const hasVideo = Boolean(recentWorkVideo.src);
 
   // Set up audio graph on first interaction (autoplay policies require gesture)
   const ensureAudioGraph = () => {
@@ -219,14 +212,6 @@ export default function RecentWork() {
     };
   }, []);
 
-  const playVideo = () => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.play()
-      .then(() => setVideoPlaying(true))
-      .catch(() => {});
-  };
-
   return (
     <section className="py-20 md:py-24 relative overflow-hidden" ref={ref}>
       {/* Subtle background accents */}
@@ -235,176 +220,111 @@ export default function RecentWork() {
         <div className="absolute bottom-1/4 -right-40 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[160px]" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
-        {/* Section header — uses same 5-col grid as content below
-            so that the description aligns with the player card,
-            and the title aligns with the video panel. */}
-        <div className="grid lg:grid-cols-5 gap-6 lg:gap-8 lg:items-end mb-10 md:mb-14">
-          <div className="lg:col-span-3">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
-            >
-              <SectionTag>
-                {locale === "zh" ? "最新作品" : "Recent Work"}
-              </SectionTag>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="mt-4"
-            >
-              <SectionTitle>
-                {locale === "zh"
-                  ? "看得到、也聽得到的實力"
-                  : "See it. Hear it. Feel it."}
-              </SectionTitle>
-            </motion.div>
-          </div>
+      <div className="relative z-10 max-w-3xl mx-auto px-6">
+        {/* Section header — centered above the single player card */}
+        <div className="text-center mb-10 md:mb-14">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="flex justify-center"
+          >
+            <SectionTag>
+              {locale === "zh" ? "最新作品" : "Recent Work"}
+            </SectionTag>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mt-4"
+          >
+            <SectionTitle>
+              {locale === "zh"
+                ? "聽得到的實力"
+                : "Hear it. Feel it."}
+            </SectionTitle>
+          </motion.div>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-2 text-ivory/60 text-sm leading-relaxed"
+            className="mt-4 text-ivory/60 text-sm leading-relaxed max-w-xl mx-auto"
           >
             {locale === "zh"
-              ? "近期代表作的主視覺與配樂精華片段，感受我們為遊戲注入的聲音能量。"
-              : "A taste of our recent work — game visuals paired with BGM highlights. Hit play and feel the energy we bring to every title."}
+              ? "近期代表作的配樂精華片段，感受我們為遊戲注入的聲音能量。"
+              : "A taste of our recent work — BGM highlights from the latest titles. Hit play and feel the energy we bring to every game."}
           </motion.p>
         </div>
 
-        {/* Main grid: video + player */}
-        <div className="grid lg:grid-cols-5 gap-6 lg:gap-8">
-          {/* Video panel (3/5) */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="lg:col-span-3 relative aspect-video rounded-2xl overflow-hidden border border-ivory/10 bg-gradient-to-br from-amber-950/40 via-bg2 to-purple-950/40"
-          >
-            {hasVideo ? (
-              <>
-                <video
-                  ref={videoRef}
-                  src={recentWorkVideo.src}
-                  poster={recentWorkVideo.poster}
-                  playsInline
-                  className="absolute inset-0 w-full h-full object-cover"
-                  onPlay={() => setVideoPlaying(true)}
-                  onPause={() => setVideoPlaying(false)}
-                  onEnded={() => setVideoPlaying(false)}
-                  controls={videoPlaying}
-                />
-                {!videoPlaying && (
-                  <button
-                    onClick={playVideo}
-                    className="absolute inset-0 flex items-center justify-center group cursor-pointer"
-                    aria-label="Play video"
-                  >
-                    <div className="absolute inset-0 bg-bg/40 group-hover:bg-bg/30 transition-colors" />
-                    <div className="relative w-20 h-20 rounded-full bg-gold/15 border border-gold/40 flex items-center justify-center group-hover:bg-gold/25 group-hover:scale-105 transition-all">
-                      <Play size={24} className="text-gold ml-1" />
-                    </div>
-                  </button>
-                )}
-                <div className="absolute top-4 left-4 text-[10px] tracking-[3px] uppercase bg-bg/70 backdrop-blur-sm px-3 py-1 rounded-full text-gold z-10">
-                  {recentWorkVideo.label[locale]}
-                </div>
-              </>
-            ) : (
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-                {/* Placeholder when video not yet available */}
-                <div className="absolute inset-0 opacity-[0.08]">
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(212,175,55,0.25)_0%,transparent_60%)]" />
-                </div>
-                <div className="relative w-14 h-14 rounded-2xl bg-gold/10 border border-gold/25 flex items-center justify-center mb-5">
-                  <Film size={22} className="text-gold" />
-                </div>
-                <p className="relative text-ivory font-medium text-base mb-1">
-                  {locale === "zh"
-                    ? "遊戲主視覺影片即將上線"
-                    : "Game trailer coming soon"}
-                </p>
-                <p className="relative text-ivory/45 text-xs max-w-xs">
-                  {locale === "zh"
-                    ? "Winning Panel 表演影片客戶放行中。"
-                    : "Winning Panel performance video awaiting client approval."}
-                </p>
-              </div>
-            )}
-          </motion.div>
+        {/* Audio player card */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="relative rounded-2xl border border-ivory/10 bg-bg2/80 backdrop-blur-sm p-6 md:p-8 flex flex-col"
+        >
+          <audio
+            ref={audioRef}
+            crossOrigin="anonymous"
+            preload="auto"
+            playsInline
+          />
 
-          {/* Audio player panel (2/5) */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="lg:col-span-2 relative rounded-2xl border border-ivory/10 bg-bg2/80 backdrop-blur-sm p-6 md:p-7 flex flex-col"
-          >
-            <audio
-              ref={audioRef}
-              crossOrigin="anonymous"
-              preload="auto"
-              playsInline
+          {/* Track meta */}
+          <div className="mb-5">
+            <p className="text-[10px] tracking-[3px] uppercase text-purple mb-2">
+              {locale === "zh" ? "BGM 精華片段" : "BGM Highlight"}
+            </p>
+            <h3 className="font-display text-2xl md:text-3xl text-ivory leading-tight">
+              {track.title[locale]}
+            </h3>
+            <p className="text-sm text-ivory/50 mt-1">
+              {track.album[locale]}
+            </p>
+          </div>
+
+          {/* Waveform canvas */}
+          <div className="min-h-[160px] md:min-h-[200px] rounded-xl bg-bg/60 border border-ivory/5 overflow-hidden mb-6">
+            <LiveWaveform
+              analyser={analyserReady ? analyserRef.current : null}
+              playing={playing}
             />
+          </div>
 
-            {/* Track meta */}
-            <div className="mb-4">
-              <p className="text-[10px] tracking-[3px] uppercase text-purple mb-2">
-                {locale === "zh" ? "BGM 精華片段" : "BGM Highlight"}
-              </p>
-              <h3 className="font-display text-2xl text-ivory leading-tight">
-                {track.title[locale]}
-              </h3>
-              <p className="text-sm text-ivory/50 mt-1">
-                {track.album[locale]}
-              </p>
+          {/* Controls */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={togglePlay}
+              aria-label={playing ? "Pause" : "Play"}
+              className="w-12 h-12 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center hover:bg-gold/30 transition-colors cursor-pointer shrink-0"
+            >
+              {playing ? (
+                <Pause size={16} className="text-gold" />
+              ) : (
+                <Play size={16} className="text-gold ml-0.5" />
+              )}
+            </button>
+            <div className="flex-1 flex gap-2">
+              {recentWorkTracks.map((tr, i) => {
+                const active = i === trackIndex;
+                return (
+                  <button
+                    key={tr.file}
+                    onClick={() => switchTrack(i)}
+                    className={`flex-1 min-w-0 px-3 py-2.5 rounded-lg border text-xs font-medium transition-colors cursor-pointer text-left truncate ${
+                      active
+                        ? "bg-gold/12 border-gold/35 text-gold"
+                        : "bg-bg/40 border-ivory/10 text-ivory/55 hover:text-ivory hover:border-ivory/25"
+                    }`}
+                  >
+                    {tr.shortLabel[locale]}
+                  </button>
+                );
+              })}
             </div>
-
-            {/* Waveform canvas — grows to fill */}
-            <div className="flex-1 min-h-[140px] md:min-h-[160px] rounded-xl bg-bg/60 border border-ivory/5 overflow-hidden mb-5">
-              <LiveWaveform
-                analyser={analyserReady ? analyserRef.current : null}
-                playing={playing}
-              />
-            </div>
-
-            {/* Controls */}
-            <div className="flex items-center gap-4">
-              <button
-                onClick={togglePlay}
-                aria-label={playing ? "Pause" : "Play"}
-                className="w-12 h-12 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center hover:bg-gold/30 transition-colors cursor-pointer shrink-0"
-              >
-                {playing ? (
-                  <Pause size={16} className="text-gold" />
-                ) : (
-                  <Play size={16} className="text-gold ml-0.5" />
-                )}
-              </button>
-              <div className="flex-1 flex gap-2">
-                {recentWorkTracks.map((tr, i) => {
-                  const active = i === trackIndex;
-                  return (
-                    <button
-                      key={tr.file}
-                      onClick={() => switchTrack(i)}
-                      className={`flex-1 min-w-0 px-3 py-2.5 rounded-lg border text-xs font-medium transition-colors cursor-pointer text-left truncate ${
-                        active
-                          ? "bg-gold/12 border-gold/35 text-gold"
-                          : "bg-bg/40 border-ivory/10 text-ivory/55 hover:text-ivory hover:border-ivory/25"
-                      }`}
-                    >
-                      {tr.shortLabel[locale]}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
