@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLocale } from "@/lib/i18n";
-import { insights } from "@/lib/insights-data";
+import type { Insight } from "@/lib/insights-data";
 
 function formatDate(iso: string, locale: string): string {
   const d = new Date(iso);
@@ -20,7 +20,7 @@ function formatDate(iso: string, locale: string): string {
   });
 }
 
-export default function InsightsList() {
+export default function InsightsList({ insights }: { insights: Insight[] }) {
   const { ref, isVisible } = useScrollReveal();
   const { t, locale } = useLocale();
 
