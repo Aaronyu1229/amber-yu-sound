@@ -275,7 +275,17 @@ export default function Contact() {
                 type="date"
                 value={form.deadline}
                 onChange={(e) => update("deadline", e.target.value)}
-                className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory focus:border-gold focus:outline-none transition-colors"
+                onClick={(e) => {
+                  // Native date inputs only open the calendar when the
+                  // (small) indicator is clicked. Open it from anywhere
+                  // on the field for a normal click affordance.
+                  try {
+                    e.currentTarget.showPicker();
+                  } catch {
+                    /* showPicker unsupported or blocked — ignore */
+                  }
+                }}
+                className="w-full bg-bg border border-ivory/10 rounded-lg px-4 py-3 text-sm text-ivory focus:border-gold focus:outline-none transition-colors cursor-pointer"
               />
             </div>
 
