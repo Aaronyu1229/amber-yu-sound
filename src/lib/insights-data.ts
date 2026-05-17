@@ -6,7 +6,8 @@ export type InsightSection =
   | { kind: "h2"; text: string }
   | { kind: "h3"; text: string }
   | { kind: "ul"; items: string[] }
-  | { kind: "quote"; text: string };
+  | { kind: "quote"; text: string }
+  | { kind: "image"; url: string; alt: string; caption?: string };
 
 export interface InsightBody {
   title: string;
