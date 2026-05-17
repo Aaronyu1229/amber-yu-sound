@@ -1,9 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { createSupabaseBrowser } from "@/lib/supabase/browser";
 
-export default function AdminLoginPage() {
+const LINK_ERRORS: Record<string, string> = {
+  link_expired: "That sign-in link has expired. Request a new one below.",
+  missing_code: "That sign-in link was invalid. Request a new one below.",
+};
+
+function LoginForm() {
+  const params = useSearchParams();
+  const linkError = LINK_ERRORS[params.get("error") ?? ""] ?? null;
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,6 +37,9 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center px-6">
       <div className="w-full max-w-sm bg-bg2 rounded-2xl p-8">
         <h1 className="font-display text-2xl text-ivory mb-2">Admin</h1>
+        {linkError && !sent && (
+          <p className="text-xs text-rose-400 mb-4">{linkError}</p>
+        )}
         {sent ? (
           <p className="text-sm text-ivory/70 leading-relaxed">
             Check your email for a sign-in link.
@@ -55,5 +66,13 @@ export default function AdminLoginPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   );
 }

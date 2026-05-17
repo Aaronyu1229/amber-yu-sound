@@ -5,10 +5,21 @@ import { isAdminEmail } from "@/lib/admin/allowlist";
 /**
  * Refreshes the Supabase session and enforces the admin allowlist for
  * /admin routes (except the login + auth-callback paths). Also exposes
- * the request path via the `x-pathname` header for server components.
+ * the *real* request path to server components via a rewritten
+ * `x-pathname` request header — any client-supplied `x-pathname` is
+ * stripped first so the value the admin layout reads cannot be spoofed.
  */
 export async function updateSessionAndGuard(request: NextRequest) {
-  let response = NextResponse.next({ request });
+  const path = request.nextUrl.pathname;
+
+  // Trustworthy request headers: drop any client-injected x-pathname,
+  // then set the proxy-derived one. Server components read this via
+  // next/headers (request headers), not response headers.
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.delete("x-pathname");
+  requestHeaders.set("x-pathname", path);
+
+  let response = NextResponse.next({ request: { headers: requestHeaders } });
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -28,7 +39,9 @@ export async function updateSessionAndGuard(request: NextRequest) {
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value),
           );
-          response = NextResponse.next({ request });
+          response = NextResponse.next({
+            request: { headers: requestHeaders },
+          });
           cookiesToSet.forEach(({ name, value, options }) =>
             response.cookies.set(name, value, options),
           );
@@ -41,7 +54,6 @@ export async function updateSessionAndGuard(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const path = request.nextUrl.pathname;
   const isPublicAdminPath =
     path === "/admin/login" || path.startsWith("/admin/auth/");
 
@@ -55,6 +67,5 @@ export async function updateSessionAndGuard(request: NextRequest) {
     }
   }
 
-  response.headers.set("x-pathname", path);
   return response;
 }

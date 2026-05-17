@@ -7,7 +7,16 @@ export async function GET(request: NextRequest) {
 
   if (code) {
     const supabase = await createSupabaseServer();
-    await supabase.auth.exchangeCodeForSession(code);
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (error) {
+      return NextResponse.redirect(
+        `${origin}/admin/login?error=link_expired`,
+      );
+    }
+  } else {
+    return NextResponse.redirect(
+      `${origin}/admin/login?error=missing_code`,
+    );
   }
   // Only ever redirect to an internal path (no open redirect).
   return NextResponse.redirect(`${origin}/admin`);

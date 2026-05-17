@@ -35,8 +35,8 @@ async function requireAdmin() {
   return supabase;
 }
 
-function assertSlug(slug: string) {
-  if (!/^[a-z0-9-]+$/.test(slug)) throw new Error("Invalid slug");
+function isValidSlug(slug: string): boolean {
+  return /^[a-z0-9-]+$/.test(slug);
 }
 
 function bodyComplete(b: InsightBody): boolean {
@@ -49,7 +49,13 @@ function bodyComplete(b: InsightBody): boolean {
 
 export async function saveArticle(input: ArticleInput) {
   const supabase = await requireAdmin();
-  assertSlug(input.slug);
+  if (!isValidSlug(input.slug)) {
+    return {
+      ok: false as const,
+      error:
+        "A slug is required (lowercase letters, numbers, hyphens). Add an English title or set the slug manually.",
+    };
+  }
 
   if (
     input.status === "published" &&
