@@ -19,12 +19,20 @@ export default function ImageUpload({
     if (!file) return;
     setBusy(true);
     setError(null);
-    const fd = new FormData();
-    fd.set("file", file);
-    const res = await uploadImage(fd);
-    setBusy(false);
-    if (res.ok) onChange(res.url);
-    else setError(res.error);
+    try {
+      const fd = new FormData();
+      fd.set("file", file);
+      const res = await uploadImage(fd);
+      if (res.ok) onChange(res.url);
+      else setError(res.error);
+    } catch {
+      setError(
+        "Upload failed — the file may be too large or your session expired. Try a smaller image or sign in again.",
+      );
+    } finally {
+      setBusy(false);
+      e.target.value = "";
+    }
   }
 
   return (

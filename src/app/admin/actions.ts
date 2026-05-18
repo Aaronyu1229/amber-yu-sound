@@ -114,7 +114,15 @@ const ALLOWED = ["image/jpeg", "image/png", "image/webp"];
 const MAX_BYTES = 5 * 1024 * 1024;
 
 export async function uploadImage(formData: FormData) {
-  const supabase = await requireAdmin();
+  let supabase;
+  try {
+    supabase = await requireAdmin();
+  } catch {
+    return {
+      ok: false as const,
+      error: "Your session expired. Sign out and sign in again.",
+    };
+  }
   const file = formData.get("file");
   if (!(file instanceof File)) return { ok: false as const, error: "No file" };
   if (!ALLOWED.includes(file.type))
