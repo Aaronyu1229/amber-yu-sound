@@ -708,7 +708,7 @@ const zh: Dictionary = {
           "展現超強專業度！Dolce & Forte 對節奏切換與音色微調的掌握度極佳，完美營造氛圍。與他們合作很放心！團隊對音樂銜接的專業建議完美解決痛點，成品無可挑剔。",
         name: "動態影像設計師",
         role: "Motion Design 團隊",
-        company: "奕樂科技股份有限公司",
+        company: "弈樂科技股份有限公司",
         initials: "YL",
       },
     ],
