@@ -9,6 +9,13 @@ export interface GameAlbum {
   category: "slot" | "brand";
   gradient: string;
   tracks: Track[];
+  /**
+   * When true, the album is excluded from the /music catalogue grid and
+   * tab counts. It still lives in `musicLibrary` so anything that
+   * references it by index (e.g. the homepage Recent Work showcase)
+   * keeps working.
+   */
+  hideFromCatalog?: boolean;
 }
 
 // Each album gets a unique gradient for its showcase card
@@ -201,5 +208,8 @@ export const musicLibrary: GameAlbum[] = [
       { title: "Main Game", file: "/audio/crown-of-odin-main-game.mp3" },
       { title: "Free Game", file: "/audio/crown-of-odin-free-game.mp3" },
     ],
+    // Featured on the homepage Recent Work card only; not yet released
+    // for the full /music catalogue.
+    hideFromCatalog: true,
   },
 ];

@@ -209,12 +209,16 @@ export default function MusicPlayer() {
   const { activeTrack, isPlaying, playTrack } = useAudioPlayer();
   const [filter, setFilter] = useState<"all" | "slot" | "brand">("all");
 
-  const filtered = musicLibrary.filter(
+  // Albums flagged hideFromCatalog (e.g. the homepage Recent Work
+  // showcase) are kept in musicLibrary so the homepage can index into
+  // them, but they don't appear in the public catalogue grid or counts.
+  const visible = musicLibrary.filter((a) => !a.hideFromCatalog);
+  const filtered = visible.filter(
     (a) => filter === "all" || a.category === filter
   );
 
-  const slotCount = musicLibrary.filter((a) => a.category === "slot").length;
-  const brandCount = musicLibrary.filter((a) => a.category === "brand").length;
+  const slotCount = visible.filter((a) => a.category === "slot").length;
+  const brandCount = visible.filter((a) => a.category === "brand").length;
 
   return (
     <div className="space-y-8 pb-32">
@@ -225,7 +229,7 @@ export default function MusicPlayer() {
             {
               key: "all",
               label: locale === "zh" ? "全部" : "All",
-              count: musicLibrary.length,
+              count: visible.length,
             },
             {
               key: "slot",
