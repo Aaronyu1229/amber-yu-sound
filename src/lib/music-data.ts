@@ -192,4 +192,14 @@ export const musicLibrary: GameAlbum[] = [
       { title: "AI Virtual Voice", file: "/audio/game-brand-theme-music-金鑫-ai-virtual-voice.mp3" },
     ],
   },
+  {
+    game: "Crown of Odin",
+    gameZh: "奧丁王冠",
+    category: "slot",
+    gradient: "from-amber-700/30 to-purple-700/20",
+    tracks: [
+      { title: "Main Game", file: "/audio/crown-of-odin-main-game.mp3" },
+      { title: "Free Game", file: "/audio/crown-of-odin-free-game.mp3" },
+    ],
+  },
 ];

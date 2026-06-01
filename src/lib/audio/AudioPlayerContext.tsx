@@ -35,7 +35,11 @@ interface AudioPlayerContextValue {
   duration: number;
   muted: boolean;
   volume: number; // 0–1
-  playTrack: (albumIndex: number, trackIndex: number) => void;
+  playTrack: (
+    albumIndex: number,
+    trackIndex: number,
+    options?: { stopAtAlbumEnd?: boolean },
+  ) => void;
   togglePlay: () => void;
   playNext: () => void;
   playPrev: () => void;
@@ -63,6 +67,11 @@ export function AudioPlayerProvider({
 }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const activeTrackRef = useRef<ActiveTrack | null>(null);
+  // When set to an album index, end-of-album auto-advance stops at that
+  // album's last track instead of crossing into the next album. Used by
+  // the homepage Recent Work showcase so its 2-track set doesn't chain
+  // into the full music catalogue.
+  const stopAtAlbumEndRef = useRef<number | null>(null);
 
   const [activeTrack, setActiveTrack] = useState<ActiveTrack | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -98,14 +107,19 @@ export function AudioPlayerProvider({
   );
 
   const playTrack = useCallback(
-    (albumIndex: number, trackIndex: number) => {
+    (
+      albumIndex: number,
+      trackIndex: number,
+      options?: { stopAtAlbumEnd?: boolean },
+    ) => {
       const current = activeTrackRef.current;
       if (
         current &&
         current.albumIndex === albumIndex &&
         current.trackIndex === trackIndex
       ) {
-        // Same track — toggle play/pause
+        // Same track — toggle play/pause. Don't disturb the existing
+        // stop-at-album-end flag on a simple toggle.
         const audio = audioRef.current;
         if (!audio) return;
         if (audio.paused) {
@@ -115,6 +129,7 @@ export function AudioPlayerProvider({
         }
         return;
       }
+      stopAtAlbumEndRef.current = options?.stopAtAlbumEnd ? albumIndex : null;
       loadAndPlay(albumIndex, trackIndex);
     },
     [loadAndPlay]
@@ -190,6 +205,14 @@ export function AudioPlayerProvider({
       let nextTrackIdx = current.trackIndex;
       if (current.trackIndex < album.tracks.length - 1) {
         nextTrackIdx = current.trackIndex + 1;
+      } else if (
+        stopAtAlbumEndRef.current === current.albumIndex
+      ) {
+        // Caller opted into "stop after this album" — don't chain into
+        // the next album. Clear the flag so future plays are normal.
+        stopAtAlbumEndRef.current = null;
+        setIsPlaying(false);
+        return;
       } else if (current.albumIndex < musicLibrary.length - 1) {
         nextAlbum = current.albumIndex + 1;
         nextTrackIdx = 0;
