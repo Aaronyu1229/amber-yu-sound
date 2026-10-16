@@ -14,9 +14,9 @@ export default function MusicPage() {
       {/* Hero: single-column centered layout */}
       <section className="relative min-h-screen pt-24 pb-16 md:pt-28 md:pb-20 overflow-hidden">
         {/* Background accents */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-purple/5 rounded-full blur-[150px]" />
-          <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-gold/5 rounded-full blur-[150px]" />
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <div className="glow glow-purple absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full" />
+          <div className="glow glow-gold absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full" />
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-6">

@@ -60,8 +60,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
 
 @keyframes waveform {
-  0%, 100% { height: 20%; }
-  50% { height: 80%; }
+  0%, 100% { transform: scaleY(0.2); }
+  50% { transform: scaleY(0.8); }
 }
 
 @keyframes float {
@@ -72,6 +72,30 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
 @keyframes wave-move {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
+}
+
+.glow {
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--glow-color) 5%, transparent) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.glow-purple { --glow-color: var(--purple); }
+.glow-gold { --glow-color: var(--gold); }
+
+@media (prefers-reduced-motion: reduce) {
+  .waveform-bar {
+    animation: none !important;
+    transform: scaleY(0.5) !important;
+  }
+
+  .float-animation,
+  .wave-move {
+    animation: none !important;
+  }
 }
 
 ::selection {

@@ -66,7 +66,7 @@ export default function InsightsList({ insights }: { insights: Insight[] }) {
                 className="object-cover opacity-70 group-hover:scale-105 group-hover:opacity-85 transition-all duration-500"
               />
               <div className="absolute inset-0 bg-bg/30" />
-              <span className="absolute top-4 left-4 text-[10px] tracking-[3px] uppercase bg-bg/70 backdrop-blur-sm px-3 py-1 rounded-full text-gold z-10">
+              <span className="absolute top-4 left-4 text-[10px] tracking-[3px] uppercase bg-bg/95 md:bg-bg/70 md:backdrop-blur-sm px-3 py-1 rounded-full text-gold z-10">
                 {featuredBody.tag}
               </span>
             </div>
@@ -117,7 +117,7 @@ export default function InsightsList({ insights }: { insights: Insight[] }) {
                         className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-bg/40" />
-                      <span className="absolute top-4 left-4 text-[10px] tracking-[3px] uppercase bg-bg/70 backdrop-blur-sm px-3 py-1 rounded-full text-gold z-10">
+                      <span className="absolute top-4 left-4 text-[10px] tracking-[3px] uppercase bg-bg/95 md:bg-bg/70 md:backdrop-blur-sm px-3 py-1 rounded-full text-gold z-10">
                         {body.tag}
                       </span>
                     </div>
