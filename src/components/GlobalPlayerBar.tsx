@@ -79,7 +79,7 @@ export default function GlobalPlayerBar() {
       >
         {/* Gradient top edge */}
         <div className="h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
-        <div className="bg-bg2/95 backdrop-blur-xl">
+        <div className="bg-bg2/95 md:backdrop-blur-xl">
           <div className="max-w-4xl mx-auto px-6 py-3 flex items-center gap-4">
             {/* Album color dot — also a "back to /music" button when off-page */}
             <button

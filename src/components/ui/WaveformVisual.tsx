@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 // Pre-generate deterministic values to avoid hydration mismatch
 function seededValues(count: number) {
@@ -11,7 +11,6 @@ function seededValues(count: number) {
     bars.push({
       delay: (seed * 1.5).toFixed(2),
       duration: (0.8 + seed2 * 0.8).toFixed(2),
-      height: 20 + seed * 60,
       isPurple: (i + 1) % 3 === 0,
     });
   }
@@ -20,20 +19,35 @@ function seededValues(count: number) {
 
 export default function WaveformVisual() {
   const bars = useMemo(() => seededValues(60), []);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsVisible(entry.isIntersecting);
+    });
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="relative bg-bg2 rounded-2xl p-8 flex items-center justify-center aspect-square md:aspect-auto md:h-full min-h-[320px]">
-      <div className="flex items-end gap-[3px] h-40 w-full max-w-[320px]">
+      <div ref={containerRef} className="flex items-end gap-[3px] h-40 w-full max-w-[320px]">
         {bars.map((bar, i) => (
           <div
             key={i}
-            className="flex-1 rounded-full min-w-[2px]"
+            className="waveform-bar flex-1 h-full rounded-full min-w-[2px]"
             style={{
               backgroundColor: bar.isPurple
                 ? "var(--purple)"
                 : "var(--gold)",
               animation: `waveform ${bar.duration}s ease-in-out ${bar.delay}s infinite`,
-              height: `${bar.height}%`,
+              animationPlayState: isVisible ? "running" : "paused",
+              transformOrigin: "bottom",
             }}
           />
         ))}

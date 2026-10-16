@@ -29,27 +29,57 @@ function Waveform({ playing }: { playing: boolean }) {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    let size = { width: 0, height: 0 };
+    let isInViewport = false;
+    let prefersReducedMotion = false;
+    let gradientCache: { intensity: number; value: CanvasPattern } | undefined;
+
     const setSize = () => {
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
       canvas.width = Math.floor(rect.width * dpr);
       canvas.height = Math.floor(rect.height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      size = { width: rect.width, height: rect.height };
+      gradientCache = undefined;
     };
-    setSize();
-    window.addEventListener("resize", setSize);
 
-    const draw = () => {
-      const rect = canvas.getBoundingClientRect();
-      const w = rect.width;
-      const h = rect.height;
+    const getGradient = (intensity: number) => {
+      if (gradientCache && gradientCache.intensity === intensity) {
+        return gradientCache.value;
+      }
+
+      const gradientCanvas = document.createElement("canvas");
+      gradientCanvas.width = 1;
+      gradientCanvas.height = 256;
+      const gradientCtx = gradientCanvas.getContext("2d");
+      if (!gradientCtx) return null;
+
+      const gradient = gradientCtx.createLinearGradient(0, 0, 0, gradientCanvas.height);
+      gradient.addColorStop(0, `rgba(212,175,55,${0.35 + 0.55 * intensity})`);
+      gradient.addColorStop(0.5, `rgba(212,175,55,${0.55 + 0.45 * intensity})`);
+      gradient.addColorStop(1, `rgba(139,92,246,${0.3 + 0.5 * intensity})`);
+      gradientCtx.fillStyle = gradient;
+      gradientCtx.fillRect(0, 0, gradientCanvas.width, gradientCanvas.height);
+
+      const pattern = ctx.createPattern(gradientCanvas, "repeat-x");
+      if (!pattern) return null;
+      gradientCache = { intensity, value: pattern };
+      return pattern;
+    };
+
+    const draw = (time: number) => {
+      const { width: w, height: h } = size;
+      if (!w || !h) return;
+
       ctx.clearRect(0, 0, w, h);
 
       const BARS = 64;
       const gap = 3;
       const barW = Math.max(1, (w - gap * (BARS - 1)) / BARS);
-      const t = performance.now() / 1000;
+      const t = time / 1000;
       const intensity = playingRef.current ? 1 : 0.35;
+      const gradient = getGradient(intensity);
 
       const mid = h / 2;
       for (let i = 0; i < BARS; i++) {
@@ -63,29 +93,73 @@ function Waveform({ playing }: { playing: boolean }) {
         const px = i * (barW + gap);
         const py = mid - barH / 2;
 
-        const grad = ctx.createLinearGradient(0, py, 0, py + barH);
-        grad.addColorStop(0, `rgba(212,175,55,${0.35 + 0.55 * intensity})`);
-        grad.addColorStop(0.5, `rgba(212,175,55,${0.55 + 0.45 * intensity})`);
-        grad.addColorStop(1, `rgba(139,92,246,${0.3 + 0.5 * intensity})`);
-
-        ctx.fillStyle = grad;
+        if (gradient) {
+          gradient.setTransform(new DOMMatrix([1, 0, 0, barH / 256, 0, py]));
+          ctx.fillStyle = gradient;
+        }
         ctx.beginPath();
         const r = Math.min(barW / 2, 2);
         ctx.roundRect(px, py, barW, barH, r);
         ctx.fill();
       }
-
-      rafRef.current = requestAnimationFrame(draw);
     };
 
-    rafRef.current = requestAnimationFrame(draw);
+    const stopLoop = () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+    };
+
+    const shouldAnimate = () =>
+      isInViewport &&
+      document.visibilityState === "visible" &&
+      !prefersReducedMotion;
+
+    const animate = (time: number) => {
+      rafRef.current = null;
+      draw(time);
+      if (shouldAnimate()) rafRef.current = requestAnimationFrame(animate);
+    };
+
+    const updateAnimation = () => {
+      stopLoop();
+      if (shouldAnimate()) rafRef.current = requestAnimationFrame(animate);
+    };
+
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleMotionChange = () => {
+      prefersReducedMotion = motionQuery.matches;
+      draw(prefersReducedMotion ? 0 : performance.now());
+      updateAnimation();
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      isInViewport = entry.isIntersecting;
+      updateAnimation();
+    });
+    const handleVisibilityChange = () => updateAnimation();
+    const handleResize = () => {
+      setSize();
+      draw(prefersReducedMotion ? 0 : performance.now());
+    };
+
+    setSize();
+    handleMotionChange();
+    observer.observe(canvas);
+    window.addEventListener("resize", handleResize);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    motionQuery.addEventListener("change", handleMotionChange);
+
     return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      window.removeEventListener("resize", setSize);
+      stopLoop();
+      observer.disconnect();
+      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      motionQuery.removeEventListener("change", handleMotionChange);
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="w-full h-full block" />;
+  return <canvas ref={canvasRef} className="w-full h-full block" aria-hidden="true" />;
 }
 
 // Crown of Odin is the recent-work showcase. Locate its index once at
@@ -135,9 +209,9 @@ export default function RecentWork() {
   return (
     <section className="py-20 md:py-24 relative overflow-hidden" ref={ref}>
       {/* Subtle background accents */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/3 -left-40 w-[500px] h-[500px] bg-purple/5 rounded-full blur-[160px]" />
-        <div className="absolute bottom-1/4 -right-40 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[160px]" />
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="glow glow-purple absolute top-1/3 -left-40 w-[500px] h-[500px] rounded-full" />
+        <div className="glow glow-gold absolute bottom-1/4 -right-40 w-[500px] h-[500px] rounded-full" />
       </div>
 
       <div className="relative z-10 max-w-3xl mx-auto px-6">
@@ -180,7 +254,7 @@ export default function RecentWork() {
           initial={{ opacity: 0, y: 40 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="relative rounded-2xl border border-ivory/10 bg-bg2/80 backdrop-blur-sm p-6 md:p-8 flex flex-col"
+          className="relative rounded-2xl border border-ivory/10 bg-bg2/95 md:bg-bg2/80 md:backdrop-blur-sm p-6 md:p-8 flex flex-col"
         >
           {/* Track meta */}
           <div className="mb-5">

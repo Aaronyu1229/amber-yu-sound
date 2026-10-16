@@ -70,7 +70,7 @@ export default function Portfolio() {
                     className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
-                  <span className="text-xs tracking-[3px] uppercase absolute top-4 left-4 bg-bg/60 backdrop-blur-sm px-3 py-1 rounded-full text-ivory/80 z-10">
+                  <span className="text-xs tracking-[3px] uppercase absolute top-4 left-4 bg-bg/95 md:bg-bg/60 md:backdrop-blur-sm px-3 py-1 rounded-full text-ivory/80 z-10">
                     {t.portfolio.items[i].type}
                   </span>
                   <div className="absolute inset-0 bg-bg/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10">

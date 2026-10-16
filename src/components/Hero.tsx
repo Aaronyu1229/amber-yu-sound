@@ -20,7 +20,7 @@ function WaveSVG({ color, opacity, delay }: { color: string; opacity: number; de
     <div className="absolute bottom-0 left-0 w-[200%] overflow-hidden" style={{ opacity }}>
       <svg
         viewBox="0 0 2400 120"
-        className="w-full"
+        className="w-full wave-move"
         style={{ animation: `wave-move ${20 + delay}s linear infinite` }}
         preserveAspectRatio="none"
       >
@@ -44,9 +44,9 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background radial gradients */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-purple/5 rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/4 left-1/3 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[150px]" />
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="glow glow-purple absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full" />
+        <div className="glow glow-gold absolute bottom-1/4 left-1/3 w-[500px] h-[500px] rounded-full" />
       </div>
 
       {/* Wave lines */}
@@ -114,7 +114,7 @@ export default function Hero() {
           {t.hero.scroll}
         </span>
         <div
-          className="w-px h-8 bg-gradient-to-b from-gold to-transparent"
+          className="float-animation w-px h-8 bg-gradient-to-b from-gold to-transparent"
           style={{ animation: "float 3s ease-in-out infinite" }}
         />
       </motion.div>

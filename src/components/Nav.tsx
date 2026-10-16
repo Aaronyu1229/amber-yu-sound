@@ -23,7 +23,7 @@ export default function Nav() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-bg/80 backdrop-blur-lg border-b border-gold/20"
+          ? "bg-bg/95 md:bg-bg/80 md:backdrop-blur-lg border-b border-gold/20"
           : "bg-transparent"
       }`}
     >
@@ -80,7 +80,7 @@ export default function Nav() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-bg2/95 backdrop-blur-lg border-b border-gold/10 overflow-hidden"
+            className="md:hidden bg-bg2/95 border-b border-gold/10 overflow-hidden"
           >
             <div className="px-6 py-6 flex flex-col gap-4">
               {t.nav.links.map((link) => (

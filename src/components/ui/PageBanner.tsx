@@ -29,9 +29,9 @@ export default function PageBanner({ title, subtitle, backgroundImage }: PageBan
 
       {/* Fallback accents when no image */}
       {!backgroundImage && (
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-purple/5 rounded-full blur-[120px]" />
-          <div className="absolute bottom-1/4 left-1/3 w-[300px] h-[300px] bg-gold/5 rounded-full blur-[120px]" />
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <div className="glow glow-purple absolute top-1/3 right-1/4 w-[400px] h-[400px] rounded-full" />
+          <div className="glow glow-gold absolute bottom-1/4 left-1/3 w-[300px] h-[300px] rounded-full" />
         </div>
       )}
 
