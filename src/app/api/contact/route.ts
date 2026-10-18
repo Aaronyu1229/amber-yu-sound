@@ -35,6 +35,7 @@
 
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
+import { getClientIp, isRateLimited, reserveAutoReply } from "@/lib/contact-rate-limit";
 
 export const runtime = "nodejs";
 
@@ -63,48 +64,6 @@ const MAX = {
   text: 5000,
 };
 
-const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
-const RATE_LIMIT_MAX_REQUESTS = 3;
-const AUTO_REPLY_WINDOW_MS = 24 * 60 * 60 * 1000;
-
-const requestsByIp = new Map<string, number[]>();
-const autoReplyByEmail = new Map<string, number>();
-
-function getClientIp(request: Request): string {
-  const forwarded = request.headers.get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0].trim();
-  return request.headers.get("x-real-ip") ?? "unknown";
-}
-
-function isRateLimited(ip: string, now: number): boolean {
-  const recentRequests = (requestsByIp.get(ip) ?? []).filter(
-    (timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS,
-  );
-
-  if (recentRequests.length >= RATE_LIMIT_MAX_REQUESTS) {
-    requestsByIp.set(ip, recentRequests);
-    return true;
-  }
-
-  recentRequests.push(now);
-  requestsByIp.set(ip, recentRequests);
-  return false;
-}
-
-function reserveAutoReply(email: string, now: number): boolean {
-  const lastAutoReply = autoReplyByEmail.get(email);
-  if (lastAutoReply !== undefined && now - lastAutoReply < AUTO_REPLY_WINDOW_MS) {
-    return false;
-  }
-
-  autoReplyByEmail.set(email, now);
-  return true;
-}
-
-export function resetContactRateLimitsForTests(): void {
-  requestsByIp.clear();
-  autoReplyByEmail.clear();
-}
 
 function validate(p: Partial<ContactPayload>): string | null {
   if (!p || typeof p !== "object") return "Invalid body";

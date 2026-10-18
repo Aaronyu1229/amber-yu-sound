@@ -8,7 +8,8 @@ vi.mock("resend", () => ({
   },
 }));
 
-import { POST, resetContactRateLimitsForTests } from "./route";
+import { POST } from "./route";
+import { resetContactRateLimitsForTests } from "@/lib/contact-rate-limit";
 
 const payload = {
   name: "Ada Lovelace",
