@@ -35,6 +35,7 @@
 
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
+import { getClientIp, isRateLimited, reserveAutoReply } from "@/lib/contact-rate-limit";
 
 export const runtime = "nodejs";
 
@@ -62,6 +63,7 @@ const MAX = {
   email: 320,
   text: 5000,
 };
+
 
 function validate(p: Partial<ContactPayload>): string | null {
   if (!p || typeof p !== "object") return "Invalid body";
@@ -184,6 +186,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: err }, { status: 400 });
   }
 
+  if (isRateLimited(getClientIp(request), Date.now())) {
+    return NextResponse.json(
+      { ok: false, error: "請稍後再試，10 分鐘內最多可送出 3 次聯絡表單。" },
+      { status: 429 },
+    );
+  }
+
   const clean: ContactPayload = {
     name: payload.name!.trim(),
     company: payload.company!.trim(),
@@ -281,7 +290,13 @@ export async function POST(request: Request) {
     }
   };
 
-  const [notify, autoReply] = await Promise.all([sendNotify(), sendAutoReply()]);
+  const shouldSendAutoReply = reserveAutoReply(clean.email, Date.now());
+  const [notify, autoReply] = await Promise.all([
+    sendNotify(),
+    shouldSendAutoReply
+      ? sendAutoReply()
+      : Promise.resolve<Leg>({ delivered: false, error: "Auto-reply limit reached" }),
+  ]);
 
   // The notify leg (to Amber) is the business-critical one. If it failed the
   // submission is effectively lost from the owner's perspective — return 502

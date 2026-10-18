@@ -6,9 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        // admin-temp is an unindexed temp endpoint; explicit deny so it
-        // never accidentally appears in search results.
-        disallow: ["/api/", "/admin-temp"],
+        disallow: ["/api/"],
       },
     ],
     sitemap: "https://dolcenforte.com/sitemap.xml",
