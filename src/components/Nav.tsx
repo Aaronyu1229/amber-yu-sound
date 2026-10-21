@@ -50,6 +50,11 @@ export default function Nav() {
               }`}
             >
               {link.label}
+              {link.href === "/tension" && (
+                <span className="ml-1.5 -translate-y-2 inline-block rounded-sm bg-gold px-1 py-px text-[8px] leading-none tracking-[1px] text-bg">
+                  NEW
+                </span>
+              )}
             </Link>
           ))}
 
@@ -95,6 +100,11 @@ export default function Nav() {
                   }`}
                 >
                   {link.label}
+                  {link.href === "/tension" && (
+                    <span className="ml-1.5 -translate-y-1 inline-block rounded-sm bg-gold px-1 py-px text-[8px] leading-none tracking-[1px] text-bg">
+                      NEW
+                    </span>
+                  )}
                 </Link>
               ))}
               <button

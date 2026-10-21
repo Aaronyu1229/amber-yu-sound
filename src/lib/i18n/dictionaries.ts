@@ -159,6 +159,95 @@ export interface Dictionary {
       ctaButton: string;
       empty: string;
     };
+    tension: {
+      hero: {
+        crumb: string;
+        title: string;
+        titleHighlight: string;
+        description: string;
+        tryDemo: string;
+        earlyAccess: string;
+        status: string;
+        dragHint: string;
+        bestMatch: string;
+        example: string;
+        yourFeeling: string;
+        openDemo: string;
+      };
+      problem: {
+        tag: string;
+        title: string;
+        titleHighlight: string;
+        description: string;
+        today: string;
+        withTension: string;
+        todayQuery: string;
+        tensionQuery: string;
+        files: string[];
+        todayNote: string;
+        tensionNote: string;
+      };
+      demo: {
+        tag: string;
+        title: string;
+        titleHighlight: string;
+        library: string;
+        librarySearch: string;
+        quickStart: string;
+        reset: string;
+        presets: string[];
+        refine: string;
+        lookingFor: string;
+        music: string;
+        sfx: string;
+        sliders: { tension: { label: string; hint: string }; excitement: { label: string; hint: string }; winImpact: { label: string; hint: string } };
+        gameMoment: string;
+        function: string;
+        rankedBy: string;
+        allMoments: string;
+        low: string;
+        mid: string;
+        high: string;
+        fit: string;
+        showAll: string;
+        showTop: string;
+        empty: string;
+        play: string;
+        pause: string;
+        seek: string;
+        tagTrack: string;
+        dimensionsNote: string;
+      };
+      tagging: {
+        tag: string;
+        title: string;
+        titleHighlight: string;
+        description: string;
+        axes: { title: string; description: string; items: string[] }[];
+        who: { title: string; description: string }[];
+      };
+      stats: { annotated: string; rated: string; dimensions: string; preview: string; note: string };
+      steps: { tag: string; title: string; titleHighlight: string; items: { title: string; description: string }[] };
+      access: {
+        event: string;
+        title: string;
+        titleHighlight: string;
+        description: string;
+        name: string;
+        company: string;
+        email: string;
+        role: string;
+        rolePlaceholder: string;
+        roles: string[];
+        submit: string;
+        submitting: string;
+        privacy: string;
+        success: string;
+        validation: string;
+        rateLimit: string;
+        network: string;
+      };
+    };
   };
 }
 
@@ -168,6 +257,7 @@ const en: Dictionary = {
       { label: "Services", href: "/services" },
       { label: "Portfolio", href: "/portfolio" },
       { label: "Music", href: "/music" },
+      { label: "Tension", href: "/tension" },
       { label: "Insights", href: "/insights" },
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
@@ -553,6 +643,122 @@ const en: Dictionary = {
       ctaButton: "Start a conversation",
       empty: "More articles coming soon.",
     },
+    tension: {
+      hero: {
+        crumb: "Tension · by Dolce & Forte",
+        title: "Find the right sound",
+        titleHighlight: "by feeling, in seconds.",
+        description: "Tension is an emotion-tagged audio search built for iGaming. Describe the moment you need — how tense, how exciting, how big the win — and get the sounds that fit, ranked.",
+        tryDemo: "Try the full demo",
+        earlyAccess: "Request early access",
+        status: "In development · interactive preview with 32 sample sounds",
+        dragHint: "Drag a corner",
+        bestMatch: "Best match · all moments",
+        example: "Example",
+        yourFeeling: "Your feeling",
+        openDemo: "Open in the full demo ↓",
+      },
+      problem: {
+        tag: "The problem",
+        title: "File names don’t tell you",
+        titleHighlight: "how a sound feels",
+        description: "Sound libraries are searched by keywords and file names. But when you are building a near-win or a jackpot moment, what you actually need is a feeling.",
+        today: "Searching today",
+        withTension: "Searching with Tension",
+        todayQuery: "big win",
+        tensionQuery: "Winning Panel · low tension · high excitement · high win impact",
+        files: ["bigwin_final_v3.wav", "BW_loop_02_alt.wav", "win_big_new(1).wav"],
+        todayNote: "Every result has to be opened and listened to. The names say nothing about energy, tension or how big the moment feels.",
+        tensionNote: "Every sound is rated on the feelings that matter in a slot, so results come back ranked by emotional fit.",
+      },
+      demo: {
+        tag: "Interactive preview",
+        title: "Try it —",
+        titleHighlight: "describe a moment",
+        library: "Preview library · {count} sample sounds",
+        librarySearch: "Library search",
+        quickStart: "Quick start",
+        reset: "Reset",
+        presets: ["Big win celebration", "Building suspense", "Scatter landing", "Free-spin music"],
+        refine: "Adjust feeling & filters",
+        lookingFor: "Looking for",
+        music: "Music",
+        sfx: "SFX",
+        sliders: {
+          tension: { label: "Tension", hint: "release ↔ build-up · tension direction" },
+          excitement: { label: "Excitement", hint: "calm ↔ thrilling · arousal" },
+          winImpact: { label: "Win impact", hint: "minor ↔ major · event significance" },
+        },
+        gameMoment: "Game moment",
+        function: "Function",
+        rankedBy: "Ranked by emotional fit",
+        allMoments: "All moments",
+        low: "low",
+        mid: "mid",
+        high: "high",
+        fit: "fit",
+        showAll: "Show all {count}",
+        showTop: "Show top {count}",
+        empty: "No sounds match these filters. Try removing one.",
+        play: "Play",
+        pause: "Pause",
+        seek: "Seek",
+        tagTrack: "How {track} is tagged",
+        dimensionsNote: "Average of {count} sound designer rating{plural} · * measured by signal analysis · gold = slider dimensions",
+      },
+      tagging: {
+        tag: "How it’s tagged",
+        title: "Ten dimensions, rated by",
+        titleHighlight: "people who make slot audio",
+        description: "Every sound is listened to and rated by working slot sound designers. Acoustic properties are measured automatically. The three search sliders are the dimensions marked in gold. Tap i on any result above to see a sound’s full profile.",
+        axes: [
+          { title: "Emotion", description: "How the sound makes a player feel in the moment.", items: ["Valence", "Arousal → Excitement", "Emotional warmth", "Tension direction → Tension"] },
+          { title: "Function", description: "Where it sits in the game loop and how big the moment is.", items: ["Temporal position", "Event significance → Win impact", "Loop capability"] },
+          { title: "Acoustic", description: "The character of the sound itself, partly measured by signal analysis.", items: ["Tonal / noise", "Spectral density", "World immersion"] },
+        ],
+        who: [
+          { title: "Game studios", description: "Find the right reference or placeholder for every game moment before the brief goes out." },
+          { title: "Slot providers", description: "Keep the emotional feel consistent across a whole portfolio of titles." },
+          { title: "Sound teams", description: "Search your own library by feeling instead of file names." },
+        ],
+      },
+      stats: {
+        annotated: "Slot sounds annotated so far",
+        rated: "Rated independently by two or more designers",
+        dimensions: "Emotion & function dimensions per sound",
+        preview: "Sounds you can try in this preview",
+        note: "Figures from the annotation database, October 2026.",
+      },
+      steps: {
+        tag: "How it works",
+        title: "From a feeling to a",
+        titleHighlight: "shortlist",
+        items: [
+          { title: "Describe", description: "Pick the game moment and set how tense, exciting and big it should feel." },
+          { title: "Rank", description: "Tension scores every sound in the library by emotional fit." },
+          { title: "Listen", description: "Audition the top matches and compare their full profiles." },
+        ],
+      },
+      access: {
+        event: "SiGMA World · Rome · 2–5 Nov 2026",
+        title: "Be among the first",
+        titleHighlight: "to search by feeling",
+        description: "Tension is in development. Leave your details for early access, or come and try it with us at the SiGMA World Startup Village in Rome.",
+        name: "Name",
+        company: "Company",
+        email: "Work email",
+        role: "I am a",
+        rolePlaceholder: "Select one",
+        roles: ["Game studio", "Slot provider", "Sound designer", "Investor", "Other"],
+        submit: "Request early access",
+        submitting: "Sending…",
+        privacy: "We’ll only use this to contact you about Tension.",
+        success: "Thanks — we’ll be in touch about Tension.",
+        validation: "Please complete your name, company, work email, and role.",
+        rateLimit: "Please wait a moment before submitting another request.",
+        network: "We couldn’t send your request. Please try again or contact us directly.",
+      },
+    },
   },
 };
 
@@ -562,6 +768,7 @@ const zh: Dictionary = {
       { label: "服務項目", href: "/services" },
       { label: "作品集", href: "/portfolio" },
       { label: "音樂試聽", href: "/music" },
+      { label: "Tension", href: "/tension" },
       { label: "觀點分享", href: "/insights" },
       { label: "關於我們", href: "/about" },
       { label: "聯繫我們", href: "/contact" },
@@ -939,6 +1146,122 @@ const zh: Dictionary = {
       ctaTitle: "想要這樣的音效嗎？",
       ctaButton: "聯繫我們",
       empty: "更多文章即將推出。",
+    },
+    tension: {
+      hero: {
+        crumb: "Tension · by Dolce & Forte",
+        title: "用感受，快速找到",
+        titleHighlight: "對的聲音。",
+        description: "Tension 是為 iGaming 打造、以情緒標註為核心的音效搜尋工具。描述您需要的遊戲時刻——要多緊張、多刺激、贏分要有多大的感受——就能依契合度取得排序後的聲音。",
+        tryDemo: "試用完整展示",
+        earlyAccess: "申請搶先體驗",
+        status: "開發中 · 互動展示含 32 個示範聲音",
+        dragHint: "拖曳任一角",
+        bestMatch: "最佳結果 · 所有時刻",
+        example: "範例",
+        yourFeeling: "您的感受",
+        openDemo: "在完整展示中開啟 ↓",
+      },
+      problem: {
+        tag: "痛點",
+        title: "檔名無法告訴您，",
+        titleHighlight: "聲音帶來什麼感受",
+        description: "聲音資料庫通常以關鍵字與檔名搜尋。但當您正在製作 Near Win 或頭獎時刻時，真正需要的是一種感受。",
+        today: "現行搜尋方式",
+        withTension: "使用 Tension 搜尋",
+        todayQuery: "big win",
+        tensionQuery: "Winning Panel · 低張力 · 高刺激度 · 高贏分影響力",
+        files: ["bigwin_final_v3.wav", "BW_loop_02_alt.wav", "win_big_new(1).wav"],
+        todayNote: "每個結果都得開啟聆聽。檔名完全無法說明能量、張力，或該時刻有多大的感受。",
+        tensionNote: "每個聲音都依老虎機真正重視的感受評分，因此結果能按情緒契合度排序。",
+      },
+      demo: {
+        tag: "互動展示",
+        title: "試試看——",
+        titleHighlight: "描述一個時刻",
+        library: "展示資料庫 · {count} 個示範聲音",
+        librarySearch: "資料庫搜尋",
+        quickStart: "快速開始",
+        reset: "重設",
+        presets: ["大獎慶祝", "堆疊懸念", "Scatter 落下", "Free Spins 音樂"],
+        refine: "調整感受與篩選條件",
+        lookingFor: "尋找",
+        music: "音樂",
+        sfx: "音效",
+        sliders: {
+          tension: { label: "張力", hint: "釋放 ↔ 堆疊 · 張力走向" },
+          excitement: { label: "刺激度", hint: "平靜 ↔ 興奮 · 喚起程度" },
+          winImpact: { label: "贏分影響力", hint: "小 ↔ 大 · 事件重要性" },
+        },
+        gameMoment: "遊戲時刻",
+        function: "功能",
+        rankedBy: "依情緒契合度排序",
+        allMoments: "所有時刻",
+        low: "低",
+        mid: "中",
+        high: "高",
+        fit: "契合",
+        showAll: "顯示全部 {count} 個",
+        showTop: "顯示前 {count} 個",
+        empty: "沒有符合這些篩選條件的聲音。請嘗試移除其中一項。",
+        play: "播放",
+        pause: "暫停",
+        seek: "搜尋位置",
+        tagTrack: "查看 {track} 的標註方式",
+        dimensionsNote: "由 {count} 位音效設計師評分{plural} · * 由訊號分析測量 · 金色 = 搜尋滑桿維度",
+      },
+      tagging: {
+        tag: "標註方式",
+        title: "十個維度，由",
+        titleHighlight: "製作老虎機音效的人評定",
+        description: "每個聲音都由在職的老虎機音效設計師聆聽並評分。聲學特徵則自動測量。三個搜尋滑桿所對應的維度以金色標示。點選上方任一結果的 i，即可查看完整聲音檔案。",
+        axes: [
+          { title: "Emotion", description: "聲音在當下帶給玩家的感受。", items: ["Valence", "Arousal → Excitement", "Emotional warmth", "Tension direction → Tension"] },
+          { title: "Function", description: "它在遊戲循環中的位置，以及這個時刻有多重要。", items: ["Temporal position", "Event significance → Win impact", "Loop capability"] },
+          { title: "Acoustic", description: "聲音本身的特性，部分由訊號分析測量。", items: ["Tonal / noise", "Spectral density", "World immersion"] },
+        ],
+        who: [
+          { title: "遊戲工作室", description: "在需求發出前，為每個遊戲時刻找到對的參考或暫用聲音。" },
+          { title: "老虎機供應商", description: "讓整個作品組合的情緒感受維持一致。" },
+          { title: "音效團隊", description: "以感受而非檔名搜尋您自己的聲音資料庫。" },
+        ],
+      },
+      stats: {
+        annotated: "目前已標註的老虎機聲音",
+        rated: "由兩位以上設計師獨立評分",
+        dimensions: "每個聲音的情緒與功能維度",
+        preview: "可在此展示中試聽的聲音",
+        note: "數據來自 2026 年 10 月的標註資料庫。",
+      },
+      steps: {
+        tag: "運作方式",
+        title: "從一種感受，到一份",
+        titleHighlight: "精選清單",
+        items: [
+          { title: "描述", description: "選擇遊戲時刻，設定它應有多緊張、多刺激，以及贏分有多大的感受。" },
+          { title: "排序", description: "Tension 依情緒契合度為資料庫中的每個聲音評分。" },
+          { title: "聆聽", description: "試聽最符合的結果，並比較它們的完整設定檔。" },
+        ],
+      },
+      access: {
+        event: "SiGMA World · Rome · 2–5 Nov 2026",
+        title: "成為最早一批",
+        titleHighlight: "用感受搜尋的人",
+        description: "Tension 仍在開發中。留下您的資料以取得搶先體驗，或在羅馬 SiGMA World Startup Village 親自來試用。",
+        name: "姓名",
+        company: "公司名稱",
+        email: "工作用電子郵件",
+        role: "我是",
+        rolePlaceholder: "請選擇",
+        roles: ["遊戲工作室", "老虎機供應商", "音效設計師", "投資人", "其他"],
+        submit: "申請搶先體驗",
+        submitting: "傳送中…",
+        privacy: "我們只會使用這些資料與您聯繫 Tension 的相關消息。",
+        success: "謝謝您——我們將與您聯繫 Tension 的相關資訊。",
+        validation: "請填寫您的姓名、公司名稱、工作用電子郵件與身分。",
+        rateLimit: "請稍候再送出另一份申請。",
+        network: "目前無法傳送您的申請。請再試一次，或直接聯繫我們。",
+      },
     },
   },
 };
