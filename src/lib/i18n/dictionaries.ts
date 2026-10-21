@@ -1206,15 +1206,15 @@ const zh: Dictionary = {
         empty: "沒有符合這些篩選條件的聲音。請嘗試移除其中一項。",
         play: "播放",
         pause: "暫停",
-        seek: "搜尋位置",
+        seek: "播放進度",
         tagTrack: "查看 {track} 的標註方式",
-        dimensionsNote: "由 {count} 位音效設計師評分{plural} · * 由訊號分析測量 · 金色 = 搜尋滑桿維度",
+        dimensionsNote: "{count} 位音效設計師評分的平均 · * 由訊號分析測量 · 金色 = 搜尋滑桿維度",
       },
       tagging: {
         tag: "標註方式",
         title: "十個維度，由",
         titleHighlight: "製作老虎機音效的人評定",
-        description: "每個聲音都由在職的老虎機音效設計師聆聽並評分。聲學特徵則自動測量。三個搜尋滑桿所對應的維度以金色標示。點選上方任一結果的 i，即可查看完整聲音檔案。",
+        description: "每個聲音都由在職的老虎機音效設計師聆聽並評分。聲學特徵則自動測量。三個搜尋滑桿所對應的維度以金色標示。點選上方任一結果的 i，即可查看該聲音的完整標註。",
         axes: [
           { title: "Emotion", description: "聲音在當下帶給玩家的感受。", items: ["Valence", "Arousal → Excitement", "Emotional warmth", "Tension direction → Tension"] },
           { title: "Function", description: "它在遊戲循環中的位置，以及這個時刻有多重要。", items: ["Temporal position", "Event significance → Win impact", "Loop capability"] },
@@ -1240,7 +1240,7 @@ const zh: Dictionary = {
         items: [
           { title: "描述", description: "選擇遊戲時刻，設定它應有多緊張、多刺激，以及贏分有多大的感受。" },
           { title: "排序", description: "Tension 依情緒契合度為資料庫中的每個聲音評分。" },
-          { title: "聆聽", description: "試聽最符合的結果，並比較它們的完整設定檔。" },
+          { title: "聆聽", description: "試聽最符合的結果，並比較它們的完整標註。" },
         ],
       },
       access: {
