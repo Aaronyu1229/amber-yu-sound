@@ -128,7 +128,7 @@ export interface Dictionary {
     platformLabel: string;
     durationLabel: string;
     items: {
-      client: string;
+      client?: string;
       clientRole: string;
       genre: string;
       year: string;
@@ -553,7 +553,6 @@ const en: Dictionary = {
         testimonialAuthor: "Studio Producer",
       },
       {
-        client: "Aztec Treasure",
         clientRole: "Aztec temple slot with a sun-disc multiplier bar, scatter-triggered Free Game and Buy Feature.",
         genre: "Aztec Theme / Free Game / Multiplier",
         year: "2026",
@@ -1088,7 +1087,6 @@ const zh: Dictionary = {
         testimonialAuthor: "工作室製作人",
       },
       {
-        client: "Aztec Treasure 阿茲特克寶藏",
         clientRole: "阿茲特克神殿主題老虎機，有太陽盤倍數列、Scatter 觸發的免費遊戲，以及購買功能。",
         genre: "阿茲特克主題 / 免費遊戲 / 倍數",
         year: "2026",

@@ -113,14 +113,18 @@ export default function PortfolioDetailClient({ slug }: { slug: string }) {
                 label: t.portfolioDetail.durationLabel,
                 value: detail.duration,
               },
-            ].map((meta, i) => (
-              <motion.div key={meta.label} custom={i} variants={fadeUp}>
-                <p className="text-xs tracking-[1.5px] uppercase text-ivory/50 mb-1">
-                  {meta.label}
-                </p>
-                <p className="text-sm text-ivory font-medium">{meta.value}</p>
-              </motion.div>
-            ))}
+            ]
+              .filter((meta) => meta.value)
+              .map((meta, i) => (
+                <motion.div key={meta.label} custom={i} variants={fadeUp}>
+                  <p className="text-xs tracking-[1.5px] uppercase text-ivory/50 mb-1">
+                    {meta.label}
+                  </p>
+                  <p className="text-sm text-ivory font-medium">
+                    {meta.value}
+                  </p>
+                </motion.div>
+              ))}
           </motion.div>
         </div>
       </section>
@@ -312,12 +316,16 @@ export default function PortfolioDetailClient({ slug }: { slug: string }) {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className="bg-bg2 rounded-xl p-6 border border-ivory/5"
               >
-                <p className="text-xs tracking-[1.5px] uppercase text-ivory/50 mb-2">
-                  {t.portfolioDetail.clientLabel}
-                </p>
-                <p className="text-ivory font-display text-lg font-medium mb-2">
-                  {detail.client}
-                </p>
+                {detail.client && (
+                  <>
+                    <p className="text-xs tracking-[1.5px] uppercase text-ivory/50 mb-2">
+                      {t.portfolioDetail.clientLabel}
+                    </p>
+                    <p className="text-ivory font-display text-lg font-medium mb-2">
+                      {detail.client}
+                    </p>
+                  </>
+                )}
                 <p className="text-ivory/70 text-sm leading-relaxed">
                   {detail.clientRole}
                 </p>
