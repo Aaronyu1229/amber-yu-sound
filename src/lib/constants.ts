@@ -96,6 +96,17 @@ export const portfolioItems: PortfolioItem[] = [
     videoSrc: "/videos/golden-piggy-megaways.mp4",
   },
   {
+    slug: "aztec-treasure",
+    title: "Aztec Treasure",
+    type: "SLOT",
+    services: "Music & Sound Design",
+    tags: ["Aztec Theme", "Free Game", "Multiplier"],
+    gradient: "from-amber-900/50 to-yellow-900/40",
+    image: "/videos/posters/aztec-treasure.jpg",
+    heroImage: "/videos/posters/aztec-treasure-hero.jpg",
+    videoSrc: "/videos/aztec-treasure.mp4",
+  },
+  {
     slug: "golden-sun-aztec",
     title: "Golden Sun Aztec",
     type: "SLOT",

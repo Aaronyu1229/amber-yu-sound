@@ -118,6 +118,8 @@ export interface Dictionary {
     approachTitle: string;
     resultTitle: string;
     assetsTitle: string;
+    chaptersTitle: string;
+    chaptersHint: string;
     ctaTitle: string;
     ctaButton: string;
     clientLabel: string;
@@ -137,8 +139,9 @@ export interface Dictionary {
       approach: string;
       result: string;
       assets: { label: string; count: string }[];
-      testimonial: string;
-      testimonialAuthor: string;
+      testimonial?: string;
+      testimonialAuthor?: string;
+      chapters?: { t: number; label: string }[];
     }[];
   };
   // Multi-page: page-level hero banners
@@ -326,6 +329,7 @@ const en: Dictionary = {
       { type: "SLOT", services: "Music & Sound Design", tags: ["Horror", "Atmospheric", "Free Game"] },
       { type: "SLOT", services: "Music & Sound Design", tags: ["Asian Theme", "Festive", "High Energy"] },
       { type: "MEGAWAYS", services: "Full Audio Package", tags: ["Asian Theme", "Megaways", "Cascade"] },
+      { type: "SLOT", services: "Music & Sound Design", tags: ["Aztec Theme", "Free Game", "Multiplier"] },
       { type: "SLOT", services: "Music & Sound Design", tags: ["Aztec Theme", "Cinematic", "Adventure"] },
       { type: "SLOT", services: "Music & Sound Design", tags: ["Japanese", "Lucky Cat", "Bonus Mechanics"] },
       { type: "POST-PRODUCTION", services: "Audio Post-Production", tags: ["Sound-to-Picture", "Mix", "Mastering"] },
@@ -478,6 +482,8 @@ const en: Dictionary = {
     approachTitle: "Our Approach",
     resultTitle: "The Result",
     assetsTitle: "Delivered Assets",
+    chaptersTitle: "Listen for",
+    chaptersHint: "Jump straight to the moments where the audio does the work.",
     ctaTitle: "Interested in a similar project?",
     ctaButton: "Start a Conversation",
     clientLabel: "Client",
@@ -545,6 +551,33 @@ const en: Dictionary = {
         ],
         testimonial: "Watch the cascade build — that escalation is exactly the player feel we wanted.",
         testimonialAuthor: "Studio Producer",
+      },
+      {
+        client: "Aztec Treasure",
+        clientRole: "Aztec temple slot with a sun-disc multiplier bar, scatter-triggered Free Game and Buy Feature.",
+        genre: "Aztec Theme / Free Game / Multiplier",
+        year: "2026",
+        platform: "Mobile & Web",
+        duration: "1 month",
+        overview: "Aztec Treasure is a temple-themed slot game built around an escalating multiplier mechanic.\n\nDuring the Free Game, each cascade increases the multiplier on the sun disc, while the music and sound effects gradually build anticipation as the game progresses.",
+        challenge: "The multiplier can increase multiple times within a single round.\n\nEach increase requires a stronger audio response while maintaining clarity and balance in the overall mix, creating a distinct sense of excitement when a Mega Win is triggered.",
+        approach: "We combined traditional ethnic instruments with epic orchestral arrangements to create distinct musical layers and atmospheres for the Base Game and Free Game.\n\nBy incorporating modal scales, we evoked the mysterious atmosphere of ancient Mesoamerican civilizations. This was complemented by crisp, punchy, and distinctive sound effects that provide immediate feedback to in-game events, keeping the overall gameplay rhythm clean and impactful.",
+        result: "The combination of traditional ethnic instruments and orchestral arrangements established distinct atmospheres and levels of intensity between the Base Game and Free Game.\n\nPaired with precise, punchy sound design, the music and sound effects seamlessly complement the game mechanics, creating a distinctive sonic identity and a smooth, engaging gameplay experience.",
+        assets: [
+          { label: "Music Tracks", count: "2" },
+          { label: "Sound Effects", count: "54" },
+          { label: "Win Stingers", count: "5" },
+        ],
+        chapters: [
+          { t: 0, label: "Base game spins" },
+          { t: 15, label: "Buy Feature" },
+          { t: 20, label: "Scatter trigger" },
+          { t: 24, label: "Free Game intro" },
+          { t: 36, label: "Multiplier climb" },
+          { t: 48, label: "Mega Win" },
+          { t: 66, label: "Retrigger" },
+          { t: 78, label: "Total Win" },
+        ],
       },
       {
         client: "Golden Sun Aztec",
@@ -837,6 +870,7 @@ const zh: Dictionary = {
       { type: "老虎機", services: "音樂與音效設計", tags: ["恐怖", "氛圍", "Free Game"] },
       { type: "老虎機", services: "音樂與音效設計", tags: ["東方節慶", "農曆新年", "高能量"] },
       { type: "MEGAWAYS", services: "全套音效方案", tags: ["東方主題", "Megaways", "連鎖中獎"] },
+      { type: "老虎機", services: "音樂與音效設計", tags: ["阿茲特克主題", "免費遊戲", "倍數"] },
       { type: "老虎機", services: "音樂與音效設計", tags: ["阿茲特克", "電影感", "冒險"] },
       { type: "老虎機", services: "音樂與音效設計", tags: ["日式風格", "招財貓", "獎勵機制"] },
       { type: "後期製作", services: "聲音後期製作", tags: ["聲畫同步", "混音", "母帶後期"] },
@@ -983,6 +1017,8 @@ const zh: Dictionary = {
     approachTitle: "我們的做法",
     resultTitle: "最終成果",
     assetsTitle: "交付素材",
+    chaptersTitle: "聆聽重點",
+    chaptersHint: "直接跳到聲音最關鍵的段落。",
     ctaTitle: "對類似專案有興趣？",
     ctaButton: "開始對話",
     clientLabel: "客戶",
@@ -1050,6 +1086,33 @@ const zh: Dictionary = {
         ],
         testimonial: "看連鎖堆疊的過程——那個推進感正是我們想要的玩家體驗。",
         testimonialAuthor: "工作室製作人",
+      },
+      {
+        client: "Aztec Treasure 阿茲特克寶藏",
+        clientRole: "阿茲特克神殿主題老虎機，有太陽盤倍數列、Scatter 觸發的免費遊戲，以及購買功能。",
+        genre: "阿茲特克主題 / 免費遊戲 / 倍數",
+        year: "2026",
+        platform: "手機與網頁",
+        duration: "1 個月",
+        overview: "Aztec Treasure 是一款以神殿為主題的老虎機，核心玩法是不斷攀升的倍數機制。\n\n在免費遊戲中，每一次消除都會推高太陽盤上的倍數，音樂與音效也隨著遊戲推進，逐步堆疊期待感。",
+        challenge: "一輪之內，倍數可能連續上升好幾次。\n\n每一次升級都需要更強烈的聲音回饋，同時又要維持整體混音的清晰與平衡，讓 Mega Win 觸發時帶來與眾不同的興奮感。",
+        approach: "我們結合傳統民族樂器與史詩管弦編曲，為主遊戲與免費遊戲打造各自不同的音樂層次與氛圍。\n\n透過調式音階，喚起古代中美洲文明的神祕氛圍；再搭配清脆、有力且辨識度高的音效，即時回應遊戲中的每個事件，讓整體遊戲節奏乾淨俐落、張力十足。",
+        result: "傳統民族樂器與管弦編曲的結合，讓主遊戲與免費遊戲之間建立起明確不同的氛圍與強度層次。\n\n搭配精準有力的音效設計，音樂與音效與遊戲機制緊密契合，形成獨特的聲音識別，帶來流暢且引人入勝的遊戲體驗。",
+        assets: [
+          { label: "音樂曲目", count: "2" },
+          { label: "音效", count: "54" },
+          { label: "贏分音效", count: "5" },
+        ],
+        chapters: [
+          { t: 0, label: "主遊戲轉輪" },
+          { t: 15, label: "購買功能" },
+          { t: 20, label: "Scatter 觸發" },
+          { t: 24, label: "免費遊戲開場" },
+          { t: 36, label: "倍數一路疊加" },
+          { t: 48, label: "Mega Win 大獎" },
+          { t: 66, label: "再觸發" },
+          { t: 78, label: "總贏分結算" },
+        ],
       },
       {
         client: "Golden Sun Aztec 黃金太陽 阿茲特克",

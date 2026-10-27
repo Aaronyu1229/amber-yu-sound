@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, Music, Volume2, Mic, Film } from "lucide-react";
+import { useRef, useState } from "react";
 import { useLocale } from "@/lib/i18n";
 import { portfolioItems } from "@/lib/constants";
 
@@ -20,6 +21,9 @@ const assetIcons = [Music, Volume2, Mic, Film];
 
 export default function PortfolioDetailClient({ slug }: { slug: string }) {
   const { t } = useLocale();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [activeChapter, setActiveChapter] = useState<number | null>(null);
+  const [hasStartedPlaying, setHasStartedPlaying] = useState(false);
 
   const itemIndex = portfolioItems.findIndex((p) => p.slug === slug);
   const item = portfolioItems[itemIndex];
@@ -142,16 +146,71 @@ export default function PortfolioDetailClient({ slug }: { slug: string }) {
                 />
               ) : (
                 <video
+                  ref={videoRef}
                   src={item.videoSrc}
                   controls
                   playsInline
                   className="absolute inset-0 w-full h-full object-cover"
+                  onPlay={() => setHasStartedPlaying(true)}
+                  onTimeUpdate={(event) => {
+                    if (!hasStartedPlaying || !detail.chapters) return;
+
+                    const chapterIndex = detail.chapters.reduce<number | null>(
+                      (currentIndex, chapter, index) =>
+                        chapter.t <= event.currentTarget.currentTime
+                          ? index
+                          : currentIndex,
+                      null,
+                    );
+                    setActiveChapter(chapterIndex);
+                  }}
                 />
               )}
             </motion.div>
             <p className="text-center text-[10px] tracking-[3px] uppercase text-ivory/40 mt-4">
               {item.youtubeId ? "YouTube · Audio Post-Production" : "Game Demo"}
             </p>
+            {item.videoSrc && detail.chapters?.length && (
+              <div className="mt-8 border-t border-ivory/10 pt-6">
+                <h2 className="text-xs tracking-[3px] uppercase text-gold font-medium">
+                  {t.portfolioDetail.chaptersTitle}
+                </h2>
+                <p className="text-ivory/70 mt-2">
+                  {t.portfolioDetail.chaptersHint}
+                </p>
+                <div className="grid gap-3 md:grid-cols-2 mt-6">
+                  {detail.chapters.map((chapter, index) => {
+                    const isActive = activeChapter === index;
+                    const minutes = Math.floor(chapter.t / 60);
+                    const seconds = String(chapter.t % 60).padStart(2, "0");
+
+                    return (
+                      <button
+                        key={chapter.t}
+                        type="button"
+                        aria-current={isActive ? "true" : undefined}
+                        className={`flex items-center gap-3 rounded-lg border px-4 py-3 text-left text-sm transition-colors ${
+                          isActive
+                            ? "border-gold/40 bg-gold/10 text-gold"
+                            : "border-ivory/10 text-ivory/70 hover:border-gold/30 hover:text-ivory"
+                        }`}
+                        onClick={() => {
+                          if (!videoRef.current) return;
+
+                          videoRef.current.currentTime = chapter.t;
+                          void videoRef.current.play();
+                        }}
+                      >
+                        <span className="tabular-nums text-gold">
+                          {minutes}:{seconds}
+                        </span>
+                        <span>{chapter.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </section>
       )}
@@ -172,7 +231,7 @@ export default function PortfolioDetailClient({ slug }: { slug: string }) {
                 <h2 className="text-xs tracking-[3px] uppercase text-gold font-medium mb-4">
                   {t.portfolioDetail.overviewTitle}
                 </h2>
-                <p className="text-ivory/70 leading-relaxed">
+                <p className="text-ivory/70 leading-relaxed whitespace-pre-line">
                   {detail.overview}
                 </p>
               </motion.div>
@@ -187,7 +246,7 @@ export default function PortfolioDetailClient({ slug }: { slug: string }) {
                 <h2 className="text-xs tracking-[3px] uppercase text-gold font-medium mb-4">
                   {t.portfolioDetail.challengeTitle}
                 </h2>
-                <p className="text-ivory/70 leading-relaxed">
+                <p className="text-ivory/70 leading-relaxed whitespace-pre-line">
                   {detail.challenge}
                 </p>
               </motion.div>
@@ -202,7 +261,7 @@ export default function PortfolioDetailClient({ slug }: { slug: string }) {
                 <h2 className="text-xs tracking-[3px] uppercase text-gold font-medium mb-4">
                   {t.portfolioDetail.approachTitle}
                 </h2>
-                <p className="text-ivory/70 leading-relaxed">
+                <p className="text-ivory/70 leading-relaxed whitespace-pre-line">
                   {detail.approach}
                 </p>
               </motion.div>
@@ -217,26 +276,30 @@ export default function PortfolioDetailClient({ slug }: { slug: string }) {
                 <h2 className="text-xs tracking-[3px] uppercase text-gold font-medium mb-4">
                   {t.portfolioDetail.resultTitle}
                 </h2>
-                <p className="text-ivory/70 leading-relaxed">
+                <p className="text-ivory/70 leading-relaxed whitespace-pre-line">
                   {detail.result}
                 </p>
               </motion.div>
 
               {/* Testimonial */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="border-l-2 border-gold/30 pl-8 py-4"
-              >
-                <p className="text-ivory/80 italic text-lg leading-relaxed mb-4">
-                  &ldquo;{detail.testimonial}&rdquo;
-                </p>
-                <p className="text-sm text-ivory/60">
-                  — {detail.testimonialAuthor}
-                </p>
-              </motion.div>
+              {detail.testimonial && (
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="border-l-2 border-gold/30 pl-8 py-4"
+                >
+                  <p className="text-ivory/80 italic text-lg leading-relaxed mb-4">
+                    &ldquo;{detail.testimonial}&rdquo;
+                  </p>
+                  {detail.testimonialAuthor && (
+                    <p className="text-sm text-ivory/60">
+                      — {detail.testimonialAuthor}
+                    </p>
+                  )}
+                </motion.div>
+              )}
             </div>
 
             {/* Right Column — Sidebar */}
