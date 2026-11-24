@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, MapPin, CheckCircle2, AlertCircle } from "lucide-react";
+import { Building2, Mail, MapPin, CheckCircle2, AlertCircle } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLocale } from "@/lib/i18n";
 import SectionTitle from "./ui/SectionTitle";
@@ -101,6 +101,10 @@ export default function Contact() {
           </p>
 
           <div className="flex flex-col gap-4 pt-4">
+            <div className="flex items-center gap-3">
+              <Building2 size={16} className="text-gold" />
+              <span className="text-sm text-ivory/80">珀瀾音樂有限公司</span>
+            </div>
             <div className="flex items-center gap-3">
               <Mail size={16} className="text-gold" />
               <a
