@@ -423,7 +423,7 @@ const en: Dictionary = {
     title: "Let's make your game sound incredible",
     description:
       "Whether you're developing a new slot title or refreshing an existing game's audio, we'd love to hear about your project. Reach out and let's create something players will remember.",
-    email: "polanmusic2025@gmail.com",
+    email: "polanmusic@dolcenforte.com",
     location: "Taipei, Taiwan — Available worldwide",
     form: {
       name: "Name *",
@@ -445,7 +445,7 @@ const en: Dictionary = {
       successBody:
         "Thanks for reaching out. A confirmation should arrive in your inbox shortly, and we'll respond within 1–2 business days.",
       errorBody:
-        "Something went wrong. Please try again, or email us directly at polanmusic2025@gmail.com.",
+        "Something went wrong. Please try again, or email us directly at polanmusic@dolcenforte.com.",
       namePlaceholder: "Your name",
       companyPlaceholder: "Studio name",
       emailPlaceholder: "you@studio.com",
@@ -455,7 +455,7 @@ const en: Dictionary = {
     },
   },
   footer: {
-    copyright: "Dolce & Forte. All rights reserved.",
+    copyright: "Dolce & Forte · 珀瀾音樂有限公司. All rights reserved.",
     services: "/ Services",
     serviceLinks: [
       { label: "Music Composition", href: "/services" },
@@ -957,7 +957,7 @@ const zh: Dictionary = {
     title: "讓我們一起打造令人驚艷的遊戲音效",
     description:
       "無論您正在開發新的老虎機遊戲，還是想更新現有遊戲的音效，我們都很樂意了解您的專案。歡迎聯繫，讓我們共同創造玩家難忘的體驗。",
-    email: "polanmusic2025@gmail.com",
+    email: "polanmusic@dolcenforte.com",
     location: "台灣台北 — 服務範圍遍及全球",
     form: {
       name: "姓名 *",
@@ -979,7 +979,7 @@ const zh: Dictionary = {
       successBody:
         "感謝您的詢問。確認信稍後會寄到您的信箱，我們會在 1–2 個工作天內回覆。",
       errorBody:
-        "傳送時發生問題，請再試一次，或直接寄信給 polanmusic2025@gmail.com。",
+        "傳送時發生問題，請再試一次，或直接寄信給 polanmusic@dolcenforte.com。",
       namePlaceholder: "您的姓名",
       companyPlaceholder: "工作室名稱",
       emailPlaceholder: "you@studio.com",
@@ -989,7 +989,7 @@ const zh: Dictionary = {
     },
   },
   footer: {
-    copyright: "Dolce & Forte. 版權所有。",
+    copyright: "Dolce & Forte · 珀瀾音樂有限公司 版權所有。",
     services: "/ 服務項目",
     serviceLinks: [
       { label: "音樂作曲", href: "/services" },
